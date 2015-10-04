@@ -7,7 +7,13 @@ Game::Game()
   m_running = true;
   m_display_ptr = NULL;
   m_renderer_ptr = NULL;
-  m_texture_ptr = NULL;
+
+  m_current_frame = 0;
+  m_last_frame = 0;
+  m_current_row = 0;
+
+  m_color = 0;
+  m_color_add = 1;
 }
 Game::~Game()
 {
@@ -38,34 +44,7 @@ bool Game::Init( std::string s_title, int s_w, int s_h )
   }
 
 
-  SDL_Surface* temp_surface = NULL;
-  temp_surface = SDL_LoadBMP( "assets/animate_cat.bmp" );
-  if ( temp_surface == NULL ) {
-    std::cout << "!! Failed to load image : " << SDL_GetError() << " !!\n";  
-    return false;
-  }
-  m_texture_ptr = SDL_CreateTextureFromSurface( m_renderer_ptr, temp_surface );
-  if ( m_texture_ptr == NULL ) {
-    std::cout << "!! Failed to load textur : " << SDL_GetError() << " !!\n";  
-    return false;
-  }
-  SDL_FreeSurface( temp_surface );
-
-
-  SDL_QueryTexture( m_texture_ptr, NULL, NULL, &m_sor_rec.w, &m_sor_rec.h );
-
-  m_sor_rec.x = 0;
-  m_sor_rec.y = 0;
-  m_sor_rec.w = 165;
-  m_sor_rec.h;
-
-
-  m_des_rec.x = 0;
-  m_des_rec.y = 0;
-  m_des_rec.w = m_sor_rec.w;
-  m_des_rec.h = m_sor_rec.h;
-
-  std::cout << m_des_rec.w << "  " << m_des_rec.w << "\n";
+  m_texture_manager.Load( m_renderer_ptr, "Alien", "assets/Alien_sprite_sheet.png" );
 
 
   return true;
@@ -92,18 +71,30 @@ void Game::Handle_events()
 
 void Game::Update()
 {
-  m_sor_rec.x = ( 165 * (int)((SDL_GetTicks() / 150 ) % 6 ));
-  m_des_rec.x = (int)((SDL_GetTicks() / 5 ) % ( 480 + 165 + 165 )) - 165;
+  m_current_frame = (( SDL_GetTicks() / 50 ) % 8 );
+
+  if (( m_current_frame == 0 )&&( m_current_frame != m_last_frame ))
+    m_current_row = (( m_current_row + 1 ) % 3 );
+
+  m_last_frame = m_current_frame;
+
+
+  m_color += m_color_add;
+  if (( m_color >= 255 )||( m_color <= 0  ))
+    m_color_add *= -1;
 }
 
 
 
 void Game::Render()
 {
-  SDL_SetRenderDrawColor( m_renderer_ptr, 0, 0, 0, 255 );
+  SDL_SetRenderDrawColor( m_renderer_ptr, m_color, 0, 0, 255 );
   SDL_RenderClear( m_renderer_ptr );
 
-  SDL_RenderCopy( m_renderer_ptr, m_texture_ptr, &m_sor_rec, &m_des_rec );
+  
+  m_texture_manager.Drow( m_renderer_ptr, "Alien", 200, 200, ( 2096/8 ), ( 786/3 ), SDL_FLIP_HORIZONTAL );
+  m_texture_manager.Drow_frame( m_renderer_ptr, "Alien", 0, 0, ( 2096/8 ), ( 786/3 ), m_current_row, m_current_frame );
+
 
   SDL_RenderPresent( m_renderer_ptr );
 }

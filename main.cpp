@@ -1,6 +1,6 @@
  
 #include"Game.h"
-
+#include"Texture_manager.h"
 
 
 Game* the_game = NULL;
@@ -9,7 +9,7 @@ int main ( int argc, char* args[] )
 {
   the_game = new Game();
 
-  the_game->Init( "Test", 480, 320 );
+  the_game->Init( "Test", 720, 480 );
 
   while( the_game->m_running )
     {

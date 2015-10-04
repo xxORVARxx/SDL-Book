@@ -3,8 +3,12 @@
 #define GAME_H
 
 #include<SDL2/SDL.h>
+#include<SDL2/SDL_image.h>
+
 #include<iostream>
 #include<string>
+
+#include"Texture_manager.h"
 
 
 
@@ -28,10 +32,15 @@ class Game
   SDL_Window* m_display_ptr;
   SDL_Renderer* m_renderer_ptr;
 
-  SDL_Texture* m_texture_ptr;
-  SDL_Rect m_sor_rec;
-  SDL_Rect m_des_rec;
+  int m_current_frame;
+  int m_last_frame;
+  int m_current_row;
+  Texture_manager m_texture_manager;
+
+  int m_color;
+  int m_color_add;
 };
+
 
 
 #endif
