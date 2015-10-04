@@ -39,7 +39,7 @@ bool Game::Init( std::string s_title, int s_w, int s_h )
 
 
   SDL_Surface* temp_surface = NULL;
-  temp_surface = SDL_LoadBMP( "assets/rider.bmp" );
+  temp_surface = SDL_LoadBMP( "assets/animate_cat.bmp" );
   if ( temp_surface == NULL ) {
     std::cout << "!! Failed to load image : " << SDL_GetError() << " !!\n";  
     return false;
@@ -51,11 +51,12 @@ bool Game::Init( std::string s_title, int s_w, int s_h )
   }
   SDL_FreeSurface( temp_surface );
 
+
   SDL_QueryTexture( m_texture_ptr, NULL, NULL, &m_sor_rec.w, &m_sor_rec.h );
 
   m_sor_rec.x = 0;
   m_sor_rec.y = 0;
-  m_sor_rec.w;
+  m_sor_rec.w = 165;
   m_sor_rec.h;
 
 
@@ -91,7 +92,8 @@ void Game::Handle_events()
 
 void Game::Update()
 {
-
+  m_sor_rec.x = ( 165 * (int)((SDL_GetTicks() / 150 ) % 6 ));
+  m_des_rec.x = (int)((SDL_GetTicks() / 5 ) % ( 480 + 165 + 165 )) - 165;
 }
 
 
