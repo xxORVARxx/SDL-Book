@@ -27,6 +27,10 @@ class Game
 
   SDL_Window* m_display_ptr;
   SDL_Renderer* m_renderer_ptr;
+
+  SDL_Texture* m_texture_ptr;
+  SDL_Rect m_sor_rec;
+  SDL_Rect m_des_rec;
 };
 
 

@@ -16,6 +16,7 @@ int main ( int argc, char* args[] )
       the_game->Handle_events();
       the_game->Update();
       the_game->Render();
+      SDL_Delay( 100 );
     }
 
   the_game->Clear();
