@@ -35,7 +35,6 @@ class Game
   int m_current_frame;
   int m_last_frame;
   int m_current_row;
-  Texture_manager m_texture_manager;
 
   int m_color;
   int m_color_add;

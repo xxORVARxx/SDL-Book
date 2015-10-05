@@ -13,7 +13,7 @@ Game::Game()
   m_current_row = 0;
 
   m_color = 0;
-  m_color_add = 1;
+  m_color_add = 2;
 }
 Game::~Game()
 {
@@ -44,7 +44,8 @@ bool Game::Init( std::string s_title, int s_w, int s_h )
   }
 
 
-  m_texture_manager.Load( m_renderer_ptr, "Alien", "assets/Alien_sprite_sheet.png" );
+  // Loading Texture with the "Singleton Class":
+  Texture_manager::Instance()->Load( m_renderer_ptr, "Alien", "assets/Alien_sprite_sheet.png" );
 
 
   return true;
@@ -80,7 +81,7 @@ void Game::Update()
 
 
   m_color += m_color_add;
-  if (( m_color >= 255 )||( m_color <= 0  ))
+  if (( m_color >= 150 )||( m_color <= 0  ))
     m_color_add *= -1;
 }
 
@@ -92,8 +93,8 @@ void Game::Render()
   SDL_RenderClear( m_renderer_ptr );
 
   
-  m_texture_manager.Drow( m_renderer_ptr, "Alien", 200, 200, ( 2096/8 ), ( 786/3 ), SDL_FLIP_HORIZONTAL );
-  m_texture_manager.Drow_frame( m_renderer_ptr, "Alien", 0, 0, ( 2096/8 ), ( 786/3 ), m_current_row, m_current_frame );
+  Texture_manager::Instance()->Drow( m_renderer_ptr, "Alien", 200, 200, ( 2096/8 ), ( 786/3 ), SDL_FLIP_HORIZONTAL );
+  Texture_manager::Instance()->Drow_frame( m_renderer_ptr, "Alien", 0, 0, ( 2096/8 ), ( 786/3 ), m_current_row, m_current_frame );
 
 
   SDL_RenderPresent( m_renderer_ptr );

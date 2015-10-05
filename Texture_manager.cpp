@@ -3,6 +3,12 @@
 
 
 
+// --- Static Variables ---
+Texture_manager* Texture_manager::sm_instance_ptr = NULL;
+
+
+
+// --- Functions ---
 bool Texture_manager::Load( SDL_Renderer* s_renderer_ptr, std::string s_id, std::string s_file_name ) 
 {
   SDL_Surface* temp_surface_ptr = NULL;
@@ -43,6 +49,7 @@ void Texture_manager::Drow( SDL_Renderer* s_renderer_ptr, std::string s_id, int 
 
   SDL_RenderCopyEx( s_renderer_ptr, m_texture_map[s_id], &src_rec, &dest_rec, 0, 0, s_flip );
 }
+
 
 
 // For "Sprite Sheet":

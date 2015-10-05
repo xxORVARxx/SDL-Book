@@ -3,6 +3,7 @@
 #include"Texture_manager.h"
 
 
+
 Game* the_game = NULL;
 
 int main ( int argc, char* args[] )
