@@ -3,7 +3,7 @@
 #define GAME_H
 
 #include "Init.h"
-#include "Texture_manager.h"
+#include "Game_object.h"
 
 
 
@@ -27,12 +27,12 @@ class Game
   SDL_Window* m_display_ptr;
   SDL_Renderer* m_renderer_ptr;
 
-  int m_current_frame;
-  int m_last_frame;
-  int m_current_row;
-
   int m_color;
   int m_color_add;
+
+  // Game Objects:
+  Game_object m_go;
+  Player m_player;
 };
 
 

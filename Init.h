@@ -30,6 +30,8 @@
 #include <string>
 #include <map>
 
+#include "Texture_manager.h"
+
 
 #endif
 

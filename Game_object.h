@@ -9,14 +9,23 @@
 class Game_object
 {
  public:
-  void Draw() { std::cout << "Draw Game Object.\n"; }
-  void Update() { std::cout << "Update Game Object.\n"; }
-  void Clean() { std::cout << "Clean Game Object.\n"; }
+  void Load( std::string s_id, int s_x, int s_y, int s_w, int s_h, SDL_RendererFlip s_flip = SDL_FLIP_NONE );
+  void Draw( SDL_Renderer* s_renderer_ptr );
+  void Update();
+  void Clean();
 
  protected:
+  std::string m_texture_id;
+  SDL_RendererFlip m_flip;
+
+  int m_current_frame;
+  int m_last_frame;
+  int m_current_row;
+
   int m_x;
   int m_y;
-
+  int m_w;
+  int m_h;
 };
 
 
@@ -24,22 +33,10 @@ class Game_object
 class Player : public Game_object
 {
  public:
-  void Draw() 
-  {
-    Game_object::Draw();
-    std::cout << "Draw Player.\n"; 
-  }
-  void Update()
-  {
-    m_x = 10;
-    m_y = 20;
-    std::cout << "Update Player.  x:" << m_x << "  y:" << m_y << "\n"; 
-  }
-  void Clean()
-  {
-    Game_object::Clean();
-    std::cout << "Clean Player.\n"; 
-  }
+  void Load( std::string s_id, int s_x, int s_y, int s_w, int s_h, SDL_RendererFlip s_flip = SDL_FLIP_NONE );
+  void Draw( SDL_Renderer* s_renderer_ptr );
+  void Update();
+  void Clean();
 };
 
 

@@ -2,7 +2,6 @@
 #include "Init.h"
 
 #include "Game.h"
-#include "Texture_manager.h"
 #include "Game_object.h"
 
 
@@ -16,9 +15,6 @@ int main ( int argc, char* args[] )
 
 
   Player player;
-  player.Draw();
-  player.Update();
-  player.Clean();
 
 
   while( the_game->m_running )
