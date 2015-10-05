@@ -31,8 +31,7 @@ class Game
   int m_color_add;
 
   // Game Objects:
-  Game_object m_go;
-  Player m_player;
+  std::vector< Game_object* > m_obj_vec;
 };
 
 

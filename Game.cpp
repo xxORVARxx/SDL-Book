@@ -43,9 +43,21 @@ bool Game::Init( std::string s_title, int s_w, int s_h )
   // Loading Texture with the "Singleton Class":
   Texture_manager::Instance()->Load( m_renderer_ptr, "Alien", "assets/Alien_sprite_sheet.png" );
 
-  // Make 'Game Object' and 'Player':
-  m_go.Load( "Alien", 0, 0, ( 2096/8 ), ( 786/3 ));
-  m_player.Load( "Alien", 200, 200, ( 2096/8 ), ( 786/3 ), SDL_FLIP_HORIZONTAL );
+
+  // Make Game Objects:
+  Game_object* temp_obj[3];
+
+  temp_obj[0] = new Game_object();
+  temp_obj[1] = new Player();
+  temp_obj[2] = new Enemy();
+
+  temp_obj[0]->Load( "Alien", 0, 0, ( 2096/8 ), ( 786/3 ) ); //  <- the Game Object.
+  temp_obj[1]->Load( "Alien", 200, 0, ( 2096/8 ), ( 786/3 )); // <- the Player.
+  temp_obj[2]->Load( "Alien", 400, 0, ( 2096/8 ), ( 786/3 )); // <- the Enemy.
+
+  m_obj_vec.push_back( temp_obj[0] );
+  m_obj_vec.push_back( temp_obj[1] );
+  m_obj_vec.push_back( temp_obj[2] );
 
 
   return true;
@@ -73,8 +85,8 @@ void Game::Handle_events()
 void Game::Update()
 {
   // Updating the Game Objects:
-  m_go.Update();
-  m_player.Update();
+  for ( int i = 0 ; i < m_obj_vec.size() ; ++i )
+    m_obj_vec[i]->Update();
 
 
   m_color += m_color_add;
@@ -90,8 +102,8 @@ void Game::Render()
   SDL_RenderClear( m_renderer_ptr );
 
   // Rendering the Game Objects:
-  m_go.Draw( m_renderer_ptr );
-  m_player.Draw( m_renderer_ptr );
+  for ( int i = 0 ; i < m_obj_vec.size() ; ++i )
+    m_obj_vec[i]->Draw( m_renderer_ptr );
 
 
   SDL_RenderPresent( m_renderer_ptr );

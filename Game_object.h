@@ -9,10 +9,10 @@
 class Game_object
 {
  public:
-  void Load( std::string s_id, int s_x, int s_y, int s_w, int s_h, SDL_RendererFlip s_flip = SDL_FLIP_NONE );
-  void Draw( SDL_Renderer* s_renderer_ptr );
-  void Update();
-  void Clean();
+  virtual void Load( std::string s_id, int s_x, int s_y, int s_w, int s_h, SDL_RendererFlip s_flip = SDL_FLIP_NONE );
+  virtual void Draw( SDL_Renderer* s_renderer_ptr );
+  virtual void Update();
+  virtual void Clean();
 
  protected:
   std::string m_texture_id;
@@ -31,6 +31,17 @@ class Game_object
 
 
 class Player : public Game_object
+{
+ public:
+  void Load( std::string s_id, int s_x, int s_y, int s_w, int s_h, SDL_RendererFlip s_flip = SDL_FLIP_NONE );
+  void Draw( SDL_Renderer* s_renderer_ptr );
+  void Update();
+  void Clean();
+};
+
+
+
+class Enemy : public Game_object
 {
  public:
   void Load( std::string s_id, int s_x, int s_y, int s_w, int s_h, SDL_RendererFlip s_flip = SDL_FLIP_NONE );

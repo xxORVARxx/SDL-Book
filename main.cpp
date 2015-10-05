@@ -13,9 +13,7 @@ int main ( int argc, char* args[] )
   the_game = new Game();
   the_game->Init( "Test", 720, 480 );
 
-
-  Player player;
-
+  // Polymorphism.
 
   while( the_game->m_running )
     {
