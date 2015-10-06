@@ -3,27 +3,41 @@
 #define GAME_H
 
 #include "Init.h"
-#include "Game_object.h"
+#include "Objects_blueprint.h"
 
 
 
+// Singleton Class:
 class Game
 {
- public:
+ private:
   Game();
+
+ public:
   ~Game();
 
-  bool Init( std::string title, int w, int h );
+  static Game* Instance()
+  {
+    if( sm_instance_ptr == NULL )
+      {
+	sm_instance_ptr = new Game();
+	return sm_instance_ptr;
+      }
+    return sm_instance_ptr;
+  }
 
+  bool Init( std::string title, int w, int h );
   void Handle_events();
   void Update();
   void Render();
+  void Clean();
+  SDL_Renderer* Get_renderer() const { return m_renderer_ptr; }
 
-  void Clear();
-
-  //private:
+  // --- Variables ---
   bool m_running;
 
+  private:
+  static Game* sm_instance_ptr;
   SDL_Window* m_display_ptr;
   SDL_Renderer* m_renderer_ptr;
 
@@ -31,7 +45,7 @@ class Game
   int m_color_add;
 
   // Game Objects:
-  std::vector< Game_object* > m_obj_vec;
+  std::vector< Object_default* > m_obj_vec;
 };
 
 

@@ -1,7 +1,16 @@
 
 #include "Game.h"
+#include "Texture_manager.h"
+#include "Objects.h"
 
 
+
+// --- Static Variables ---
+Game* Game::sm_instance_ptr = NULL;
+
+
+
+// --- Constructors ---
 Game::Game()
 {
   m_running = true;
@@ -13,11 +22,12 @@ Game::Game()
 }
 Game::~Game()
 {
-  Clear();
+  Clean();
 }
 
 
 
+// --- Functions ---
 bool Game::Init( std::string s_title, int s_w, int s_h )
 {
   // Initializing_SDL2:
@@ -44,20 +54,14 @@ bool Game::Init( std::string s_title, int s_w, int s_h )
   Texture_manager::Instance()->Load( m_renderer_ptr, "Alien", "assets/Alien_sprite_sheet.png" );
 
 
-  // Make Game Objects:
-  Game_object* temp_obj[3];
+  // Make Objects:
+  Object_load_parameters olp1( "Alien", 0, 0, ( 2096/8 ), ( 786/3 ) );
+  Object_load_parameters olp2( "Alien", 200, 0, ( 2096/8 ), ( 786/3 ) );
+  Object_load_parameters olp3( "Alien", 400, 0, ( 2096/8 ), ( 786/3 ) );
 
-  temp_obj[0] = new Game_object();
-  temp_obj[1] = new Player();
-  temp_obj[2] = new Enemy();
-
-  temp_obj[0]->Load( "Alien", 0, 0, ( 2096/8 ), ( 786/3 ) ); //  <- the Game Object.
-  temp_obj[1]->Load( "Alien", 200, 0, ( 2096/8 ), ( 786/3 )); // <- the Player.
-  temp_obj[2]->Load( "Alien", 400, 0, ( 2096/8 ), ( 786/3 )); // <- the Enemy.
-
-  m_obj_vec.push_back( temp_obj[0] );
-  m_obj_vec.push_back( temp_obj[1] );
-  m_obj_vec.push_back( temp_obj[2] );
+  m_obj_vec.push_back( new Object_default( &olp1 ));
+  m_obj_vec.push_back( new Object_player( &olp2 ));
+  m_obj_vec.push_back( new Object_enemy( &olp3 ));
 
 
   return true;
@@ -101,9 +105,10 @@ void Game::Render()
   SDL_SetRenderDrawColor( m_renderer_ptr, m_color, 0, 0, 255 );
   SDL_RenderClear( m_renderer_ptr );
 
+
   // Rendering the Game Objects:
   for ( int i = 0 ; i < m_obj_vec.size() ; ++i )
-    m_obj_vec[i]->Draw( m_renderer_ptr );
+    m_obj_vec[i]->Draw();
 
 
   SDL_RenderPresent( m_renderer_ptr );
@@ -111,9 +116,18 @@ void Game::Render()
 
 
 
-void Game::Clear()
+void Game::Clean()
 {
+  
+  for ( int i = 0 ; i < m_obj_vec.size() ; ++i ) {
+    m_obj_vec[i]->Clean();
+    delete m_obj_vec[i];
+    m_obj_vec[i] = NULL;
+  }
+  
+
   SDL_DestroyRenderer( m_renderer_ptr );
   SDL_DestroyWindow( m_display_ptr );
   SDL_Quit();
+  std::cout << "Game.Clean() Done\n";
 }

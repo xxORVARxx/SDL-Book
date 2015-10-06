@@ -1,28 +1,24 @@
  
 #include "Init.h"
-
 #include "Game.h"
-#include "Game_object.h"
 
 
-
-Game* the_game = NULL;
 
 int main ( int argc, char* args[] )
 {
-  the_game = new Game();
-  the_game->Init( "Test", 720, 480 );
+  if ( ! Game::Instance()->Init( "Test", 720, 480 )) {
+    std::cout << "\n!! the_Game.Init() Failed !!\n\n";
+    return -1;
+  }
 
-  // Polymorphism.
-
-  while( the_game->m_running )
+  while( Game::Instance()->m_running )
     {
-      the_game->Handle_events();
-      the_game->Update();
-      the_game->Render();
+      Game::Instance()->Handle_events();
+      Game::Instance()->Update();
+      Game::Instance()->Render();
       SDL_Delay( 16 );
     }
 
-  the_game->Clear();
-  return 1;
+  Game::Instance()->Clean();
+  return 0;
 }
