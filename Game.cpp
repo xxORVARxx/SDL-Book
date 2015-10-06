@@ -55,9 +55,9 @@ bool Game::Init( std::string s_title, int s_w, int s_h )
 
 
   // Make Objects:
-  Object_load_parameters olp1( "Alien", 0, 0, ( 2096/8 ), ( 786/3 ) );
-  Object_load_parameters olp2( "Alien", 200, 0, ( 2096/8 ), ( 786/3 ) );
-  Object_load_parameters olp3( "Alien", 400, 0, ( 2096/8 ), ( 786/3 ) );
+  Object_load_parameters olp1( "Alien", glm::vec2( 0, 0 ), ( 2096/8 ), ( 786/3 ) );
+  Object_load_parameters olp2( "Alien", glm::vec2( 200, 0 ), ( 2096/8 ), ( 786/3 ) );
+  Object_load_parameters olp3( "Alien", glm::vec2( 400, 0 ), ( 2096/8 ), ( 786/3 ) );
 
   m_obj_vec.push_back( new Object_default( &olp1 ));
   m_obj_vec.push_back( new Object_player( &olp2 ));

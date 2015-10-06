@@ -4,8 +4,13 @@
 
 
 
+const Uint32 FPS = 60;
+const Uint32 DELAY_TIME = 1000.0f / FPS;
+
 int main ( int argc, char* args[] )
 {
+  Uint32 frame_start, frame_time;
+
   if ( ! Game::Instance()->Init( "Test", 720, 480 )) {
     std::cout << "\n!! the_Game.Init() Failed !!\n\n";
     return -1;
@@ -13,10 +18,21 @@ int main ( int argc, char* args[] )
 
   while( Game::Instance()->m_running )
     {
+      frame_start = SDL_GetTicks();
+
+      // GAME:
       Game::Instance()->Handle_events();
       Game::Instance()->Update();
       Game::Instance()->Render();
-      SDL_Delay( 16 );
+
+      // FPS:
+      frame_time = SDL_GetTicks() - frame_start;
+      std::cout << "Loop Time : " << frame_time << " ms  \t";
+      if( frame_time < DELAY_TIME ) {
+	SDL_Delay( (int)( DELAY_TIME - frame_time ));
+	std::cout << "Delay : " << (int)( DELAY_TIME - frame_time ) << " ms  \t";
+      }
+      std::cout << "Frame Time : " << SDL_GetTicks() - frame_start << " ms\n";
     }
 
   Game::Instance()->Clean();

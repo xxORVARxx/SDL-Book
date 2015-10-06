@@ -16,6 +16,14 @@ class Object_player : public Object_default
 
   virtual void Update() 
   {
+    Object_default::Update() ;
+
+    // Player Moving:
+    m_acceleration.y = 0.1;
+    if (( m_position.y > 400 )) {
+      m_velocity.y *= -1;
+    }
+
     m_current_frame = (( SDL_GetTicks() / 15 ) % 8 );
     if (( m_current_frame == 0 )&&( m_current_frame != m_last_frame ))
       m_current_row = (( m_current_row + 1 ) % 3 );
@@ -42,6 +50,8 @@ class Object_enemy : public Object_default
 
   virtual void Update() 
   {
+    Object_default::Update() ;
+
     m_current_frame = (( SDL_GetTicks() / 150 ) % 8 );
     if (( m_current_frame == 0 )&&( m_current_frame != m_last_frame ))
       m_current_row = (( m_current_row + 1 ) % 3 );

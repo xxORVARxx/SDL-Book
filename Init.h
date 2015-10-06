@@ -23,6 +23,9 @@
 #define INIT_H
 
 
+#define GLM_FORCE_CXX11 
+#include <glm/glm.hpp>
+
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 
