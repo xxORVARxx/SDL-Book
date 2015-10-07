@@ -54,6 +54,7 @@ class Object_default : public Object_blueprint
   virtual void Draw();
   virtual void Clean();
 
+  // --- Variables ---
  protected:
   std::string m_texture_id;
   SDL_RendererFlip m_texture_flip;

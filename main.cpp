@@ -1,5 +1,6 @@
  
 #include "Init.h"
+#include "Input_handler.h"
 #include "Game.h"
 
 
@@ -11,30 +12,30 @@ int main ( int argc, char* args[] )
 {
   Uint32 frame_start, frame_time;
 
-  if ( ! Game::Instance()->Init( "Test", 720, 480 )) {
-    std::cout << "\n!! the_Game.Init() Failed !!\n\n";
+  if ( ! the_Game::Instance()->Init( "Test", 720, 480 )) {
+    std::cout << "\n!! the_the_Game.Init() Failed !!\n\n";
     return -1;
   }
 
-  while( Game::Instance()->m_running )
+  while( the_Input_handler::Instance()->Running() )
     {
       frame_start = SDL_GetTicks();
 
       // GAME:
-      Game::Instance()->Handle_events();
-      Game::Instance()->Update();
-      Game::Instance()->Render();
+      the_Game::Instance()->Handle_events();
+      the_Game::Instance()->Update();
+      the_Game::Instance()->Render();
 
       // FPS:
       frame_time = SDL_GetTicks() - frame_start;
-      std::cout << "Loop Time : " << frame_time << " ms  \t";
+      //std::cout << "Loop Time : " << frame_time << " ms  \t";
       if( frame_time < DELAY_TIME ) {
 	SDL_Delay( (int)( DELAY_TIME - frame_time ));
-	std::cout << "Delay : " << (int)( DELAY_TIME - frame_time ) << " ms  \t";
+	//std::cout << "Delay : " << (int)( DELAY_TIME - frame_time ) << " ms  \t";
       }
-      std::cout << "Frame Time : " << SDL_GetTicks() - frame_start << " ms\n";
+      //std::cout << "Frame Time : " << SDL_GetTicks() - frame_start << " ms\n";
     }
 
-  Game::Instance()->Clean();
+  the_Game::Instance()->Clean();
   return 0;
 }

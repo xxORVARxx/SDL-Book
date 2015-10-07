@@ -11,15 +11,13 @@ class Texture_manager
 {
  private:
   Texture_manager() {}
+  ~Texture_manager() {}
 
  public:
   static Texture_manager* Instance()
   {
-    if ( sm_instance_ptr == NULL )
-      {
-	sm_instance_ptr = new Texture_manager();
-	return sm_instance_ptr;
-      }
+    if( sm_instance_ptr == NULL )
+      sm_instance_ptr = new Texture_manager();
     return sm_instance_ptr;
   }
 
@@ -38,6 +36,8 @@ class Texture_manager
   static Texture_manager* sm_instance_ptr;
   std::map< std::string, SDL_Texture* > m_texture_map;
 };
+
+typedef Texture_manager the_Texture_manager;
 
 
 

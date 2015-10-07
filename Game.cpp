@@ -1,5 +1,6 @@
 
 #include "Game.h"
+#include "Input_handler.h"
 #include "Texture_manager.h"
 #include "Objects.h"
 
@@ -13,7 +14,6 @@ Game* Game::sm_instance_ptr = NULL;
 // --- Constructors ---
 Game::Game()
 {
-  m_running = true;
   m_display_ptr = NULL;
   m_renderer_ptr = NULL;
 
@@ -50,8 +50,12 @@ bool Game::Init( std::string s_title, int s_w, int s_h )
   }
 
 
+  // Opening Inputh Handler:
+  the_Input_handler::Instance()->Initialise_joysticks();
+
+
   // Loading Texture with the "Singleton Class":
-  Texture_manager::Instance()->Load( m_renderer_ptr, "Alien", "assets/Alien_sprite_sheet.png" );
+  the_Texture_manager::Instance()->Load( m_renderer_ptr, "Alien", "assets/Alien_sprite_sheet.png" );
 
 
   // Make Objects:
@@ -60,8 +64,8 @@ bool Game::Init( std::string s_title, int s_w, int s_h )
   Object_load_parameters olp3( "Alien", glm::vec2( 400, 0 ), ( 2096/8 ), ( 786/3 ) );
 
   m_obj_vec.push_back( new Object_default( &olp1 ));
-  m_obj_vec.push_back( new Object_player( &olp2 ));
-  m_obj_vec.push_back( new Object_enemy( &olp3 ));
+  m_obj_vec.push_back( new Player( &olp2 ));
+  m_obj_vec.push_back( new Enemy( &olp3 ));
 
 
   return true;
@@ -71,17 +75,8 @@ bool Game::Init( std::string s_title, int s_w, int s_h )
 
 void Game::Handle_events()
 {
-  SDL_Event event;
-  while ( SDL_PollEvent( &event ))
-    {
-      switch (event.type) 
-	{
-	  // --- QUIT ---
-	case SDL_QUIT : 
-	  m_running = false;
-	  break;
-	}
-    }
+  // Inputh Handler:
+  the_Input_handler::Instance()->Update();
 }
 
 
@@ -93,6 +88,7 @@ void Game::Update()
     m_obj_vec[i]->Update();
 
 
+  // Background:
   m_color += m_color_add;
   if (( m_color >= 150 )||( m_color <= 0  ))
     m_color_add *= -1;
@@ -118,14 +114,17 @@ void Game::Render()
 
 void Game::Clean()
 {
-  
+  // Deleting Oblects:
   for ( int i = 0 ; i < m_obj_vec.size() ; ++i ) {
     m_obj_vec[i]->Clean();
     delete m_obj_vec[i];
     m_obj_vec[i] = NULL;
   }
   
+  // Closing Inputh Handler:
+  the_Input_handler::Instance()->Clean();
 
+  // Closing SDL:
   SDL_DestroyRenderer( m_renderer_ptr );
   SDL_DestroyWindow( m_display_ptr );
   SDL_Quit();

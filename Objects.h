@@ -9,64 +9,42 @@
 // using 'Object_load_parameters' structure to get its Parameters/values.
 
 
-class Object_player : public Object_default 
+
+class Player : public Object_default 
 {
  public:
- Object_player( Object_load_parameters* params_ptr ) : Object_default(params_ptr) {}
-
-  virtual void Update() 
-  {
-    Object_default::Update() ;
-
-    // Player Moving:
-    m_acceleration.y = 0.1;
-    if (( m_position.y > 400 )) {
-      m_velocity.y *= -1;
-    }
-
-    m_current_frame = (( SDL_GetTicks() / 15 ) % 8 );
-    if (( m_current_frame == 0 )&&( m_current_frame != m_last_frame ))
-      m_current_row = (( m_current_row + 1 ) % 3 );
-    m_last_frame = m_current_frame;
+ Player( Object_load_parameters* params_ptr ) : Object_default(params_ptr) {
+    // Seting keys:
+    move_up_key =    SDL_SCANCODE_W ;
+    move_down_key =  SDL_SCANCODE_S ;
+    move_right_key = SDL_SCANCODE_D ;
+    move_left_key =  SDL_SCANCODE_A ;
   }
 
-  virtual void Draw() 
-  {
-    Object_default::Draw();
-  }
+  virtual void Update();
+  virtual void Draw() { Object_default::Draw(); }
+  virtual void Clean() { Object_default::Clean(); }
 
-  virtual void Clean() 
-  {
-    Object_default::Clean();
-  }
+ private:
+  void Hendle_input();
+
+  // --- Variables ---
+  Uint8 move_up_key, move_down_key, move_right_key, move_left_key;
 };
 
 
 
-class Object_enemy : public Object_default
+class Enemy : public Object_default
 {
  public:
- Object_enemy( Object_load_parameters* params_ptr ) : Object_default(params_ptr) {}
+ Enemy( Object_load_parameters* params_ptr ) : Object_default(params_ptr) {}
 
-  virtual void Update() 
-  {
-    Object_default::Update() ;
+  virtual void Update();
+  virtual void Draw() { Object_default::Draw(); }
+  virtual void Clean() { Object_default::Clean(); }
 
-    m_current_frame = (( SDL_GetTicks() / 150 ) % 8 );
-    if (( m_current_frame == 0 )&&( m_current_frame != m_last_frame ))
-      m_current_row = (( m_current_row + 1 ) % 3 );
-    m_last_frame = m_current_frame;
-  }
-
-  virtual void Draw() 
-  {
-    Object_default::Draw();
-  }
-
-  virtual void Clean() 
-  {
-    Object_default::Clean();
-  }
+ private:
+  void Hendle_input();
 };
 
 

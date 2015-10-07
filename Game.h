@@ -12,17 +12,13 @@ class Game
 {
  private:
   Game();
-
- public:
   ~Game();
 
+ public:
   static Game* Instance()
   {
     if( sm_instance_ptr == NULL )
-      {
-	sm_instance_ptr = new Game();
-	return sm_instance_ptr;
-      }
+      sm_instance_ptr = new Game();
     return sm_instance_ptr;
   }
 
@@ -34,9 +30,7 @@ class Game
   SDL_Renderer* Get_renderer() const { return m_renderer_ptr; }
 
   // --- Variables ---
-  bool m_running;
-
-  private:
+ private:
   static Game* sm_instance_ptr;
   SDL_Window* m_display_ptr;
   SDL_Renderer* m_renderer_ptr;
@@ -47,6 +41,8 @@ class Game
   // Game Objects:
   std::vector< Object_default* > m_obj_vec;
 };
+
+typedef Game the_Game;
 
 
 

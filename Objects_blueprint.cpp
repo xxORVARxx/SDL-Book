@@ -38,9 +38,9 @@ void Object_default::Update()
 
 void Object_default::Draw()
 {
-  Texture_manager::Instance()->Drow_frame( Game::Instance()->Get_renderer(), m_texture_id, 
-					   (int)m_position.x, (int)m_position.y, m_w, m_h, 
-					   m_current_row, m_current_frame, m_texture_flip );
+  the_Texture_manager::Instance()->Drow_frame( the_Game::Instance()->Get_renderer(), m_texture_id, 
+					       (int)m_position.x, (int)m_position.y, m_w, m_h, 
+					       m_current_row, m_current_frame, m_texture_flip );
 }
 
 
