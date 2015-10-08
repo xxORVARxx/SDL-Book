@@ -17,7 +17,7 @@ int main ( int argc, char* args[] )
     return -1;
   }
 
-  while( the_Input_handler::Instance()->Running() )
+  while( the_Input_handler::Instance()->is_Running() )
     {
       frame_start = SDL_GetTicks();
 

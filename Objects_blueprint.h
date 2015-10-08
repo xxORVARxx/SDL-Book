@@ -50,6 +50,7 @@ class Object_default : public Object_blueprint
  public:
   Object_default( Object_load_parameters* params_ptr );
 
+  // --- Functions ---
   virtual void Update();
   virtual void Draw();
   virtual void Clean();

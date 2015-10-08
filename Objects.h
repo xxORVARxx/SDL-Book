@@ -10,6 +10,7 @@
 
 
 
+// --- PLAYER ---
 class Player : public Object_default 
 {
  public:
@@ -23,7 +24,7 @@ class Player : public Object_default
 
   virtual void Update();
   virtual void Draw() { Object_default::Draw(); }
-  virtual void Clean() { Object_default::Clean(); }
+  virtual void Clean() { std::cout << "Player.Clean() Done  &  "; Object_default::Clean(); }
 
  private:
   void Hendle_input();
@@ -34,6 +35,7 @@ class Player : public Object_default
 
 
 
+// --- ENEMY ---
 class Enemy : public Object_default
 {
  public:
@@ -41,7 +43,7 @@ class Enemy : public Object_default
 
   virtual void Update();
   virtual void Draw() { Object_default::Draw(); }
-  virtual void Clean() { Object_default::Clean(); }
+  virtual void Clean() { std::cout << "Enemy.Clean() Done  &  "; Object_default::Clean(); }
 
  private:
   void Hendle_input();
@@ -50,3 +52,16 @@ class Enemy : public Object_default
 
 
 #endif
+
+/*
+These variables are 'inherit' from the 'Object_default' class:
+  SDL_RendererFlip m_texture_flip;
+  glm::vec2 m_acceleration;
+  glm::vec2 m_velocity;
+  glm::vec2 m_position;
+  int m_w;
+  int m_h;
+  int m_current_frame;
+  int m_last_frame;
+  int m_current_row;
+*/

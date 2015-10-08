@@ -25,33 +25,19 @@ void Player::Hendle_input()
   m_acceleration.y = 0;
 
   // Keyboard:
-  if( the_Input_handler::Instance()->Key_down() )
+  if( the_Input_handler::Instance()->is_Key_down() )
     {
-      const Uint8* state = SDL_GetKeyboardState ( NULL ) ;
-      if( state[ move_right_key ] )
+      const Uint8* keys_state = the_Input_handler::Instance()->Get_keys_state();
+
+      if( keys_state[ move_right_key ] )
 	m_acceleration.x = 0.1;
-      else if( state[ move_left_key ] )
+      else if( keys_state[ move_left_key ] )
 	m_acceleration.x = -0.1;
 
-      if( state[ move_down_key ] )
+      if( keys_state[ move_down_key ] )
 	m_acceleration.y = 0.1;
-      else if( state[ move_up_key ] )
+      else if( keys_state[ move_up_key ] )
 	m_acceleration.y = -0.1;
-    }
-
-  // Mouse:
-  if( the_Input_handler::Instance()->Mouse_button_down() )
-    {
-      if( the_Input_handler::Instance()->Get_mouse_button( SDL_BUTTON_RIGHT ))
-	m_acceleration.x = 0.1;
-      else if( the_Input_handler::Instance()->Get_mouse_button( SDL_BUTTON_LEFT ))
-	m_acceleration.x = -0.1;
-    }
-
-  // Joystick:
-  if( the_Input_handler::Instance()->Joystick_initialised() )
-    {
-
     }
 }
 
@@ -73,8 +59,5 @@ void Enemy::Update()
 
 void Enemy::Hendle_input()
 {
-  // Mouse:
-  glm::vec2 mouse_pos = the_Input_handler::Instance()->Mouse_position();
-  m_velocity.x = ( mouse_pos.x - ( m_position.x + ( m_w / 2 ))) / 50.0f ;
-  m_velocity.y = ( mouse_pos.y - ( m_position.y + ( m_h / 2 ))) / 50.0f ;
+
 }

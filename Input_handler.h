@@ -21,33 +21,43 @@ class Input_handler
     return sm_instance_ptr;
   }
 
+  // --- Functions ---
   bool Update();
   void Clean();
   void Quit() { m_running = false; }
-  bool Running() { return m_running; }
+  bool is_Running() { return m_running; }
+
   // Keyboard:
-  bool Key_down() { return key_down; }
+  bool is_Key_down() { return m_key_down; }
+  const Uint8* Get_keys_state() { return m_keys_state; }
   // Mouse:
-  bool Mouse_moving() { return mouse_moving; }
-  const glm::vec2& Mouse_position() { return mouse_position; }
-  bool Mouse_button_down() { return mouse_button_down; }
-  bool Get_mouse_button( Uint8 sdl_button_flag ) { return mouse_buttons[ sdl_button_flag ]; }
+  bool is_Mouse_moving() { return m_mouse_moving; }
+  const glm::vec2& Mouse_position() { return m_mouse_position; }
+  bool is_Mouse_button_down() { return m_mouse_button_down; }
+  bool Get_mouse_button( Uint8 sdl_button_flag ) { return m_mouse_buttons[ sdl_button_flag ]; }
   // Joystick:
   void Initialise_joysticks();
-  bool Joystick_initialised() { return m_joysticks_initialised; }
-  const glm::vec4& Get_joystick_values( int id ) { return m_joystick_values_vec[ id ]; }
+  bool is_Joystick_initialised() { return m_joysticks_initialised; }
+  const glm::vec4& Get_joystick_values( int joystick_id ) { return m_joystick_values_vec[ joystick_id ]; }
 
  private:
+  // Handle Joystick & Window Events:
+  void on_Joystick_axis_move( SDL_Event& event );
+  void on_Joystick_button_down( SDL_Event& event );
+  void on_Joystick_button_up( SDL_Event& event );
+  void on_Window_event( SDL_Event& event );
+
   // --- Variables ---
   static Input_handler* sm_instance_ptr;
   bool m_running;
   // Keyboard:
-  bool key_down;
+  bool m_key_down;
+  const Uint8* m_keys_state;
   // Mouse:
-  bool mouse_moving;
-  glm::vec2 mouse_position;
-  bool mouse_button_down;
-  bool mouse_buttons[16];
+  bool m_mouse_moving;
+  glm::vec2 m_mouse_position;
+  bool m_mouse_button_down;
+  bool m_mouse_buttons[16];
   // Joystick:
   bool m_joysticks_initialised;
   std::vector< SDL_Joystick* > m_joystick_vec;

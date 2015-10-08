@@ -49,6 +49,9 @@ bool Game::Init( std::string s_title, int s_w, int s_h )
     return false;
   }
 
+  // The Game State Machine:
+  m_state_machine.Change_state( new Menu_state() );
+
 
   // Opening Inputh Handler:
   the_Input_handler::Instance()->Initialise_joysticks();
@@ -77,6 +80,19 @@ void Game::Handle_events()
 {
   // Inputh Handler:
   the_Input_handler::Instance()->Update();
+
+
+  // Change Game State between 'Menu_state' and 'Play_state':
+  if( the_Input_handler::Instance()->is_Key_down() )
+    {
+      const Uint8* keys_state = the_Input_handler::Instance()->Get_keys_state();
+      // Press 'P' for Play_state:
+      if ( keys_state[ SDL_SCANCODE_P ] )
+	m_state_machine.Change_state( new Play_state() );
+      // Press 'M' for Menu_state:
+      if ( keys_state[ SDL_SCANCODE_M ] )
+	m_state_machine.Change_state( new Menu_state() );
+    }
 }
 
 

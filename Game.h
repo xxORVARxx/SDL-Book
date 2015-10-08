@@ -3,6 +3,7 @@
 #define GAME_H
 
 #include "Init.h"
+#include "Game_state_machine.h"
 #include "Objects_blueprint.h"
 
 
@@ -32,11 +33,12 @@ class Game
   // --- Variables ---
  private:
   static Game* sm_instance_ptr;
-  SDL_Window* m_display_ptr;
-  SDL_Renderer* m_renderer_ptr;
-
   int m_color;
   int m_color_add;
+
+  SDL_Window* m_display_ptr;
+  SDL_Renderer* m_renderer_ptr;
+  Game_state_machine m_state_machine;
 
   // Game Objects:
   std::vector< Object_default* > m_obj_vec;
