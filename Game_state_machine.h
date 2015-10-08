@@ -11,12 +11,12 @@
 class Game_state_machine
 {
  public:
-  void Push_state( State_blueprint* state_ptr );
-  void Change_state( State_blueprint* state_ptr );
+  void Push_state( Game_states_blueprint* state_ptr );
+  void Change_state( Game_states_blueprint* state_ptr );
   void Pop_state();
 
  private:
-  std::vector< State_blueprint* > m_states_vec;
+  std::vector< Game_states_blueprint* > m_states_vec;
 };
 
 

@@ -4,7 +4,7 @@
 
 
 // Adding one state without removing the previous state:
-void Game_state_machine::Push_state( State_blueprint* state_ptr )
+void Game_state_machine::Push_state( Game_states_blueprint* state_ptr )
 {
   m_states_vec.push_back( state_ptr );
   m_states_vec.back()->on_Enter();
@@ -13,7 +13,7 @@ void Game_state_machine::Push_state( State_blueprint* state_ptr )
 
 
 // Removing one state and adding another:
-void Game_state_machine::Change_state( State_blueprint* state_ptr )
+void Game_state_machine::Change_state( Game_states_blueprint* state_ptr )
 {
   if( ! m_states_vec.empty() )
     {
@@ -44,4 +44,3 @@ void Game_state_machine::Pop_state()
 	}
     }
 }
-
