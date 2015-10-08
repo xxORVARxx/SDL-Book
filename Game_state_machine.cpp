@@ -44,3 +44,36 @@ void Game_state_machine::Pop_state()
 	}
     }
 }
+
+
+
+void Game_state_machine::Update()
+{
+  if( ! m_states_vec.empty() )
+    {
+      m_states_vec.back()->Update();
+    }
+}
+
+
+
+void Game_state_machine::Render()
+{
+  if( ! m_states_vec.empty() )
+    {
+      m_states_vec.back()->Render();
+    }
+}
+
+
+
+void Game_state_machine::Clean()
+{
+  // Deleting states:
+  for ( int i = 0 ; i < m_states_vec.size() ; ++i ) {
+    m_states_vec[i]->on_Exit();
+    delete m_states_vec[i];
+    m_states_vec[i] = NULL;
+  }
+  m_states_vec.clear();
+}

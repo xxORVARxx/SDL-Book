@@ -156,7 +156,7 @@ void Input_handler::Clean()
     for( unsigned int i = 0 ; i < m_joystick_vec.size() ; ++i )
       SDL_JoystickClose( m_joystick_vec[i] );
 
-  std::cout << "Input_handler.Clean() Done\n";
+  std::cout << "INPUT HANDLER :: Clean() is Done.\n";
 }
 
 
@@ -179,9 +179,9 @@ void Input_handler::Initialise_joysticks()
 	m_joystick_values_vec.push_back( glm::vec4() );
       }
       else
-	std::cout << "!! Joystick Error : " << SDL_GetError() << " !!\n";  
+	std::cout << "INPUT HANDLER :: !! Joystick Error : " << SDL_GetError() << " !!\n";  
     }
   SDL_JoystickEventState( SDL_ENABLE );
   m_joysticks_initialised = true;
-  std::cout << "Initialised: " << m_joystick_vec.size() << " joystick(s)\n";
+  std::cout << "INPUT HANDLER :: Initialised: " << m_joystick_vec.size() << " joystick(s).\n";
 }

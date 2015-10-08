@@ -14,7 +14,7 @@ bool Texture_manager::Load( SDL_Renderer* s_renderer_ptr, std::string s_id, std:
   SDL_Surface* temp_surface_ptr = NULL;
   temp_surface_ptr = IMG_Load( s_file_name.c_str() );
   if ( temp_surface_ptr == NULL ) {
-    std::cout << "!! Failed to load image: '" << s_file_name <<  "'. Error : " << SDL_GetError() << " !!\n";  
+    std::cout << "TEXTURE MANAGER :: !! Failed to load image: '" << s_file_name <<  "'. Error : " << SDL_GetError() << " !!\n";  
     return false;
   }
 
@@ -22,7 +22,7 @@ bool Texture_manager::Load( SDL_Renderer* s_renderer_ptr, std::string s_id, std:
   texture_ptr = SDL_CreateTextureFromSurface( s_renderer_ptr, temp_surface_ptr );
   if ( texture_ptr == NULL ) {
     SDL_FreeSurface( temp_surface_ptr );
-    std::cout << "!! Failed to load textur : " << SDL_GetError() << " !!\n";  
+    std::cout << "TEXTURE MANAGER :: !! Failed to load textur : " << SDL_GetError() << " !!\n";  
     return false;
   }
   SDL_FreeSurface( temp_surface_ptr );

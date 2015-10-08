@@ -3,6 +3,7 @@
 #define GAME_STATES_H
 
 #include "Init.h"
+#include "Objects.h"
 
 
 
@@ -31,6 +32,8 @@ class Menu_state : public Game_states_blueprint
 
  private:
   static const std::string sm_menu_id;
+
+  std::vector< Object_default* > m_objects_vec;
 };
 
 
@@ -47,6 +50,8 @@ class Play_state : public Game_states_blueprint
 
  private:
   static const std::string sm_menu_id;
+
+  std::vector< Object_default* > m_objects_vec;
 };
 
 

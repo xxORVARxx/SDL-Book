@@ -35,6 +35,13 @@
 #include <map>
 
 
+namespace xx
+{
+  bool Point_in_rect( const glm::vec2& p, const glm::vec4& r );
+  bool Point_in_rect( const SDL_Point& p, const SDL_Rect& r );
+};
+
+
 #endif
 
 /* Open GL:

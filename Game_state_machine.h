@@ -15,6 +15,10 @@ class Game_state_machine
   void Change_state( Game_states_blueprint* state_ptr );
   void Pop_state();
 
+  void Update();
+  void Render();
+  void Clean();
+
  private:
   std::vector< Game_states_blueprint* > m_states_vec;
 };

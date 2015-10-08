@@ -32,7 +32,7 @@ class Input_handler
   const Uint8* Get_keys_state() { return m_keys_state; }
   // Mouse:
   bool is_Mouse_moving() { return m_mouse_moving; }
-  const glm::vec2& Mouse_position() { return m_mouse_position; }
+  const glm::vec2& Get_mouse_position() { return m_mouse_position; }
   bool is_Mouse_button_down() { return m_mouse_button_down; }
   bool Get_mouse_button( Uint8 sdl_button_flag ) { return m_mouse_buttons[ sdl_button_flag ]; }
   // Joystick:

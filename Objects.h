@@ -3,10 +3,33 @@
 #define OBJECTS_H
 
 #include "Init.h"
+#include "Objects_blueprint.h"
 
 // This are the other 'Object' classes using the design of the 'Blueprint' class and
 // inheritanceing from the 'Object_default' class and
 // using 'Object_load_parameters' structure to get its Parameters/values.
+
+
+
+// --- BUTTON ---
+class Button : public Object_default 
+{
+ public:
+  Button( Object_load_parameters* params_ptr );
+
+  virtual void Update();
+  virtual void Draw() { Object_default::Draw(); }
+  virtual void Clean() { std::cout << "BUTTON :: Clean() is Done,  &  "; Object_default::Clean(); }
+
+ private:
+  enum button_state
+  {
+    MOUSE_OUT = 0,
+    MOUSE_OVER = 1,
+    MOUSE_CLICKED = 2,
+    MOUSE_CLICK_RELEASED = 3
+  };
+};
 
 
 
@@ -24,7 +47,7 @@ class Player : public Object_default
 
   virtual void Update();
   virtual void Draw() { Object_default::Draw(); }
-  virtual void Clean() { std::cout << "Player.Clean() Done  &  "; Object_default::Clean(); }
+  virtual void Clean() { std::cout << "PLAYER :: Clean() is Done,  &  "; Object_default::Clean(); }
 
  private:
   void Hendle_input();
@@ -41,12 +64,9 @@ class Enemy : public Object_default
  public:
  Enemy( Object_load_parameters* params_ptr ) : Object_default(params_ptr) {}
 
-  virtual void Update();
-  virtual void Draw() { Object_default::Draw(); }
-  virtual void Clean() { std::cout << "Enemy.Clean() Done  &  "; Object_default::Clean(); }
-
- private:
-  void Hendle_input();
+  virtual void Update() { Object_default::Update(); }
+  virtual void Draw();
+  virtual void Clean() { std::cout << "ENEMY :: Clean() is Done,  &  "; Object_default::Clean(); }
 };
 
 

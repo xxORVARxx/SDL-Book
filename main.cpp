@@ -13,9 +13,10 @@ int main ( int argc, char* args[] )
   Uint32 frame_start, frame_time;
 
   if ( ! the_Game::Instance()->Init( "Test", 720, 480 )) {
-    std::cout << "\n!! the_the_Game.Init() Failed !!\n\n";
+    std::cout << "\nMAIN :: !! the_the_Game.Init() Failed !!\n\n";
     return -1;
   }
+
 
   while( the_Input_handler::Instance()->is_Running() )
     {
@@ -35,6 +36,7 @@ int main ( int argc, char* args[] )
       }
       //std::cout << "Frame Time : " << SDL_GetTicks() - frame_start << " ms\n";
     }
+
 
   the_Game::Instance()->Clean();
   return 0;
