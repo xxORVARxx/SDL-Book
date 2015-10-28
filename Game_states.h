@@ -34,6 +34,10 @@ class Menu_state : public Game_states_blueprint
   static const std::string sm_menu_id;
 
   std::vector< Object_default* > m_objects_vec;
+
+  // Call back functions for menu items:
+  static void sm_Menu_to_play();
+  static void sm_Exit_from_menu();
 };
 
 

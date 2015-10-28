@@ -13,7 +13,7 @@ int main ( int argc, char* args[] )
   Uint32 frame_start, frame_time;
 
   if ( ! the_Game::Instance()->Init( "Test", 720, 480 )) {
-    std::cout << "\nMAIN :: !! the_the_Game.Init() Failed !!\n\n";
+    std::cout << "\nMAIN :: !! the_Game.Init() Failed !!\n\n";
     return -1;
   }
 

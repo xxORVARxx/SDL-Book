@@ -7,11 +7,12 @@
 
 
 // --- BUTTON ---
-Button::Button( Object_load_parameters* params_ptr ) : Object_default(params_ptr)
+Button::Button( Object_load_parameters& params, void (*s_Callback)()) : Object_default(params),  m_Callback(s_Callback)
 {
   m_current_frame = 0;
   m_last_frame = 0;
   m_current_row = MOUSE_OUT;
+  m_clicked = false;
 }
 
 void Button::Update()
@@ -21,17 +22,41 @@ void Button::Update()
   // Check whether the Mouse is over the Button or not:
   if( xx::Point_in_rect( mouse_pos, glm::vec4( m_position.x, m_position.y, (float)m_w, (float)m_h )))
     {
-      m_current_row = MOUSE_OVER;
-      if( the_Input_handler::Instance()->Get_mouse_button( SDL_BUTTON_LEFT ))
-	m_current_row = MOUSE_CLICKED;
+      if( m_clicked &&( ! the_Input_handler::Instance()->Get_mouse_button( SDL_BUTTON_LEFT )))
+	{
+	  m_Callback(); // Calling the function pointer.
+	  m_clicked = false;
+	}
+      else if( the_Input_handler::Instance()->Get_mouse_button( SDL_BUTTON_LEFT ))
+	{
+	  m_current_row = MOUSE_CLICKED;
+	  m_clicked = true;
+	}
+      else
+	{
+	  m_current_row = MOUSE_OVER;
+	  m_clicked = false;
+	}
     }
   else
-    m_current_row = MOUSE_OUT;
+    {
+      m_current_row = MOUSE_OUT;
+      m_clicked = false;
+    }
 }
 
 
 
 // --- Player ---
+Player::Player( Object_load_parameters& params ) : Object_default(params) 
+{
+  // Seting keys:
+  move_up_key =    SDL_SCANCODE_W ;
+  move_down_key =  SDL_SCANCODE_S ;
+  move_right_key = SDL_SCANCODE_D ;
+  move_left_key =  SDL_SCANCODE_A ;
+}
+
 void Player::Update() 
 {
   Hendle_input();

@@ -1,5 +1,7 @@
 
 #include "Init.h"
+#include "Input_handler.h"
+#include "Game.h"
 
 
 

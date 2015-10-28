@@ -16,11 +16,6 @@ Game::Game()
   m_renderer_ptr = NULL;
 }
 
-Game::~Game()
-{
-
-}
-
 
 
 // --- Functions ---
@@ -55,12 +50,12 @@ bool Game::Init( std::string s_title, int s_w, int s_h )
 	    << (int)linked.major <<"."<< (int)linked.minor <<"."<< (int)linked.patch << "\n";
 
 
-  // The Game State Machine:
-  m_state_machine.Change_state( new Menu_state() );
-
-
   // Opening Inputh Handler:
   the_Input_handler::Instance()->Initialise_joysticks();
+
+
+  // The Game State Machine:
+  m_state_machine.Change_state( new Menu_state() );
 
 
   return true;

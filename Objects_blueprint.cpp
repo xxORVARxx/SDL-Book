@@ -12,17 +12,14 @@
 
 
 // --- Object_default ---
-Object_default::Object_default( Object_load_parameters* params_ptr ) : Object_blueprint( params_ptr )
+Object_default::Object_default( Object_load_parameters& params ) : Object_blueprint( params )
 {
-  m_texture_id = params_ptr->Get_id();
-  m_texture_flip = params_ptr->Get_flip();
+  m_texture_id = params.Get_id();
+  m_texture_flip = params.Get_flip();
 
-  m_position = params_ptr->Get_position();
-  m_w = params_ptr->Get_w();
-  m_h = params_ptr->Get_h();
-
-  delete params_ptr; // Deleting 'params_ptr'.
-  params_ptr = NULL;
+  m_position = params.Get_position();
+  m_w = params.Get_w();
+  m_h = params.Get_h();
 
   m_current_frame = 0;
   m_last_frame = 0;

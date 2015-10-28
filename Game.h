@@ -12,7 +12,7 @@ class Game
 {
  private:
   Game();
-  ~Game();
+  ~Game() {}
 
  public:
   static Game* Instance()
@@ -28,6 +28,7 @@ class Game
   void Render();
   void Clean();
   SDL_Renderer* Get_renderer() const { return m_renderer_ptr; }
+  Game_state_machine* Get_state_machine() { return &m_state_machine; }
 
   // --- Variables ---
  private:
@@ -38,6 +39,9 @@ class Game
   Game_state_machine m_state_machine;
 };
 
+
+
+// Global Variable:
 typedef Game the_Game;
 
 

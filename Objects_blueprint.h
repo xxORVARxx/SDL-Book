@@ -33,7 +33,7 @@ struct Object_load_parameters
 class Object_blueprint
 {
  protected:
-  Object_blueprint( const Object_load_parameters* params_ptr ) {}
+  Object_blueprint( const Object_load_parameters& params ) {}
   virtual ~Object_blueprint() {}
 
  public:
@@ -48,7 +48,7 @@ class Object_blueprint
 class Object_default : public Object_blueprint
 {
  public:
-  Object_default( Object_load_parameters* params_ptr );
+  Object_default( Object_load_parameters& params );
 
   // --- Functions ---
   virtual void Update();

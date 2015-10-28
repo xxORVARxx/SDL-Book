@@ -65,6 +65,9 @@ class Input_handler
   int m_joystick_Deadzone;
 };
 
+
+
+// Global Variable:
 typedef Input_handler the_Input_handler;
 
 

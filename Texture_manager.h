@@ -21,6 +21,8 @@ class Texture_manager
     return sm_instance_ptr;
   }
 
+  void Test() { std::cout <<"Test\n"; }
+
   // Load Texture:
   bool Load( SDL_Renderer* s_renderer_ptr, std::string s_id, std::string s_file_name );
 
@@ -37,6 +39,9 @@ class Texture_manager
   std::map< std::string, SDL_Texture* > m_texture_map;
 };
 
+
+
+// Global Variable:
 typedef Texture_manager the_Texture_manager;
 
 

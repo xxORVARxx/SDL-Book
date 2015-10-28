@@ -1,5 +1,7 @@
 
-/* 
+/* To compile use: 
+ *   $ g++ -std=c++11 -o test *.cpp -lSDL2 -lSDL2_image
+ *
  * To check if packages/liberys are installed:  
  *   $ dpkg -l | grep THE-PACKAGE-NAME
  * To see available packages/liberys:  
@@ -8,10 +10,10 @@
  * Needed Liberys:
  *   libsdl2-dev
  *   libsdl2-image-dev
+ *   libglm-dev
  *  
  * Other good Liberys:
  *   libglew-dev
- *   libglm-dev
  *   libsdl2-ttf-dev
  *   libsdl2-mixer-dev
  *   libsdl2-net-dev
@@ -33,6 +35,7 @@
 #include <string>
 #include <vector>
 #include <map>
+#include <algorithm>
 
 
 namespace xx
@@ -40,6 +43,7 @@ namespace xx
   bool Point_in_rect( const glm::vec2& p, const glm::vec4& r );
   bool Point_in_rect( const SDL_Point& p, const SDL_Rect& r );
 };
+
 
 
 #endif

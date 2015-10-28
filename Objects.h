@@ -15,7 +15,7 @@
 class Button : public Object_default 
 {
  public:
-  Button( Object_load_parameters* params_ptr );
+  Button( Object_load_parameters& params, void (*s_Callback)());
 
   virtual void Update();
   virtual void Draw() { Object_default::Draw(); }
@@ -27,8 +27,10 @@ class Button : public Object_default
     MOUSE_OUT = 0,
     MOUSE_OVER = 1,
     MOUSE_CLICKED = 2,
-    MOUSE_CLICK_RELEASED = 3
   };
+
+  void (*m_Callback)(); // Function pointer.
+  bool m_clicked;
 };
 
 
@@ -37,13 +39,7 @@ class Button : public Object_default
 class Player : public Object_default 
 {
  public:
- Player( Object_load_parameters* params_ptr ) : Object_default(params_ptr) {
-    // Seting keys:
-    move_up_key =    SDL_SCANCODE_W ;
-    move_down_key =  SDL_SCANCODE_S ;
-    move_right_key = SDL_SCANCODE_D ;
-    move_left_key =  SDL_SCANCODE_A ;
-  }
+  Player( Object_load_parameters& params );
 
   virtual void Update();
   virtual void Draw() { Object_default::Draw(); }
@@ -62,7 +58,7 @@ class Player : public Object_default
 class Enemy : public Object_default
 {
  public:
- Enemy( Object_load_parameters* params_ptr ) : Object_default(params_ptr) {}
+ Enemy( Object_load_parameters& params ) : Object_default(params) {}
 
   virtual void Update() { Object_default::Update(); }
   virtual void Draw();
