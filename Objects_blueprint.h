@@ -9,8 +9,8 @@
 // This holds the 'Parameters' to pass through the 'Blueprint' class to the 'Object' classes.
 struct Object_load_parameters
 {
- Object_load_parameters( std::string s_id, glm::vec2 s_pos, int s_w, int s_h, SDL_RendererFlip s_flip = SDL_FLIP_NONE  ) :
-  m_id(s_id), m_position(s_pos), m_w(s_w), m_h(s_h), m_flip(s_flip) {}
+ Object_load_parameters( std::string _id, glm::vec2 _pos, int _w, int _h, SDL_RendererFlip _flip = SDL_FLIP_NONE  ) :
+  m_id(_id), m_position(_pos), m_w(_w), m_h(_h), m_flip(_flip) {}
 
   std::string Get_id() { return m_id; }
   SDL_RendererFlip Get_flip() { return m_flip; }
@@ -33,7 +33,7 @@ struct Object_load_parameters
 class Object_blueprint
 {
  protected:
-  Object_blueprint( const Object_load_parameters& params ) {}
+  Object_blueprint( const Object_load_parameters& _params ) {}
   virtual ~Object_blueprint() {}
 
  public:
@@ -48,7 +48,8 @@ class Object_blueprint
 class Object_default : public Object_blueprint
 {
  public:
-  Object_default( Object_load_parameters& params );
+  Object_default( Object_load_parameters& _params );
+  virtual ~Object_default() {}
 
   // --- Functions ---
   virtual void Update();

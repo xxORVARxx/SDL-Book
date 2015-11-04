@@ -15,7 +15,8 @@
 class Button : public Object_default 
 {
  public:
-  Button( Object_load_parameters& params, void (*s_Callback)());
+  Button( Object_load_parameters& _params, void (*f_Callback)());
+  virtual ~Button() {}
 
   virtual void Update();
   virtual void Draw() { Object_default::Draw(); }
@@ -29,8 +30,8 @@ class Button : public Object_default
     MOUSE_CLICKED = 2,
   };
 
-  void (*m_Callback)(); // Function pointer.
   bool m_clicked;
+  void (*mf_Callback)(); // Function pointer.
 };
 
 
@@ -39,7 +40,8 @@ class Button : public Object_default
 class Player : public Object_default 
 {
  public:
-  Player( Object_load_parameters& params );
+  Player( Object_load_parameters& _params );
+  virtual ~Player() {}
 
   virtual void Update();
   virtual void Draw() { Object_default::Draw(); }
@@ -58,7 +60,8 @@ class Player : public Object_default
 class Enemy : public Object_default
 {
  public:
- Enemy( Object_load_parameters& params ) : Object_default(params) {}
+ Enemy( Object_load_parameters& _params ) : Object_default(_params) {}
+  virtual ~Enemy() {}
 
   virtual void Update() { Object_default::Update(); }
   virtual void Draw();

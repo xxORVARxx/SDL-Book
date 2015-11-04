@@ -7,42 +7,36 @@
 
 
 // Singleton Class:
-class Texture_manager
+class the_Texture_manager
 {
  private:
-  Texture_manager() {}
-  ~Texture_manager() {}
+  the_Texture_manager() = default;
+  the_Texture_manager( const the_Texture_manager& ) = delete;
+  the_Texture_manager& operator=( const the_Texture_manager& ) = delete;
 
  public:
-  static Texture_manager* Instance()
+  ~the_Texture_manager() = default;
+
+  static the_Texture_manager& Instance()
   {
-    if( sm_instance_ptr == NULL )
-      sm_instance_ptr = new Texture_manager();
-    return sm_instance_ptr;
+    static the_Texture_manager instance;
+    return instance;
   }
 
-  void Test() { std::cout <<"Test\n"; }
-
   // Load Texture:
-  bool Load( SDL_Renderer* s_renderer_ptr, std::string s_id, std::string s_file_name );
-
+  bool Load( SDL_Renderer* _renderer_ptr, std::string _id, std::string _file_name );
   // Draw:
-  void Drow( SDL_Renderer* s_renderer_ptr, std::string s_id, int s_x, int s_y, int s_w, int s_h, 
-	     SDL_RendererFlip s_flip = SDL_FLIP_NONE );
-
+  void Drow( SDL_Renderer* _renderer_ptr, std::string _id, int _x, int _y, int _w, int _h, 
+	     SDL_RendererFlip _flip = SDL_FLIP_NONE );
   // Draw Frame:
-  void Drow_frame( SDL_Renderer* s_renderer_ptr, std::string s_id, int s_x, int s_y, int s_w, int s_h, 
-		   int current_row, int current_frame, SDL_RendererFlip s_flip = SDL_FLIP_NONE );
+  void Drow_frame( SDL_Renderer* _renderer_ptr, std::string _id, int _x, int _y, int _w, int _h, 
+		   int _current_row, int _current_frame, SDL_RendererFlip _flip = SDL_FLIP_NONE );
+  void Clean();
 
+ private:
   // --- Variables ---
-  static Texture_manager* sm_instance_ptr;
-  std::map< std::string, SDL_Texture* > m_texture_map;
+  std::map< const std::string, SDL_Texture* > m_texture_map;
 };
-
-
-
-// Global Variable:
-typedef Texture_manager the_Texture_manager;
 
 
 

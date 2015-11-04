@@ -3,13 +3,8 @@
 
 
 
-// --- Static Variables ---
-Input_handler* Input_handler::sm_instance_ptr = NULL;
-
-
-
 // --- Constructors ---
-Input_handler::Input_handler()
+the_Input_handler::the_Input_handler()
 {
   m_running = true;
   m_key_down = false;
@@ -22,9 +17,9 @@ Input_handler::Input_handler()
 
 
 // --- Functions ---
-bool Input_handler::Update()
+bool the_Input_handler::Update()
 {
-  m_keys_state = SDL_GetKeyboardState( NULL );
+  m_keys_state = SDL_GetKeyboardState( nullptr );
   m_mouse_moving = false;
   SDL_Event event;
   while( SDL_PollEvent( &event ))
@@ -79,41 +74,41 @@ bool Input_handler::Update()
 
 
 
-void Input_handler::on_Joystick_axis_move( SDL_Event& event )
+void the_Input_handler::on_Joystick_axis_move( SDL_Event& _event )
 {
   // !!!!!!!!!!!!! NOT TESTED !!!!!!!!!!!!!!
   // This is based on the Xbox 360 Controller:
-  int which_one = event.jaxis.which;
-  switch( event.jaxis.axis )
+  int which_one = _event.jaxis.which;
+  switch( _event.jaxis.axis )
     {
     case 0 :// Left-stick was moved: Left or Right.
-      if( event.jaxis.value > m_joystick_Deadzone )
+      if( _event.jaxis.value > m_joystick_Deadzone )
 	m_joystick_values_vec[ which_one ].x = 1;
-      else if( event.jaxis.value < -m_joystick_Deadzone )
+      else if( _event.jaxis.value < -m_joystick_Deadzone )
 	m_joystick_values_vec[ which_one ].x = -1;
       else
 	m_joystick_values_vec[ which_one ].x = 0;
       break;
     case 1 :// Left-stick was moved: Up or Down.
-      if( event.jaxis.value > m_joystick_Deadzone )
+      if( _event.jaxis.value > m_joystick_Deadzone )
 	m_joystick_values_vec[ which_one ].y = 1;
-      else if( event.jaxis.value < -m_joystick_Deadzone )
+      else if( _event.jaxis.value < -m_joystick_Deadzone )
 	m_joystick_values_vec[ which_one ].y = -1;
       else
 	m_joystick_values_vec[ which_one ].y = 0;
       break;
     case 3 :// Right-stick was moved: Left or Right.
-      if( event.jaxis.value > m_joystick_Deadzone )
+      if( _event.jaxis.value > m_joystick_Deadzone )
 	m_joystick_values_vec[ which_one ].z = 1;
-      else if( event.jaxis.value < -m_joystick_Deadzone )
+      else if( _event.jaxis.value < -m_joystick_Deadzone )
 	m_joystick_values_vec[ which_one ].z = -1;
       else
 	m_joystick_values_vec[ which_one ].z = 0;
       break;
     case 4 :// Right-stick was moved: Up or Down.
-      if( event.jaxis.value > m_joystick_Deadzone )
+      if( _event.jaxis.value > m_joystick_Deadzone )
 	m_joystick_values_vec[ which_one ].w = 1;
-      else if( event.jaxis.value < -m_joystick_Deadzone )
+      else if( _event.jaxis.value < -m_joystick_Deadzone )
 	m_joystick_values_vec[ which_one ].w = -1;
       else
 	m_joystick_values_vec[ which_one ].w = 0;
@@ -125,32 +120,32 @@ void Input_handler::on_Joystick_axis_move( SDL_Event& event )
 	    << "  z:" << m_joystick_values_vec[ which_one ].z 
 	    << "  w:" << m_joystick_values_vec[ which_one ].w << "\n";
 }
-void Input_handler::on_Joystick_button_down( SDL_Event& event )
+void the_Input_handler::on_Joystick_button_down( SDL_Event& _event )
 {
 
 }
-void Input_handler::on_Joystick_button_up( SDL_Event& event )
+void the_Input_handler::on_Joystick_button_up( SDL_Event& _event )
 {
 
 }
-void Input_handler::on_Window_event( SDL_Event& event )
+void the_Input_handler::on_Window_event( SDL_Event& _event )
 {
-  switch( event.window.event )
+  switch( _event.window.event )
     {
     case SDL_WINDOWEVENT_SIZE_CHANGED : 
       // Width = event.window.data1;
       // Height = event.window.data2;
       break;
     case SDL_WINDOWEVENT_CLOSE :// The window-manager requests that the window be closed.
-      event.type = SDL_QUIT;
-      SDL_PushEvent(&event);
+      _event.type = SDL_QUIT;
+      SDL_PushEvent( &_event );
       break;
     }//switch-end
 }
 
 
 
-void Input_handler::Clean()
+void the_Input_handler::Clean()
 {
   if( m_joysticks_initialised )
     for( unsigned int i = 0 ; i < m_joystick_vec.size() ; ++i )
@@ -161,7 +156,7 @@ void Input_handler::Clean()
 
 
 
-void Input_handler::Initialise_joysticks()
+void the_Input_handler::Initialise_joysticks()
 {
   if( SDL_WasInit( SDL_INIT_JOYSTICK ) == 0 )
     SDL_InitSubSystem( SDL_INIT_JOYSTICK );
@@ -185,3 +180,4 @@ void Input_handler::Initialise_joysticks()
   m_joysticks_initialised = true;
   std::cout << "INPUT HANDLER :: Initialised: " << m_joystick_vec.size() << " joystick(s).\n";
 }
+

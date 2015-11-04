@@ -7,29 +7,33 @@
 
 
 // Singleton Class:
-class Input_handler
+class the_Input_handler
 {
  private:
-  Input_handler();
-  ~Input_handler() {}
+  the_Input_handler();
+  the_Input_handler( const the_Input_handler& ) = delete;
+  the_Input_handler& operator=( const the_Input_handler& ) = delete;
 
  public:
-  static Input_handler* Instance()
+  ~the_Input_handler() = default;
+
+  static the_Input_handler& Instance()
   {
-    if( sm_instance_ptr == NULL )
-      sm_instance_ptr = new Input_handler();
-    return sm_instance_ptr;
+    static the_Input_handler instance;
+    return instance;
   }
 
   // --- Functions ---
   bool Update();
   void Clean();
+
   void Quit() { m_running = false; }
   bool is_Running() { return m_running; }
 
   // Keyboard:
   bool is_Key_down() { return m_key_down; }
   const Uint8* Get_keys_state() { return m_keys_state; }
+
   // Mouse:
   bool is_Mouse_moving() { return m_mouse_moving; }
   const glm::vec2& Get_mouse_position() { return m_mouse_position; }
@@ -48,7 +52,6 @@ class Input_handler
   void on_Window_event( SDL_Event& event );
 
   // --- Variables ---
-  static Input_handler* sm_instance_ptr;
   bool m_running;
   // Keyboard:
   bool m_key_down;
@@ -64,11 +67,6 @@ class Input_handler
   std::vector< glm::vec4 > m_joystick_values_vec;
   int m_joystick_Deadzone;
 };
-
-
-
-// Global Variable:
-typedef Input_handler the_Input_handler;
 
 
 

@@ -1,25 +1,21 @@
 
 #include "Game.h"
 #include "Input_handler.h"
-
-
-
-// --- Static Variables ---
-Game* Game::sm_instance_ptr = NULL;
+#include "Texture_manager.h"
 
 
 
 // --- Constructors ---
-Game::Game()
+the_Game::the_Game()
 {
-  m_display_ptr = NULL;
-  m_renderer_ptr = NULL;
+  m_display_ptr = nullptr;//NULL
+  m_renderer_ptr = nullptr;//NULL
 }
 
 
 
 // --- Functions ---
-bool Game::Init( std::string s_title, int s_w, int s_h )
+bool the_Game::Init( std::string _title, int _w, int _h )
 {
   // Initializing_SDL2:
   if( SDL_Init( SDL_INIT_EVERYTHING ) == -1 ) {
@@ -27,15 +23,15 @@ bool Game::Init( std::string s_title, int s_w, int s_h )
     return false;
   }
 
-  m_display_ptr = SDL_CreateWindow( s_title.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-				    s_w, s_h, SDL_WINDOW_RESIZABLE );
-  if ( m_display_ptr == NULL ) {
+  m_display_ptr = SDL_CreateWindow( _title.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
+				    _w, _h, SDL_WINDOW_RESIZABLE );
+  if ( m_display_ptr == nullptr ) {
     std::cout << "GAME :: !! Failed to create window : " << SDL_GetError() << " !!\n";  
     return false;
   }
 
   m_renderer_ptr = SDL_CreateRenderer( m_display_ptr, -1, SDL_RENDERER_ACCELERATED );
-  if ( m_renderer_ptr == NULL ) {
+  if ( m_renderer_ptr == nullptr ) {
     std::cout << "GAME :: !! Failed to create renderer : " << SDL_GetError() << " !!\n";  
     return false;
   }
@@ -49,13 +45,13 @@ bool Game::Init( std::string s_title, int s_w, int s_h )
   std::cout <<"GAME :: But we are linking against SDL version: " 
 	    << (int)linked.major <<"."<< (int)linked.minor <<"."<< (int)linked.patch << "\n";
 
-
+ 
   // Opening Inputh Handler:
-  the_Input_handler::Instance()->Initialise_joysticks();
+  the_Input_handler::Instance().Initialise_joysticks();
 
 
   // The Game State Machine:
-  m_state_machine.Change_state( new Menu_state() );
+  m_state_machine.Push_state( new Menu_state );
 
 
   return true;
@@ -63,28 +59,15 @@ bool Game::Init( std::string s_title, int s_w, int s_h )
 
 
 
-void Game::Handle_events()
+void the_Game::Handle_events()
 {
   // Inputh Handler:
-  the_Input_handler::Instance()->Update();
-
-
-  // Change Game State between 'Menu_state' and 'Play_state':
-  if( the_Input_handler::Instance()->is_Key_down() )
-    {
-      const Uint8* keys_state = the_Input_handler::Instance()->Get_keys_state();
-      // Press 'P' for Play_state:
-      if ( keys_state[ SDL_SCANCODE_P ] )
-	m_state_machine.Change_state( new Play_state() );
-      // Press 'M' for Menu_state:
-      if ( keys_state[ SDL_SCANCODE_M ] )
-	m_state_machine.Change_state( new Menu_state() );
-    }
+  the_Input_handler::Instance().Update();
 }
 
 
 
-void Game::Update()
+void the_Game::Update()
 {
   // The Game State Machine:
   m_state_machine.Update();
@@ -92,7 +75,7 @@ void Game::Update()
 
 
 
-void Game::Render()
+void the_Game::Render()
 {
   SDL_RenderClear( m_renderer_ptr );
 
@@ -104,17 +87,42 @@ void Game::Render()
 
 
 
-void Game::Clean()
+void the_Game::Clean()
 {
+  // Closing the Texture Manager:
+  the_Texture_manager::Instance().Clean();
+
   // Closing Inputh Handler:
-  the_Input_handler::Instance()->Clean();
+  the_Input_handler::Instance().Clean();
 
   // The Game State Machine:
   m_state_machine.Clean();
 
   // Closing SDL:
   SDL_DestroyRenderer( m_renderer_ptr );
+  m_renderer_ptr = nullptr;//NULL
+
   SDL_DestroyWindow( m_display_ptr );
+  m_display_ptr = nullptr;//NULL
+
   SDL_Quit();
   std::cout << "GAME :: Clean() is Done.\n";
+}
+
+
+
+void Push_P() {
+  the_Game::Instance().Get_state_machine()->Push_state( new Play_state );
+}
+void Push_M() {
+  the_Game::Instance().Get_state_machine()->Push_state( new Menu_state );
+}
+void Change_M_to_P() {
+  the_Game::Instance().Get_state_machine()->Change_state( new Play_state );
+}
+void Change_P_to_M() {
+  the_Game::Instance().Get_state_machine()->Change_state( new Menu_state );
+}
+void Pop() {
+  the_Game::Instance().Get_state_machine()->Pop_state();
 }

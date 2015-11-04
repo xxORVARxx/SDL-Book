@@ -7,7 +7,7 @@
 
 
 // --- BUTTON ---
-Button::Button( Object_load_parameters& params, void (*s_Callback)()) : Object_default(params),  m_Callback(s_Callback)
+Button::Button( Object_load_parameters& _params, void (*f_Callback)()) : Object_default(_params),  mf_Callback(f_Callback)
 {
   m_current_frame = 0;
   m_last_frame = 0;
@@ -15,19 +15,21 @@ Button::Button( Object_load_parameters& params, void (*s_Callback)()) : Object_d
   m_clicked = false;
 }
 
+
+
 void Button::Update()
 {
   // Get Mouse Position/Coordinates:
-  const glm::vec2 mouse_pos = the_Input_handler::Instance()->Get_mouse_position();
+  const glm::vec2 mouse_pos = the_Input_handler::Instance().Get_mouse_position();
   // Check whether the Mouse is over the Button or not:
   if( xx::Point_in_rect( mouse_pos, glm::vec4( m_position.x, m_position.y, (float)m_w, (float)m_h )))
     {
-      if( m_clicked &&( ! the_Input_handler::Instance()->Get_mouse_button( SDL_BUTTON_LEFT )))
+      if( m_clicked &&( ! the_Input_handler::Instance().Get_mouse_button( SDL_BUTTON_LEFT )))
 	{
-	  m_Callback(); // Calling the function pointer.
+	  mf_Callback(); // Calling the function pointer.
 	  m_clicked = false;
 	}
-      else if( the_Input_handler::Instance()->Get_mouse_button( SDL_BUTTON_LEFT ))
+      else if( the_Input_handler::Instance().Get_mouse_button( SDL_BUTTON_LEFT ))
 	{
 	  m_current_row = MOUSE_CLICKED;
 	  m_clicked = true;
@@ -48,7 +50,7 @@ void Button::Update()
 
 
 // --- Player ---
-Player::Player( Object_load_parameters& params ) : Object_default(params) 
+Player::Player( Object_load_parameters& _params ) : Object_default(_params) 
 {
   // Seting keys:
   move_up_key =    SDL_SCANCODE_W ;
@@ -74,9 +76,9 @@ void Player::Hendle_input()
   m_acceleration.y = 0;
 
   // Keyboard:
-  if( the_Input_handler::Instance()->is_Key_down() )
+  if( the_Input_handler::Instance().is_Key_down() )
     {
-      const Uint8* keys_state = the_Input_handler::Instance()->Get_keys_state();
+      const Uint8* keys_state = the_Input_handler::Instance().Get_keys_state();
 
       if( keys_state[ move_right_key ] )
 	m_acceleration.x = 0.1;
@@ -95,6 +97,7 @@ void Player::Hendle_input()
 // --- Enemy ---
 void Enemy::Draw()
 {
-  the_Texture_manager::Instance()->Drow( the_Game::Instance()->Get_renderer(), m_texture_id, 
-					 (int)m_position.x, (int)m_position.y, m_w, m_h, m_texture_flip );
+  the_Texture_manager::Instance().Drow( the_Game::Instance().Get_renderer(), m_texture_id, 
+					(int)m_position.x, (int)m_position.y, m_w, m_h, m_texture_flip );
 }
+

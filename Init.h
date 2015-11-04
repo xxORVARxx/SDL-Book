@@ -45,7 +45,6 @@ namespace xx
 };
 
 
-
 #endif
 
 /* Open GL:

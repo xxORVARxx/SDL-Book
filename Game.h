@@ -8,41 +8,37 @@
 
 
 // Singleton Class:
-class Game
+class the_Game
 {
  private:
-  Game();
-  ~Game() {}
+  the_Game();
+  the_Game( const the_Game& ) = delete;
+  the_Game& operator=( const the_Game& ) = delete;
 
  public:
-  static Game* Instance()
+  ~the_Game() = default;
+
+  static the_Game& Instance()
   {
-    if( sm_instance_ptr == NULL )
-      sm_instance_ptr = new Game();
-    return sm_instance_ptr;
+    static the_Game instance;
+    return instance;
   }
 
-  bool Init( std::string title, int w, int h );
+  bool Init( std::string _title, int _w, int _h );
   void Handle_events();
   void Update();
   void Render();
   void Clean();
+
   SDL_Renderer* Get_renderer() const { return m_renderer_ptr; }
   Game_state_machine* Get_state_machine() { return &m_state_machine; }
 
   // --- Variables ---
  private:
-  static Game* sm_instance_ptr;
-
   SDL_Window* m_display_ptr;
   SDL_Renderer* m_renderer_ptr;
   Game_state_machine m_state_machine;
 };
-
-
-
-// Global Variable:
-typedef Game the_Game;
 
 
 
