@@ -92,6 +92,3 @@ void Game_state_machine::Refresh()
   m_state_change_vec.clear();
   m_refresh = false;
 }
-
-
-

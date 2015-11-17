@@ -18,7 +18,6 @@ int main ( int argc, char* args[] )
   }
 
 
-  //for( int i = 0 ; i < 10 ; ++i )
   while( the_Input_handler::Instance().is_Running() )
     {
       frame_start = SDL_GetTicks();

@@ -6,14 +6,13 @@
 #include "Objects.h"
 
 
-
-
+/*
 void Push_P();
 void Push_M();
 void Change_M_to_P();
 void Change_P_to_M();
 void Pop();
-
+*/
 
 
 // Abstract Base Class. 

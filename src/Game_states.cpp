@@ -6,7 +6,6 @@
 
 
 
-
 // --- MENU STATE ---
 // --- Static Variables: ---
 const std::string Menu_state::sm_menu_id = "MENU";
@@ -28,15 +27,16 @@ void Menu_state::on_Enter()
 {
   m_c = '?';
   std::cout << "STATE MACHINE :: Entering MENU-state.\n";
+  SDL_SetCursor ( SDL_CreateSystemCursor( SDL_SYSTEM_CURSOR_ARROW ));
 
   // Loading Texture with the "Singleton Class":
   the_Texture_manager::Instance().Load( the_Game::Instance().Get_renderer(), "PLAY_B", "assets/Play_button.png" );
   the_Texture_manager::Instance().Load( the_Game::Instance().Get_renderer(), "EXIT_B", "assets/Exit_button.png" );
 
   // Make Objects:
-  Object_load_parameters for_button_1( "PLAY_B", glm::vec2( 100, 100 ), 255, ( 147/3 ));
+  Object_load_parameters for_button_1( "PLAY_B", glm::vec2( 100, 100 ), 255, ( 147/3 ), 2, 0, 1 );
   m_objects_vec.push_back( new Button( for_button_1, smf_Menu_to_play ));
-  Object_load_parameters for_button_2( "EXIT_B", glm::vec2( 100, 200 ), 255, ( 147/3 ));
+  Object_load_parameters for_button_2( "EXIT_B", glm::vec2( 100, 200 ), 255, ( 147/3 ), 2, 0, 30 );
   m_objects_vec.push_back( new Button( for_button_2, smf_Exit_from_menu ));
   // The 'new Button()' is deleted in: Menu_state::on_Exit().
 }
@@ -110,19 +110,18 @@ void Play_state::on_Enter()
 {
   m_c = '?';
   std::cout << "STATE MACHINE :: Entering PLAY-state.\n";
+  SDL_SetCursor ( SDL_CreateSystemCursor( SDL_SYSTEM_CURSOR_CROSSHAIR ));
 
   // Loading Texture with the "Singleton Class":
   the_Texture_manager::Instance().Load( the_Game::Instance().Get_renderer(), "B_B", "assets/Blue_button.png" );
   the_Texture_manager::Instance().Load( the_Game::Instance().Get_renderer(), "ALIEN", "assets/Alien_sprite_sheet.png" );
-  the_Texture_manager::Instance().Load( the_Game::Instance().Get_renderer(), "GNU", "assets/Baby_Gnu.png" );
+  the_Texture_manager::Instance().Load( the_Game::Instance().Get_renderer(), "HELI", "assets/Helicopter.png" );
 
   // Make Objects:
-  Object_load_parameters for_button_1( "B_B", glm::vec2( 5, 5 ), 56, ( 147/3 ));
+  Object_load_parameters for_button_1( "B_B", glm::vec2( 5, 5 ), 56, ( 147/3 ), 1, 3, 1 );
   m_objects_vec.push_back( new Button( for_button_1, smf_Play_to_menu ));
-  Object_load_parameters for_player( "ALIEN", glm::vec2( 100, 100 ), ( 2096/8 ), ( 786/3 ));
+  Object_load_parameters for_player( "HELI", glm::vec2( 50, ( (float)the_Game::Instance().Get_height()/2 )), ( 460/4 ), 65, 4, 1, 1 );
   m_objects_vec.push_back( new Player( for_player ));
-  Object_load_parameters for_enemy( "GNU", glm::vec2( 400, 150 ), 614, 555 );
-  m_objects_vec.push_back( new Enemy( for_enemy ));
   // The 'new Button()' is deleted in: Menu_state::on_Exit().
 }
 
@@ -171,5 +170,3 @@ void Play_state::on_Exit()
   std::for_each( m_objects_vec.begin(), m_objects_vec.end(), []( Object_default* i ){ i->Clean(); delete i; } );
   m_objects_vec.clear();
 }
-
-

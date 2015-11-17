@@ -80,6 +80,9 @@ These variables are 'inherit' from the 'Object_default' class:
   glm::vec2 m_position;
   int m_w;
   int m_h;
+  int m_frame;
+  int m_row;
+
   int m_current_frame;
   int m_last_frame;
   int m_current_row;

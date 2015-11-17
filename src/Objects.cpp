@@ -15,8 +15,6 @@ Button::Button( Object_load_parameters& _params, void (*f_Callback)()) : Object_
   m_clicked = false;
 }
 
-
-
 void Button::Update()
 {
   // Get Mouse Position/Coordinates:
@@ -62,12 +60,12 @@ Player::Player( Object_load_parameters& _params ) : Object_default(_params)
 void Player::Update() 
 {
   Hendle_input();
-  Object_default::Update();
 
-  m_current_frame = (( SDL_GetTicks() / 50 ) % 8 );
-  if (( m_current_frame == 0 )&&( m_current_frame != m_last_frame ))
-    m_current_row = (( m_current_row + 1 ) % 3 );
-  m_last_frame = m_current_frame;
+  m_frame_speed = 30;
+  if( m_acceleration.y > 0 )  m_frame_speed = 45;
+  if( m_acceleration.y < 0 )  m_frame_speed = 15;
+
+  Object_default::Update();
 }
 
 void Player::Hendle_input()
@@ -100,4 +98,3 @@ void Enemy::Draw()
   the_Texture_manager::Instance().Drow( the_Game::Instance().Get_renderer(), m_texture_id, 
 					(int)m_position.x, (int)m_position.y, m_w, m_h, m_texture_flip );
 }
-

@@ -17,6 +17,9 @@ the_Game::the_Game()
 // --- Functions ---
 bool the_Game::Init( std::string _title, int _w, int _h )
 {
+  m_width = _w;
+  m_height = _h;
+
   // Initializing_SDL2:
   if( SDL_Init( SDL_INIT_EVERYTHING ) == -1 ) {
     std::cout << "GAME :: !! Failed to initialize SDL : " << SDL_GetError() << " !!\n";  
@@ -24,7 +27,7 @@ bool the_Game::Init( std::string _title, int _w, int _h )
   }
 
   m_display_ptr = SDL_CreateWindow( _title.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-				    _w, _h, SDL_WINDOW_RESIZABLE );
+				    m_width, m_height, SDL_WINDOW_RESIZABLE );
   if ( m_display_ptr == nullptr ) {
     std::cout << "GAME :: !! Failed to create window : " << SDL_GetError() << " !!\n";  
     return false;
@@ -110,6 +113,7 @@ void the_Game::Clean()
 }
 
 
+/*
 
 void Push_P() {
   the_Game::Instance().Get_state_machine()->Push_state( new Play_state );
@@ -126,3 +130,5 @@ void Change_P_to_M() {
 void Pop() {
   the_Game::Instance().Get_state_machine()->Pop_state();
 }
+
+*/

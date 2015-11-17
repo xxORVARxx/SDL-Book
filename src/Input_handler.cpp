@@ -180,4 +180,3 @@ void the_Input_handler::Initialise_joysticks()
   m_joysticks_initialised = true;
   std::cout << "INPUT HANDLER :: Initialised: " << m_joystick_vec.size() << " joystick(s).\n";
 }
-

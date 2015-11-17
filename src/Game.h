@@ -30,11 +30,14 @@ class the_Game
   void Render();
   void Clean();
 
+  int Get_width() { return m_width; }
+  int Get_height() { return m_height; }
   SDL_Renderer* Get_renderer() const { return m_renderer_ptr; }
   Game_state_machine* Get_state_machine() { return &m_state_machine; }
 
   // --- Variables ---
  private:
+  int m_width, m_height;
   SDL_Window* m_display_ptr;
   SDL_Renderer* m_renderer_ptr;
   Game_state_machine m_state_machine;

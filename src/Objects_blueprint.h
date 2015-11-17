@@ -9,21 +9,28 @@
 // This holds the 'Parameters' to pass through the 'Blueprint' class to the 'Object' classes.
 struct Object_load_parameters
 {
- Object_load_parameters( std::string _id, glm::vec2 _pos, int _w, int _h, SDL_RendererFlip _flip = SDL_FLIP_NONE  ) :
-  m_id(_id), m_position(_pos), m_w(_w), m_h(_h), m_flip(_flip) {}
+Object_load_parameters( std::string _id, glm::vec2 _pos, int _w, int _h, int _frame, int _row, int _speed,
+			SDL_RendererFlip _flip = SDL_FLIP_NONE  ) :
+  m_id(_id), m_position(_pos), m_w(_w), m_h(_h), m_frame(_frame), m_row(_row), m_frame_speed(_speed), m_flip(_flip) {}
 
   std::string Get_id() { return m_id; }
   SDL_RendererFlip Get_flip() { return m_flip; }
   glm::vec2 Get_position() { return m_position; }
   int Get_w() { return m_w; }
   int Get_h() { return m_h; }
+  int Get_frame() { return m_frame; }
+  int Get_row() { return m_row; }
+  int Get_frame_speed() { return m_frame_speed; }
 
- private:
+private:
   std::string m_id;
   SDL_RendererFlip m_flip;
   glm::vec2 m_position;
   int m_w;
   int m_h;
+  int m_frame;
+  int m_row;
+  int m_frame_speed;
 };
 
 
@@ -65,6 +72,10 @@ class Object_default : public Object_blueprint
   glm::vec2 m_position;
   int m_w;
   int m_h;
+  int m_frame;
+  int m_row;
+  int m_frame_speed;
+
   int m_current_frame;
   int m_last_frame;
   int m_current_row;
