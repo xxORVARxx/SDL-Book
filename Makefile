@@ -1,109 +1,83 @@
 
-## These are some Built-in Variables:
-# CXX = g++
-# COMPILE.cc = $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(TARGET_ARCH) -c
-# COMPILE.cpp = $(COMPILE.cc)
-# LINK.cc = $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(LDFLAGS) $(TARGET_ARCH)
-# LINK.cpp = $(LINK.cc)
-
-## This is how a 'Rule' is Defined:
-# 'Target': 'Prerequisites'
-#	'Recipe'
-
-
 
 TEST := test
 CPPFLAGS := -std=c++11 -O3
 LDFLAGS := -lSDL2 -lSDL2_image
 
-SRC-DIR := src
-LIB_DIR := lib
-OBJ-DIR := obj
 
 
-## Find all Files in the SRC-directory and every Sub-Directories:
-ls = $(wildcard $(1)/*)
-ls-all = $(strip $(call ls,$(1)) $(foreach i,$(call ls,$(1)),$(call ls-all,$(i))))
-ALL-FILES := $(call ls-all,$(SRC-DIR))
-
-## Separate the Files:
-CPP-FILES := $(filter $(SRC-DIR)%.cpp,$(ALL-FILES))
-H-FILES := $(filter $(SRC-DIR)%.h,$(ALL-FILES))
-O-FILES := $(patsubst $(SRC-DIR)/%.cpp,$(OBJ-DIR)/%.o,$(CPP-FILES))
-D-FILES := $(patsubst $(SRC-DIR)/%.cpp,$(OBJ-DIR)/%.d,$(CPP-FILES))
-
-ALL-DIR := $(sort $(dir $(O-FILES)))
-
-cpp-to-o = $(patsubst $(SRC-DIR)/%.cpp,$(OBJ-DIR)/%.o,$(1))
+## This Makefile will find all the source and header files in the SRC directory, 
+## or any sub-directory of SRC, and copy them into a singla build-directory. 
+## From there it will compile, link and run the Program.
+## So the source and header files can be put into any number of sub-directories
+## and it will always compile without having changing the #include"" in the files.
 
 
 
-## The 'Goal', do Everything.
+SRC := src
+BUILD := build
+
+# Source variables:
+SRC-CPPs := $(subst ./,,$(shell find $(SRC)/ -name '*.cpp'))
+SRC-Hs := $(subst ./,,$(shell find $(SRC)/ -name '*.h'))
+SRC-CPP-DIRs := $(sort $(dir $(SRC-CPPs)))
+SRC-H-DIRs := $(sort $(dir $(SRC-Hs)))
+
+# Build variables:
+S-DIR := $(BUILD)/s
+O-DIR := $(BUILD)/o
+D-DIR := $(BUILD)/d
+M-DIR := $(BUILD)/m
+
+BUILD-CPPs := $(addprefix $(S-DIR)/,$(notdir $(SRC-CPPs)))
+BUILD-Hs := $(addprefix $(S-DIR)/,$(notdir $(SRC-Hs)))
+BUILD-Ds := $(addprefix $(D-DIR)/,$(addsuffix .d,$(notdir $(basename $(BUILD-CPPs)))))
+BUILD-Os := $(addprefix $(O-DIR)/,$(addsuffix .o,$(notdir $(basename $(BUILD-CPPs)))))
+
+
+
+## Make sure 'all' is the 'Default-Goal', and not some Target from the Included Files.
+all:
+
+
+
+-include Makefile_Copy_Rules.mk
+-include Makefile_Compile_Rules.mk
+
+
+
+## The Goal: 'create_copy_rules', 'copy', 'create_compile_rules', 'compile' and 'run'.
 .PHONY: all
-all: out dir dep run
+all: create_copy_rules
+	$(MAKE) copy
+	$(MAKE) create_compile_rules
+	$(MAKE) run
 
 
-## Create all or new Directories if needed.
-.PHONY: dir
-dir:
-	@-mkdir -p $(ALL-DIR)
 
+## Copy Source-Files from all source-directories into a singla build-directory.
+PHONY: copy
+copy: $(BUILD-CPPs) $(BUILD-Hs)
 
-## Use g++ with -MM to find all the 'Prerequisites' for each of the cpp-Files,
-## Writing it to a Dependency-File and then add to it the 'recipe'.
-.PHONY: dep
-dep: $(D-FILES)
-
-$(OBJ-DIR)/%.d: $(SRC-DIR)/%.cpp
-	$(info )
-	$(CXX) $(CPPFLAGS) -MM $< -MT $(call cpp-to-o,$<) -o $@
-	@echo '\t $(CXX) $(CPPFLAGS) -c $< -o $(call cpp-to-o,$<)' >> $@
-#  g++ -std=c++11 -MM my.cpp -MT my.o -o my.d
-#  echo '	g++ -std=c++11 -c my.cpp -o my.o' >> my.d
-
-
-## Turns the Dependency-Files into the 'Rules' they Contain.
-## which are used to Compile the cpp-File in to the o-files.
--include $(D-FILES)
 
 
 ## Link and Run the Program.
 .PHONY: run
-run: $(O-FILES)
+run: $(BUILD-Os)
 	$(info )
-	$(info ---Linking---)
-	$(CXX) $(CPPFLAGS) $(O-FILES) -o $(TEST) $(LDFLAGS)
+	$(info REMEMBER EACH TIME YOU CHANGE WHICH HEADER-FILES)
+	$(info ARE #included"" INTO OTHER FILES IN YOUR PROGRAM,)
+	$(info YOU HAVE TO COMPILE FROM SCRATCH! use: 'make clean')
+	$(info )
+	$(info ----------   Linking   ----------)
+	$(CXX) $(CPPFLAGS) $(BUILD-Os) -o $(TEST) $(LDFLAGS)
+#	  g++ -std=c++11 my.o -o test -lSDL2 -lSDL2_image
 	./$(TEST)
-#  g++ -std=c++11 my.o -o test -lSDL2 -lSDL2_image
-#  ./test
+#	  ./test
 
 
-## Delete the Object- and Dependency-Files.
+
+## Delete the build-directory.
 .PHONY: clean
 clean:
-	-rm -r $(O-FILES) $(D-FILES) $(TEST)
-	@-mkdir -p $(ALL-DIR)
-
-
-## Print out Data to ease Debugging.
-.PHONY: out
-out:
-	$(info )
-	$(info Total Files Found: $(words $(ALL-FILES)))
-	$(info $(ALL-FILES))
-	$(info )
-	$(info Source Files: $(words $(CPP-FILES))  '.cpp')
-	$(info $(CPP-FILES))
-	$(info )
-	$(info Header Files: $(words $(H-FILES))  '.h')
-	$(info $(H-FILES))
-	$(info )
-	$(info Object Files: $(words $(O-FILES))  '.o')
-	$(info $(O-FILES))
-	$(info )
-	$(info Dependency Files: $(words $(D-FILES))  '.d')
-	$(info $(D-FILES))
-	$(info )
-	$(info All used Directories: $(words $(ALL-DIR)))
-	$(info $(ALL-DIR))
-	$(info )
+	-rm -r $(BUILD)
