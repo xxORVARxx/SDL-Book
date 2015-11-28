@@ -2,6 +2,7 @@
 #include "Game.h"
 #include "Input_handler.h"
 #include "Texture_manager.h"
+#include "State_main_menu.h"
 
 
 
@@ -54,7 +55,7 @@ bool the_Game::Init( std::string _title, int _w, int _h )
 
 
   // The Game State Machine:
-  m_state_machine.Push_state( new Menu_state );
+  m_state_machine.Push_state( new State_main_menu );
 
 
   return true;
@@ -111,24 +112,3 @@ void the_Game::Clean()
   SDL_Quit();
   std::cout << "GAME :: Clean() is Done.\n";
 }
-
-
-/*
-
-void Push_P() {
-  the_Game::Instance().Get_state_machine()->Push_state( new Play_state );
-}
-void Push_M() {
-  the_Game::Instance().Get_state_machine()->Push_state( new Menu_state );
-}
-void Change_M_to_P() {
-  the_Game::Instance().Get_state_machine()->Change_state( new Play_state );
-}
-void Change_P_to_M() {
-  the_Game::Instance().Get_state_machine()->Change_state( new Menu_state );
-}
-void Pop() {
-  the_Game::Instance().Get_state_machine()->Pop_state();
-}
-
-*/

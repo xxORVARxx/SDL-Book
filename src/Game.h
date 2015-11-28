@@ -30,6 +30,7 @@ class the_Game
   void Render();
   void Clean();
 
+  glm::vec2 Get_display_size() { return glm::vec2( m_width, m_height ); }
   int Get_width() { return m_width; }
   int Get_height() { return m_height; }
   SDL_Renderer* Get_renderer() const { return m_renderer_ptr; }

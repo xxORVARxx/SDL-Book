@@ -5,7 +5,7 @@
 
 // --- Functions: ---
 // Adding one state without removing the previous state:
-void Game_state_machine::Push_state( Game_states_blueprint* _state_ptr )
+void Game_state_machine::Push_state( State_interface* _state_ptr )
 {
   if( _state_ptr == nullptr ) {
     std::cout << "STATE MACHINE :: ERROR: Can't Push 'NULL' as a State!\n";
@@ -16,7 +16,7 @@ void Game_state_machine::Push_state( Game_states_blueprint* _state_ptr )
 }
 
 // Removing one state and adding another:
-void Game_state_machine::Change_state( Game_states_blueprint* _state_ptr )
+void Game_state_machine::Change_state( State_interface* _state_ptr )
 {
   if( _state_ptr == nullptr ) {
     std::cout << "STATE MACHINE :: ERROR: Can't Change a State with 'NULL'!\n";
@@ -55,9 +55,9 @@ void Game_state_machine::Render()
 
 void Game_state_machine::Clean()
 {
-  std::for_each( m_states_vec.begin(), m_states_vec.end(), []( Game_states_blueprint* i ){ i->on_Exit(); delete i; } );
+  std::for_each( m_states_vec.begin(), m_states_vec.end(), []( State_interface* i ){ i->on_Exit(); delete i; } );
   m_states_vec.clear();
-  std::for_each( m_state_change_vec.begin(), m_state_change_vec.end(), []( Game_states_blueprint* i ){ i->on_Exit(); delete i; } );
+  std::for_each( m_state_change_vec.begin(), m_state_change_vec.end(), []( State_interface* i ){ i->on_Exit(); delete i; } );
   m_state_change_vec.clear();
   std::cout << "STATE MACHINE :: Clean() is done.\n";
 }
@@ -74,7 +74,7 @@ void Game_state_machine::Delete_and_remove_state()
     }
 }
 
-void Game_state_machine::Add_and_begin_state( Game_states_blueprint* _state_ptr ) 
+void Game_state_machine::Add_and_begin_state( State_interface* _state_ptr ) 
 {
   m_states_vec.push_back( _state_ptr );
   m_states_vec.back()->on_Enter();
