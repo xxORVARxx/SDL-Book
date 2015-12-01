@@ -31,7 +31,6 @@ class the_Input_handler
   bool is_Running() { return m_running; }
 
   // Keyboard:
-  bool is_Key_down() { return m_key_down; }
   const Uint8* Get_keys_state() { return m_keys_state; }
 
   // Mouse:
@@ -54,7 +53,6 @@ class the_Input_handler
   // --- Variables ---
   bool m_running;
   // Keyboard:
-  bool m_key_down;
   const Uint8* m_keys_state;
   // Mouse:
   bool m_mouse_moving;

@@ -25,6 +25,9 @@ class Game_obj_sheet_player : public Game_obj_sheet
   Uint8 move_up_key, move_down_key, move_right_key, move_left_key;
 
   SDL_RendererFlip m_texture_flip;
+  double delta_time;
+  //glm::vec2 m_gravity;
+  //glm::vec2 m_blade_torque;
   glm::vec2 m_acceleration;
   glm::vec2 m_velocity;
 };

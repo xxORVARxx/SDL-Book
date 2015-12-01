@@ -44,6 +44,7 @@ class the_Texture_manager
   }
 
   glm::vec2 Get_image_size( std::string _id );
+
   bool Load_image( SDL_Renderer* _renderer_ptr, std::string _id, std::string _file_name );
 
   void Draw( SDL_Renderer* _renderer_ptr, std::string _id, glm::vec2 _position, glm::vec2 _size, 
@@ -52,11 +53,7 @@ class the_Texture_manager
   void Draw_frame( SDL_Renderer* _renderer_ptr, std::string _id, glm::vec2 _position, glm::vec2 _size,
 		   int _frame_width, int _frame_height, int _frame_number, int _row_number, 
 		   SDL_RendererFlip _flip = SDL_FLIP_NONE );
-  /*
-  // Draw Frame:
-  void Draw_frame( SDL_Renderer* _renderer_ptr, std::string _id, int _x, int _y, int _w, int _h, 
-		   int _current_row, int _current_frame, SDL_RendererFlip _flip = SDL_FLIP_NONE );
-  */
+
   void Clean();
 
  private:

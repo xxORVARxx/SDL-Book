@@ -7,7 +7,6 @@
 the_Input_handler::the_Input_handler()
 {
   m_running = true;
-  m_key_down = false;
   m_mouse_moving = false;
   m_mouse_button_down = false;
   for( Uint8 i = 0 ; i < 16 ; ++i )  m_mouse_buttons[i] = false;
@@ -32,10 +31,8 @@ bool the_Input_handler::Update()
 	  break;
 	  // --- KEYBOARD ---
 	case SDL_KEYDOWN :
-	  m_key_down = true;
 	  break;
 	case SDL_KEYUP :
-	  m_key_down = false;
 	  break;
 	  // --- MOUSE --- 
 	case SDL_MOUSEMOTION :
