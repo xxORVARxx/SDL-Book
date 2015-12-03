@@ -5,7 +5,7 @@
 #include "Init.h"
 #include "A_State_interface.h"
 
-class Game_obj;
+class Game_obj_default;
 
 
 
@@ -23,7 +23,7 @@ class State_main_menu : public State_interface
  private:
   static const std::string sm_menu_id;
 
-  std::vector< Game_obj* > m_objects_vec;
+  std::vector< Game_obj_default* > m_objects_vec;
 
   // Call back functions for menu items:
   static void smf_Menu_to_play();

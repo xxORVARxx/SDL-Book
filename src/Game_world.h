@@ -31,7 +31,6 @@ class the_World
 
   std::chrono::duration< long int, std::nano > Get_delta_time_duration();
   double Get_delta_time();
-
   void Frame_begin();
   void Frame_end();
  private:
@@ -57,5 +56,3 @@ class the_World
 
 
 #endif
-
-// Good fps-goles: 120, 100, 80, 75, 60, 50, 40, 30, 25, 20, 15

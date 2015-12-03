@@ -15,7 +15,7 @@ class Game_obj_sheet_button : public Game_obj_sheet
   virtual ~Game_obj_sheet_button() {}
 
   virtual void Update();
-  virtual void Draw();
+  virtual void Draw( Camera* _camera );
   virtual void Clean() { std::cout << "BUTTON :: Clean() is Done,  &  "; Game_obj_sheet::Clean(); }
 
  private:

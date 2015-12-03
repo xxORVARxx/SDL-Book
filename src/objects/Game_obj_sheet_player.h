@@ -11,21 +11,23 @@
 class Game_obj_sheet_player : public Game_obj_sheet
 {
  public:
-  Game_obj_sheet_player( Game_obj_parameters& _obj_params, Game_obj_sheet_parameters& _sheet_params );
+  Game_obj_sheet_player( Game_obj_parameters& _obj_params, Game_obj_sheet_parameters& _sheet_params, Camera* _camera );
   virtual ~Game_obj_sheet_player() {}
 
   virtual void Update();
-  virtual void Draw();
+  virtual void Draw( Camera* _camera );
   virtual void Clean() { std::cout << "PLAYER :: Clean() is Done,  &  "; Game_obj_sheet::Clean(); }
 
  private:
+  void Update_camera();
   void Hendle_input();
   void Other_forces();
 
   // --- Variables ---
   Uint8 move_up_key, move_down_key, move_right_key, move_left_key;
+  Camera* m_camera;
   SDL_RendererFlip m_texture_flip;
-  double m_delta_time;
+  float m_delta_time;
   glm::vec2 m_mouse_pos;
 
   glm::vec2 m_helicopter_middle_pos;

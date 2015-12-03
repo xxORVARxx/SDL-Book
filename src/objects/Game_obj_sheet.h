@@ -7,6 +7,7 @@
 
 
 
+// This holds the 'Parameters' to pass through the 'Object' classes.
 struct Game_obj_sheet_parameters
 {
 Game_obj_sheet_parameters( int frames, int row, float speed = 66.67 ) : 
@@ -27,7 +28,7 @@ class Game_obj_sheet : public Game_obj
 
   // --- Functions ---
   virtual void Update();
-  virtual void Draw();
+  virtual void Draw( Camera* _camera );
   virtual void Clean();
 
   // --- Variables ---

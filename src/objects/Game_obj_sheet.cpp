@@ -55,10 +55,14 @@ void Game_obj_sheet::Update()
 
 
 
-void Game_obj_sheet::Draw()
+void Game_obj_sheet::Draw( Camera* _camera )
 {
-  the_Texture_manager::Instance().Draw_frame( the_Game::Instance().Get_renderer(), m_texture_id, m_position, m_size,
-					      m_frame_width, m_frame_height, m_frame_number, m_row_number );
+  glm::vec2 display_position = m_position;
+  if( _camera != nullptr )
+    display_position -= _camera->Get_position();
+
+  the_Texture_manager::Instance().Draw_frame( the_Game::Instance().Get_renderer(), m_texture_id, display_position, 
+					      m_size, m_frame_width, m_frame_height, m_frame_number, m_row_number );
 }
 
 

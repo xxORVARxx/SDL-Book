@@ -49,7 +49,7 @@ void Game_obj_sheet_button::Update()
 
 
 
-void Game_obj_sheet_button::Draw()
+void Game_obj_sheet_button::Draw( Camera* _camera )
 {
   // Finding the frame: (the first frame/row is number '1' not '0')
   int row_number;

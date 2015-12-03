@@ -27,9 +27,13 @@ Game_obj::Game_obj( Game_obj_parameters& _obj_params, bool is_a_sheet )
 
 
 
-void Game_obj::Draw()
+void Game_obj::Draw( Camera* _camera )
 {
-  the_Texture_manager::Instance().Draw( the_Game::Instance().Get_renderer(), m_texture_id, m_position, m_size );
+  glm::vec2 display_position = m_position;
+  if( _camera != nullptr )
+    display_position -= _camera->Get_position();
+
+  the_Texture_manager::Instance().Draw( the_Game::Instance().Get_renderer(), m_texture_id, display_position, m_size );
 }
 
 void Game_obj::Clean()

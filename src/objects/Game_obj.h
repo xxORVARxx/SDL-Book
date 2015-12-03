@@ -22,8 +22,7 @@ Game_obj_parameters( std::string _id, glm::vec2 _image_size, glm::vec2 _pos,
 
 
 
-// This is the default 'Game-object' class which other 'Object' classes can 'inharents' from. 
-class Game_obj : public Game_obj_interface
+class Game_obj : public Game_obj_default
 {
  public:
   Game_obj( Game_obj_parameters& _obj_params, bool is_a_sheet = false );
@@ -31,7 +30,7 @@ class Game_obj : public Game_obj_interface
 
   // --- Functions ---
   virtual void Update() {}
-  virtual void Draw();
+  virtual void Draw( Camera* _camera );
   virtual void Clean();
 
   // --- Variables ---

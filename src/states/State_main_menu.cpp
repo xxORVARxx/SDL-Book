@@ -44,22 +44,28 @@ void State_main_menu::on_Enter()
   }// The 'new Game_objects' are deleted in: Menu-state::on_Exit().
 }
 
+
+
 void State_main_menu::Update()
 {
   // Updating the Game Objects:
-  std::for_each( m_objects_vec.begin(), m_objects_vec.end(), []( Game_obj* i ){ i->Update(); } );
+  std::for_each( m_objects_vec.begin(), m_objects_vec.end(), []( Game_obj_default* i ){ i->Update(); } );
 }
+
+
 
 void State_main_menu::Render()
 {
   // Rendering the Game Objects:
-  std::for_each( m_objects_vec.begin(), m_objects_vec.end(), []( Game_obj* i ){ i->Draw(); } );
+  std::for_each( m_objects_vec.begin(), m_objects_vec.end(), []( Game_obj_default* i ){ i->Draw( nullptr ); } );
 }
+
+
 
 void State_main_menu::on_Exit()
 {
   std::cout << "STATE MACHINE :: Exiting MENU-state.\n";
   // Deleting Oblects:
-  std::for_each( m_objects_vec.begin(), m_objects_vec.end(), []( Game_obj* i ){ i->Clean(); delete i; } );
+  std::for_each( m_objects_vec.begin(), m_objects_vec.end(), []( Game_obj_default* i ){ i->Clean(); delete i; } );
   m_objects_vec.clear();
 }

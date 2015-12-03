@@ -16,7 +16,7 @@ class Game_obj_sheet_enemy : public Game_obj_sheet
   virtual ~Game_obj_sheet_enemy() {}
 
   virtual void Update();
-  virtual void Draw() { Game_obj_sheet::Draw(); }
+  virtual void Draw( Camera* _camera ) { Game_obj_sheet::Draw( nullptr ); }
   virtual void Clean() { std::cout << "ENEMY :: Clean() is Done,  &  "; Game_obj_sheet::Clean(); }
 };
 
