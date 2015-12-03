@@ -54,6 +54,11 @@ class the_Texture_manager
 		   int _frame_width, int _frame_height, int _frame_number, int _row_number, 
 		   SDL_RendererFlip _flip = SDL_FLIP_NONE );
 
+  void Draw_frame_rot( SDL_Renderer* _renderer_ptr, std::string _id, glm::vec2 _position, glm::vec2 _size,
+		       int _frame_width, int _frame_height, int _frame_number, int _row_number, 
+		       double _angle, double _divide_width, double _divide_height, 
+		       SDL_RendererFlip _flip = SDL_FLIP_NONE );
+
   void Clean();
 
  private:

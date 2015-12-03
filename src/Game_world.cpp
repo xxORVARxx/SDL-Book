@@ -3,8 +3,10 @@
 
 
 
-void the_World::Setup( double _fps, bool print_fps )
+void the_World::Setup( int _display_width, int _display_height, double _fps, bool print_fps )
 {
+  m_display_width = _display_width;
+  m_display_height = _display_height;
   m_preferred_fps = _fps;
   m_time_period_per_frame = std::chrono::seconds( 1 );
   m_time_period_per_frame /= m_preferred_fps;

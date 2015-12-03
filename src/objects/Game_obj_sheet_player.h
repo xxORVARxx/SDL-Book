@@ -20,15 +20,17 @@ class Game_obj_sheet_player : public Game_obj_sheet
 
  private:
   void Hendle_input();
+  void Other_forces();
 
   // --- Variables ---
   Uint8 move_up_key, move_down_key, move_right_key, move_left_key;
-
   SDL_RendererFlip m_texture_flip;
-  double delta_time;
-  //glm::vec2 m_gravity;
-  //glm::vec2 m_blade_torque;
-  glm::vec2 m_acceleration;
+  double m_delta_time;
+  glm::vec2 m_mouse_pos;
+
+  glm::vec2 m_helicopter_middle_pos;
+  float m_helicopter_pitch_degrees;
+  glm::vec2 m_acceleration_steering;
   glm::vec2 m_velocity;
 };
 

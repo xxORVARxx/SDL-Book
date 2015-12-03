@@ -43,6 +43,9 @@ namespace xx
 {
   bool Point_in_rect( const glm::vec2& p, const glm::vec4& r );
   bool Point_in_rect( const SDL_Point& p, const SDL_Rect& r );
+
+  float Vec_to_degrees( glm::vec2 _vec );
+  glm::vec2 Degrees_to_vec( float _degrees );
 };
 
 

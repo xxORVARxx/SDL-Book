@@ -1,10 +1,12 @@
 
 #include "State_play.h"
-#include "State_pause.h"
-#include "State_main_menu.h"
-#include "Game.h"
-#include "Texture_manager.h"
 #include "Input_handler.h"
+#include "Texture_manager.h"
+
+#include "Game_world.h"
+#include "Game.h"
+#include "State_main_menu.h"
+#include "State_pause.h"
 #include "Game_obj_sheet_button.h"
 #include "Game_obj_sheet_player.h"
 
@@ -33,7 +35,7 @@ void State_play::on_Enter()
   the_Texture_manager::Instance().Load_image( the_Game::Instance().Get_renderer(), "ROUND_B", "assets/Round_button.png" );
   {// Make Objects:
     Game_obj_parameters obj_params( "HELI", the_Texture_manager::Instance().Get_image_size( "HELI" ), 
-				    glm::vec2( 10, ( the_Game::Instance().Get_display_size().y / 3 )));
+				    glm::vec2( 10, ( the_World::Instance().Get_display_height() / 3 )));
     Game_obj_sheet_parameters sheet_params( 4, 4 );
     m_objects_vec.push_back( new Game_obj_sheet_player( obj_params, sheet_params ));
   }{

@@ -1,16 +1,17 @@
  
 #include "Init.h"
+#include "Input_handler.h"
+
 #include "Game_world.h"
 #include "Game.h"
-#include "Input_handler.h"
 
 
 
 int main ( int argc, char* args[] )
 {
-  the_World::Instance().Setup( 60, true );
+  the_World::Instance().Setup();
 
-  if ( ! the_Game::Instance().Init( "Test", 720, 480 )) {
+  if ( ! the_Game::Instance().Init( "Helicopter" )) {
     std::cout << "\nMAIN :: !! the_Game.Init() Failed !!\n\n";
     return -1;
   }

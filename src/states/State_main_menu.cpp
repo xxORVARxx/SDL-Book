@@ -1,9 +1,10 @@
 
 #include "State_main_menu.h"
-#include "State_play.h"
-#include "Game.h"
-#include "Texture_manager.h"
 #include "Input_handler.h"
+#include "Texture_manager.h"
+
+#include "Game.h"
+#include "State_play.h"
 #include "Game_obj_sheet_button.h"
 
 

@@ -23,7 +23,11 @@ class the_World
     return instance;
   }
 
-  void Setup( double _fps = 60.0d, bool print_fps = false );
+  void Setup( int _display_width = 720, int _display_height = 480, double _fps = 60.0d, bool print_fps = false );
+
+  glm::vec2 Get_display_size() { return glm::vec2( m_display_width, m_display_height ); }
+  int Get_display_width() { return m_display_width; }
+  int Get_display_height() { return m_display_height; }
 
   std::chrono::duration< long int, std::nano > Get_delta_time_duration();
   double Get_delta_time();
@@ -34,6 +38,8 @@ class the_World
   void Print_fps();
 
   // --- Variables ---
+  int m_display_width;
+  int m_display_height;
   // For keeping the 'Frames-Per-Second' steady:
   double m_preferred_fps;
   std::chrono::nanoseconds m_time_period_per_frame;

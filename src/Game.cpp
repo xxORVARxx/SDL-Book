@@ -2,6 +2,8 @@
 #include "Game.h"
 #include "Input_handler.h"
 #include "Texture_manager.h"
+
+#include "Game_world.h"
 #include "State_main_menu.h"
 
 
@@ -16,11 +18,8 @@ the_Game::the_Game()
 
 
 // --- Functions ---
-bool the_Game::Init( std::string _title, int _w, int _h )
+bool the_Game::Init( std::string _title )
 {
-  m_width = _w;
-  m_height = _h;
-
   // Initializing_SDL2:
   if( SDL_Init( SDL_INIT_EVERYTHING ) == -1 ) {
     std::cout << "GAME :: !! Failed to initialize SDL : " << SDL_GetError() << " !!\n";  
@@ -28,7 +27,9 @@ bool the_Game::Init( std::string _title, int _w, int _h )
   }
 
   m_display_ptr = SDL_CreateWindow( _title.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-				    m_width, m_height, SDL_WINDOW_RESIZABLE );
+				    the_World::Instance().Get_display_width(), 
+				    the_World::Instance().Get_display_height(), 
+				    SDL_WINDOW_RESIZABLE );
   if ( m_display_ptr == nullptr ) {
     std::cout << "GAME :: !! Failed to create window : " << SDL_GetError() << " !!\n";  
     return false;
@@ -85,6 +86,17 @@ void the_Game::Render()
 
   // The Game State Machine:
   m_state_machine.Render();
+
+  /*
+  glm::vec2 display( the_World::Instance().Get_display_size());
+  glm::vec2 mouse_pos = the_Input_handler::Instance().Get_mouse_position();
+  glm::vec2 display_middle(( display.x / 2 ), ( display.y / 2 ));
+
+  SDL_SetRenderDrawColor( the_Game::Instance().Get_renderer(), 50, 50, 255, 255 );
+  SDL_RenderDrawLine( the_Game::Instance().Get_renderer(), 0, ( display.y / 2 ), display.x, ( display.y / 2 ));
+  SDL_RenderDrawLine( the_Game::Instance().Get_renderer(), ( display.x / 2 ), 0, ( display.x / 2 ), display.y );
+  SDL_SetRenderDrawColor( the_Game::Instance().Get_renderer(), 0, 0, 0, 255 );
+  */
 
   SDL_RenderPresent( m_renderer_ptr );
 }

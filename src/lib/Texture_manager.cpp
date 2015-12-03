@@ -108,7 +108,7 @@ void the_Texture_manager::Draw( SDL_Renderer* _renderer_ptr, std::string _id, gl
   if( _flip == SDL_FLIP_NONE )
     SDL_RenderCopy( _renderer_ptr, it->second.Get_texture(), &src_rec, &dest_rec );
   else
-    SDL_RenderCopyEx( _renderer_ptr, it->second.Get_texture(), &src_rec, &dest_rec, 0, 0, _flip );
+    SDL_RenderCopyEx( _renderer_ptr, it->second.Get_texture(), &src_rec, &dest_rec, 0, nullptr, _flip );
 }
 
 
@@ -138,7 +138,42 @@ void the_Texture_manager::Draw_frame( SDL_Renderer* _renderer_ptr, std::string _
   if( _flip == SDL_FLIP_NONE )
     SDL_RenderCopy( _renderer_ptr, it->second.Get_texture(), &src_rec, &dest_rec );
   else
-    SDL_RenderCopyEx( _renderer_ptr, it->second.Get_texture(), &src_rec, &dest_rec, 0, 0, _flip );
+    SDL_RenderCopyEx( _renderer_ptr, it->second.Get_texture(), &src_rec, &dest_rec, 0, nullptr, _flip );
+}
+
+
+
+void the_Texture_manager::Draw_frame_rot( SDL_Renderer* _renderer_ptr, std::string _id, glm::vec2 _position, glm::vec2 _size,
+					  int _frame_width, int _frame_height, int _frame_number, int _row_number, 
+					  double _angle, double _divide_width, double _divide_height, 
+					  SDL_RendererFlip _flip )
+{
+  std::map< const std::string, Texture_data >::iterator it = m_texture_map.find( _id );
+  if( it == m_texture_map.end() )
+    {
+      std::cout << "TEXTURE MANAGER :: Texture not found! No Texture with this ID: '"<< _id <<"'.\n";
+      return;
+    }
+  SDL_Rect src_rec; // Source Rectangle.
+  SDL_Rect dest_rec; // Destination Rectangle.
+  src_rec.x = ( _frame_width * ( _frame_number - 1 ));
+  src_rec.y = ( _frame_height * ( _row_number - 1 ));
+  src_rec.w = _frame_width;
+  src_rec.h = _frame_height;
+  dest_rec.x = _position.x;
+  dest_rec.y = _position.y;
+  dest_rec.w = _size.x;
+  dest_rec.h = _size.y;
+
+  if( _divide_width == 0 )  
+    _divide_width = _size.x;
+  if( _divide_height == 0 )  
+    _divide_height = _size.y;
+  SDL_Point center_rec; // Point to Rotate Around.
+  center_rec.x = _size.x / _divide_width;
+  center_rec.y = _size.y / _divide_height;
+
+  SDL_RenderCopyEx( _renderer_ptr, it->second.Get_texture(), &src_rec, &dest_rec, _angle, &center_rec, _flip );
 }
 
 
