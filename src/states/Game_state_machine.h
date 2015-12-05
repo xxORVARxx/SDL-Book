@@ -17,6 +17,7 @@ class Game_state_machine
   void Change_state( State_interface* _state_ptr );
   void Pop_state();
 
+  void on_Display_resize();
   void Update();
   void Render();
   void Clean();

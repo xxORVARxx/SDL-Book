@@ -42,6 +42,8 @@ class the_Input_handler
   void Initialise_joysticks();
   bool is_Joystick_initialised() { return m_joysticks_initialised; }
   const glm::vec4& Get_joystick_values( int joystick_id ) { return m_joystick_values_vec[ joystick_id ]; }
+  // Window:
+  void Set_callback_on_display_resize( void(* _Callback )( int _w, int _h ) );
 
  private:
   // Handle Joystick & Window Events:
@@ -64,6 +66,8 @@ class the_Input_handler
   std::vector< SDL_Joystick* > m_joystick_vec;
   std::vector< glm::vec4 > m_joystick_values_vec;
   int m_joystick_Deadzone;
+  // Window:
+  void(* mf_Callback_on_display_resize )( int _width, int _height );
 };
 
 

@@ -12,7 +12,6 @@ Game_obj_grid::Game_obj_grid( SDL_Color _color, int _size ) : m_color(_color), m
 
 void Game_obj_grid::Draw( Camera* _camera )
 {
-  m_grid_size = 50;
   int position_x = 0;
   int position_y = 0;
   int display_size_w = the_World::Instance().Get_display_width();

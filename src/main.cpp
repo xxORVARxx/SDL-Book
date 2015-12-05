@@ -7,6 +7,14 @@
 
 
 
+void Display_resized( int _display_width, int _display_height )
+{
+  the_World::Instance().Set_display_size( _display_width, _display_height );
+  the_Game::Instance().on_Display_resize();
+}
+
+
+
 int main ( int argc, char* args[] )
 {
   the_World::Instance().Setup();
@@ -15,6 +23,8 @@ int main ( int argc, char* args[] )
     std::cout << "\nMAIN :: !! the_Game.Init() Failed !!\n\n";
     return -1;
   }
+
+  the_Input_handler::Instance().Set_callback_on_display_resize( Display_resized );
 
 
   while( the_Input_handler::Instance().is_Running() )
@@ -31,5 +41,7 @@ int main ( int argc, char* args[] )
 
 
   the_Game::Instance().Clean();
+
+
   return 0;
 }

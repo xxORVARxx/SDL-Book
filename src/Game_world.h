@@ -28,6 +28,7 @@ class the_World
   glm::vec2 Get_display_size() { return glm::vec2( m_display_width, m_display_height ); }
   int Get_display_width() { return m_display_width; }
   int Get_display_height() { return m_display_height; }
+  void Set_display_size( int _new_width, int _new_height ) { m_display_width = _new_width; m_display_height = _new_height; }
 
   std::chrono::duration< long int, std::nano > Get_delta_time_duration();
   double Get_delta_time();

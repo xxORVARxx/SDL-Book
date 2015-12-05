@@ -32,21 +32,61 @@
 #include <SDL2/SDL_image.h>
 
 #include <iostream>
+#include <algorithm>
+
 #include <string>
 #include <vector>
 #include <map>
-#include <algorithm>
+
 #include <chrono>
+#include <random>
+
 
 
 namespace xx
 {
-  bool Point_in_rect( const glm::vec2& p, const glm::vec4& r );
-  bool Point_in_rect( const SDL_Point& p, const SDL_Rect& r );
+  bool Point_in_rect( const glm::vec2& _p, const glm::vec4& _r );
+  bool Point_in_rect( const SDL_Point& _p, const SDL_Rect& _r );
 
-  float Vec_to_degrees( glm::vec2 _vec );
-  glm::vec2 Degrees_to_vec( float _degrees );
+  void Clamp_degrees( float& _degrees );
+  void Clamp_degrees( double& _degrees );
+
+  float Vec_to_degrees( const glm::vec2& _vec );
+  glm::vec2 Degrees_to_vec( const float& _degrees );
 };
+
+
+
+namespace xx
+{
+  class Random
+  {
+  public:
+  Random( bool _use_seed = false, int _seed = 0 ) : m_seed(_seed)
+    {
+      if( _use_seed )  m_engine.seed( _seed );
+      else  m_engine.seed( m_true_random_devic() );
+    }
+    template< typename T >
+      T Discrete_num( T _a, T _b )
+      {
+	std::uniform_int_distribution< T > discrete_dist( _a, _b );
+	return discrete_dist( m_engine );
+      }
+    template< typename T >
+      T Real_num( T _a, T _b )
+      {
+	std::uniform_real_distribution< T > real_dist( _a, _b );
+	return real_dist( m_engine );
+      }
+  private:
+    // --- Variables ---
+    int m_seed;
+    std::random_device m_true_random_devic;
+    std::mt19937 m_engine;
+  } static Get_random;
+};
+
 
 
 #endif

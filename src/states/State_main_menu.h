@@ -15,6 +15,7 @@ class State_main_menu : public State_interface
  public:
   virtual ~State_main_menu() {}
   virtual void on_Enter();
+  virtual void on_Display_resize();
   virtual void Update();
   virtual void Render();
   virtual void on_Exit();

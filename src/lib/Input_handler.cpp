@@ -4,13 +4,14 @@
 
 
 // --- Constructors ---
-the_Input_handler::the_Input_handler()
+the_Input_handler::the_Input_handler() 
 {
   m_running = true;
   m_mouse_moving = false;
   m_mouse_button_down = false;
   for( Uint8 i = 0 ; i < 16 ; ++i )  m_mouse_buttons[i] = false;
   m_joystick_Deadzone = 10000;
+  mf_Callback_on_display_resize = nullptr;
 }
 
 
@@ -53,20 +54,31 @@ bool the_Input_handler::Update()
 	  break;
 	  // --- JOYSTICK  ---
 	case SDL_JOYAXISMOTION :
-	  on_Joystick_axis_move( event );
+	  this->on_Joystick_axis_move( event );
 	  break;
 	case SDL_JOYBUTTONDOWN :
-	  on_Joystick_button_down( event );
+	  this->on_Joystick_button_down( event );
 	  break;
 	case SDL_JOYBUTTONUP :
-	  on_Joystick_button_up( event );
+	  this->on_Joystick_button_up( event );
 	  break;
 	  // --- WINDOW ---
 	case SDL_WINDOWEVENT :
-	  on_Window_event( event );
+	  this->on_Window_event( event );
 	  break;
 	}//switch-end
     }//while-end
+}
+
+
+
+void the_Input_handler::Clean()
+{
+  if( m_joysticks_initialised )
+    for( unsigned int i = 0 ; i < m_joystick_vec.size() ; ++i )
+      SDL_JoystickClose( m_joystick_vec[i] );
+
+  std::cout << "INPUT HANDLER :: Clean() is Done.\n";
 }
 
 
@@ -129,26 +141,17 @@ void the_Input_handler::on_Window_event( SDL_Event& _event )
 {
   switch( _event.window.event )
     {
-    case SDL_WINDOWEVENT_SIZE_CHANGED : 
-      // Width = event.window.data1;
-      // Height = event.window.data2;
+    case SDL_WINDOWEVENT_SIZE_CHANGED :
+      if( mf_Callback_on_display_resize != nullptr )
+	mf_Callback_on_display_resize( _event.window.data1, _event.window.data2 );
+      // Width = _event.window.data1;
+      // Height = _event.window.data2;
       break;
     case SDL_WINDOWEVENT_CLOSE :// The window-manager requests that the window be closed.
       _event.type = SDL_QUIT;
       SDL_PushEvent( &_event );
       break;
     }//switch-end
-}
-
-
-
-void the_Input_handler::Clean()
-{
-  if( m_joysticks_initialised )
-    for( unsigned int i = 0 ; i < m_joystick_vec.size() ; ++i )
-      SDL_JoystickClose( m_joystick_vec[i] );
-
-  std::cout << "INPUT HANDLER :: Clean() is Done.\n";
 }
 
 
@@ -176,4 +179,11 @@ void the_Input_handler::Initialise_joysticks()
   SDL_JoystickEventState( SDL_ENABLE );
   m_joysticks_initialised = true;
   std::cout << "INPUT HANDLER :: Initialised: " << m_joystick_vec.size() << " joystick(s).\n";
+}
+
+
+
+void the_Input_handler::Set_callback_on_display_resize( void(* _Callback )( int _w, int _h ) )
+{
+  mf_Callback_on_display_resize = _Callback;
 }

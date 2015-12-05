@@ -12,6 +12,7 @@ class State_interface
  public:
   virtual ~State_interface() {};
   virtual void on_Enter() = 0;
+  virtual void on_Display_resize() = 0;
   virtual void Update() = 0;
   virtual void Render() = 0;
   virtual void on_Exit() = 0;

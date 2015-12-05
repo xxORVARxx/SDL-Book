@@ -25,6 +25,7 @@ class the_Game
   }
 
   bool Init( std::string _title );
+  void on_Display_resize();
   void Handle_events();
   void Update();
   void Render();

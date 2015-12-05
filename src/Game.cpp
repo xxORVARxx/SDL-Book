@@ -64,6 +64,13 @@ bool the_Game::Init( std::string _title )
 
 
 
+void the_Game::on_Display_resize()
+{
+  m_state_machine.on_Display_resize();
+}
+
+
+
 void the_Game::Handle_events()
 {
   // Inputh Handler:

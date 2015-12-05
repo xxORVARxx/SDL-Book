@@ -2,6 +2,7 @@
 #include "Game_obj.h"
 #include "Texture_manager.h"
 
+#include "Game_world.h"
 #include "Game.h"
 
 

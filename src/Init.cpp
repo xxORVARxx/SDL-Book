@@ -5,21 +5,39 @@
 
 namespace xx
 {
-  bool Point_in_rect( const glm::vec2& p, const glm::vec4& r )
+  bool Point_in_rect( const glm::vec2& _p, const glm::vec4& _r )
   {
-    return ( (p.x >= r.x) && (p.x < (r.x + r.z)) &&
-	     (p.y >= r.y) && (p.y < (r.y + r.w)) ) ? true : false;
+    return (( _p.x >= _r.x )&&( _p.x < ( _r.x + _r.z ))&&
+	    ( _p.y >= _r.y )&&( _p.y < ( _r.y + _r.w ))) ? true : false;
   }
 
-  bool Point_in_rect( const SDL_Point& p, const SDL_Rect& r )
+  bool Point_in_rect( const SDL_Point& _p, const SDL_Rect& _r )
   {
-    return ( (p.x >= r.x) && (p.x < (r.x + r.w)) &&
-	     (p.y >= r.y) && (p.y < (r.y + r.h)) ) ? true : false;
+    return (( _p.x >= _r.x )&&( _p.x < ( _r.x + _r.w ))&&
+	    ( _p.y >= _r.y )&&( _p.y < ( _r.y + _r.h ))) ? true : false;
   }
 
 
 
-  float Vec_to_degrees( glm::vec2 _vec )
+  void Clamp_degrees( float& _degrees )
+  {
+    while( _degrees > 360.0f )
+      _degrees -= 360.f;
+    while( _degrees <= 0.0f )
+      _degrees += 360.f;
+  }
+
+  void Clamp_degrees( double& _degrees )
+  {
+    while( _degrees > 360.0d )
+      _degrees -= 360.d;
+    while( _degrees <= 0.0d )
+      _degrees += 360.d;
+  }
+
+
+
+  float Vec_to_degrees( const glm::vec2& _vec )
   {
     if( _vec.y > 0 )
       return( std::acos( glm::normalize( _vec ).x ) * 180.0f / M_PI );
@@ -27,7 +45,7 @@ namespace xx
       return( 360.0f - ( std::acos( glm::normalize( _vec ).x ) * 180.0f / M_PI ));
   }
 
-  glm::vec2 Degrees_to_vec( float _degrees )
+  glm::vec2 Degrees_to_vec( const float& _degrees )
   {
     return glm::vec2( std::cos( _degrees * M_PI / 180.0f ), std::sin( _degrees * M_PI / 180.0f ));
   }

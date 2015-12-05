@@ -122,6 +122,7 @@ void Game_obj_sheet_player::Other_forces()
   // THE GRAVITY:
   float m_gravity_forces = ( 9.8f * 2.0f * m_delta_time );
   glm::vec2 acceleration_gravity( 0.0f, m_gravity_forces );
+  m_velocity -= ( 0.05f * m_velocity * m_delta_time  );
   m_velocity += ( acceleration_gravity * 1.5f );
 
   // THE MAIN ROTOR BLADES:

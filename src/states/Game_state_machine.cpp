@@ -38,6 +38,14 @@ void Game_state_machine::Pop_state()
 
 
 
+void Game_state_machine::on_Display_resize()
+{
+  if( ! m_states_vec.empty() )
+    m_states_vec.back()->on_Display_resize();
+}
+
+
+
 void Game_state_machine::Update()
 {
   if( ! m_states_vec.empty() )

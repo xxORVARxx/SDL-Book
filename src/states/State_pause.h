@@ -15,6 +15,7 @@ class State_pause : public State_interface
  public:
   virtual ~State_pause() {}
   virtual void on_Enter();
+  virtual void on_Display_resize();
   virtual void Update();
   virtual void Render();
   virtual void on_Exit();

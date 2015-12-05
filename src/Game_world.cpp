@@ -1,6 +1,8 @@
  
 #include "Game_world.h"
 
+#include "Input_handler.h"
+
 
 
 void the_World::Setup( int _display_width, int _display_height, double _fps, bool print_fps )
