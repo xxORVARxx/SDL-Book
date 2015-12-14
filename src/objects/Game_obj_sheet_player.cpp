@@ -18,6 +18,8 @@ Game_obj_sheet_player::Game_obj_sheet_player( Game_obj_parameters& _obj_params, 
   move_down_key =  SDL_SCANCODE_S ;
   move_right_key = SDL_SCANCODE_D ;
   move_left_key =  SDL_SCANCODE_A ;
+  move_up_key_pressed = false;
+  move_down_key_pressed = false;
 
   m_texture_flip = SDL_FLIP_NONE;
 }
@@ -35,9 +37,12 @@ void Game_obj_sheet_player::Update()
   this->Other_forces();
   m_position += (( m_velocity + m_velocity ) * m_delta_time );
 
-  m_frame_speed = 33.33f;
-  if( m_acceleration_steering.y > 0.0f )  m_frame_speed = 50.0f;
-  if( m_acceleration_steering.y < 0.0f )  m_frame_speed = 11.11f;
+  if( move_up_key_pressed )
+    m_frame_time = 11.11f;
+  else if( move_down_key_pressed )
+    m_frame_time = 50.0f;
+  else
+    m_frame_time = 33.33f;
   Game_obj_sheet::Update();
 }
 
@@ -72,6 +77,8 @@ void Game_obj_sheet_player::Update_camera()
 void Game_obj_sheet_player::Hendle_input()
 {
   // THE STEERING CONTROL:
+  move_up_key_pressed = false;
+  move_down_key_pressed = false;
   m_acceleration_steering.x = 0.0f;
   m_acceleration_steering.y = 0.0f;
   float steering_speed = ( 50.0f * m_delta_time );
@@ -95,16 +102,20 @@ void Game_obj_sheet_player::Hendle_input()
   // Keyboard:
   const Uint8* keys_state = the_Input_handler::Instance().Get_keys_state();
   if( keys_state[ move_left_key ] )// Left:
-    m_acceleration_steering += xx::Degrees_to_vec( m_helicopter_pitch_degrees + 180.0f );
+    m_acceleration_steering.x += xx::Degrees_to_vec( m_helicopter_pitch_degrees + 180.0f ).x;
   if( keys_state[ move_right_key ] )// Right:
-    m_acceleration_steering += xx::Degrees_to_vec( m_helicopter_pitch_degrees );
+    m_acceleration_steering.x += xx::Degrees_to_vec( m_helicopter_pitch_degrees ).x;
   if( keys_state[ move_up_key ] )// Up:
     {
+      move_up_key_pressed = true;
       m_acceleration_steering += xx::Degrees_to_vec( m_helicopter_pitch_degrees + 270.0f );
       steering_speed *= 2.0f;
     }
   else if( keys_state[ move_down_key ] )// Down:
-    m_acceleration_steering.y += 1.0f;
+    {
+      move_down_key_pressed = true;
+      m_acceleration_steering.y += 1.0f;
+    }
 
   if( m_acceleration_steering.x || m_acceleration_steering.y  )
     {
@@ -122,7 +133,7 @@ void Game_obj_sheet_player::Other_forces()
   // THE GRAVITY:
   float m_gravity_forces = ( 9.8f * 2.0f * m_delta_time );
   glm::vec2 acceleration_gravity( 0.0f, m_gravity_forces );
-  m_velocity -= ( 0.05f * m_velocity * m_delta_time  );
+  m_velocity -= ( 0.05f * m_velocity * m_delta_time  );// 5% Air-Resistans.
   m_velocity += ( acceleration_gravity * 1.5f );
 
   // THE MAIN ROTOR BLADES:

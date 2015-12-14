@@ -12,10 +12,10 @@ Game_obj_sheet::Game_obj_sheet( Game_obj_parameters& _obj_params, Game_obj_sheet
 {
   m_total_num_of_frames = _sheet_params.total_num_of_frames;
   m_frames_in_a_row = _sheet_params.frames_in_a_row;
-  m_frame_speed = _sheet_params.frame_speed;
+  m_frame_time = _sheet_params.frame_time;
 
   m_frame_counter = 0;
-  m_frame_time = 0;
+  m_frame_time_out = 0;
   m_frame_number = 1;
   m_row_number = 1;
   // Calculate the frame size:
@@ -36,10 +36,10 @@ Game_obj_sheet::Game_obj_sheet( Game_obj_parameters& _obj_params, Game_obj_sheet
 void Game_obj_sheet::Update()
 {
   // If current frame is too old:
-  if( (float)SDL_GetTicks() > m_frame_time )
+  if( (float)SDL_GetTicks() > m_frame_time_out )
     {
       m_frame_counter++;
-      m_frame_time = SDL_GetTicks() + m_frame_speed;
+      m_frame_time_out = SDL_GetTicks() + m_frame_time;
     }
   // If the current frame is the last frame:
   if( m_frame_counter > m_total_num_of_frames )

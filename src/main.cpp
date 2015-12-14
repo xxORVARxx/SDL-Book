@@ -41,7 +41,5 @@ int main ( int argc, char* args[] )
 
 
   the_Game::Instance().Clean();
-
-
   return 0;
 }

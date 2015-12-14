@@ -4,14 +4,14 @@
 
 
 // --- Constructors ---
-the_Input_handler::the_Input_handler() 
+the_Input_handler::the_Input_handler()
 {
   m_running = true;
   m_mouse_moving = false;
   m_mouse_button_down = false;
   for( Uint8 i = 0 ; i < 16 ; ++i )  m_mouse_buttons[i] = false;
   m_joystick_Deadzone = 10000;
-  mf_Callback_on_display_resize = nullptr;
+  mf_Callback_on_display_resize = nullptr; // Function pointer.
 }
 
 
@@ -142,6 +142,7 @@ void the_Input_handler::on_Window_event( SDL_Event& _event )
   switch( _event.window.event )
     {
     case SDL_WINDOWEVENT_SIZE_CHANGED :
+      // Calling the function pointer:
       if( mf_Callback_on_display_resize != nullptr )
 	mf_Callback_on_display_resize( _event.window.data1, _event.window.data2 );
       // Width = _event.window.data1;
@@ -185,5 +186,6 @@ void the_Input_handler::Initialise_joysticks()
 
 void the_Input_handler::Set_callback_on_display_resize( void(* _Callback )( int _w, int _h ) )
 {
+  // Setting the callback function pointer:
   mf_Callback_on_display_resize = _Callback;
 }

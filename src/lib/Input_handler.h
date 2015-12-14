@@ -67,7 +67,7 @@ class the_Input_handler
   std::vector< glm::vec4 > m_joystick_values_vec;
   int m_joystick_Deadzone;
   // Window:
-  void(* mf_Callback_on_display_resize )( int _width, int _height );
+  void(* mf_Callback_on_display_resize )( int _width, int _height ); // Function pointer.
 };
 
 

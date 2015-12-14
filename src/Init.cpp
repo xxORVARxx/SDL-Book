@@ -22,17 +22,17 @@ namespace xx
   void Clamp_degrees( float& _degrees )
   {
     while( _degrees > 360.0f )
-      _degrees -= 360.f;
+      _degrees -= 360.0f;
     while( _degrees <= 0.0f )
-      _degrees += 360.f;
+      _degrees += 360.0f;
   }
 
   void Clamp_degrees( double& _degrees )
   {
     while( _degrees > 360.0d )
-      _degrees -= 360.d;
+      _degrees -= 360.0d;
     while( _degrees <= 0.0d )
-      _degrees += 360.d;
+      _degrees += 360.0d;
   }
 
 

@@ -25,6 +25,8 @@ class Game_obj_sheet_player : public Game_obj_sheet
 
   // --- Variables ---
   Uint8 move_up_key, move_down_key, move_right_key, move_left_key;
+  bool move_up_key_pressed, move_down_key_pressed;
+
   Camera* m_camera;
   SDL_RendererFlip m_texture_flip;
   float m_delta_time;

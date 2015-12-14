@@ -57,10 +57,10 @@ void Game_obj_sheet_enemy::Update_frame()
 {
   int m_number_of_enemy_types = 17;
   // If current frame is too old:
-  if( (float)SDL_GetTicks() > m_frame_time )
+  if( (float)SDL_GetTicks() > m_frame_time_out )
     {
       m_frame_counter += m_number_of_enemy_types;
-      m_frame_time = SDL_GetTicks() + m_frame_speed;
+      m_frame_time_out = SDL_GetTicks() + m_frame_time;
     }
   // If the current frame is the last frame:
   if( m_frame_counter > m_total_num_of_frames )
