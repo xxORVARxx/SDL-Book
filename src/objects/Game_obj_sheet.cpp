@@ -5,7 +5,7 @@
 #include "Game.h"
 
 
-
+/*
 // --- Sprite-Sheet Game object ---
 Game_obj_sheet::Game_obj_sheet( Game_obj_parameters& _obj_params, Game_obj_sheet_parameters& _sheet_params ) : 
   Game_obj( _obj_params, true )
@@ -18,6 +18,37 @@ Game_obj_sheet::Game_obj_sheet( Game_obj_parameters& _obj_params, Game_obj_sheet
   m_frame_time_out = 0;
   m_frame_number = 1;
   m_row_number = 1;
+  // Calculate the frame size:
+  m_frame_width = ( (int)m_image_size.x / m_frames_in_a_row );
+  if( m_total_num_of_frames % m_frames_in_a_row )
+    m_frame_height = ( (int)m_image_size.y / (( m_total_num_of_frames / m_frames_in_a_row ) + 1 ));
+  else
+    m_frame_height = ( (int)m_image_size.y / ( m_total_num_of_frames / m_frames_in_a_row ));
+
+  // If there is no 'size' requested ('size' is 0), then the 'frame_size' is used:
+  if( m_size.x == 0 )  m_size.x = m_frame_width;
+  if( m_size.y == 0 )  m_size.y = m_frame_height;
+  m_size *= m_scale;
+}
+*/
+
+
+void Game_obj_sheet::Load( Game_obj_sheet_parameters& _sheet_params )
+{
+  m_texture_id = _sheet_params.m_obj_params.texture_id;
+  m_image_size = _sheet_params.m_obj_params.image_size;
+  m_position = _sheet_params.m_obj_params.position;
+  m_scale = _sheet_params.m_obj_params.scale;
+  m_size = _sheet_params.m_obj_params.size;
+
+  m_total_num_of_frames = _sheet_params.total_num_of_frames;
+  m_frames_in_a_row = _sheet_params.frames_in_a_row;
+  m_frame_time = _sheet_params.frame_time;
+  m_frame_counter = 0;
+  m_frame_time_out = 0;
+  m_frame_number = 1;
+  m_row_number = 1;
+
   // Calculate the frame size:
   m_frame_width = ( (int)m_image_size.x / m_frames_in_a_row );
   if( m_total_num_of_frames % m_frames_in_a_row )

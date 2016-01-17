@@ -31,7 +31,7 @@ void State_main_menu::on_Enter()
 {
   std::cout << "STATE MACHINE :: Entering MENU-state.\n";
   SDL_SetCursor ( SDL_CreateSystemCursor( SDL_SYSTEM_CURSOR_ARROW ));
-
+  /*
   // Loading Texture with the "Singleton Class":
   the_Texture_manager::Instance().Load_image( the_Game::Instance().Get_renderer(), "PLAY_B", "assets/Play_button.png" );
   the_Texture_manager::Instance().Load_image( the_Game::Instance().Get_renderer(), "EXIT_B", "assets/Exit_button.png" );
@@ -50,6 +50,7 @@ void State_main_menu::on_Enter()
     Game_obj_sheet_parameters sheet_params( 3, 1 );
     m_objects_vec.push_back( new Game_obj_sheet_button( obj_params, sheet_params, smf_Exit_from_menu ));
   }// The 'new Game_objects' are deleted in: Menu-state::on_Exit().
+  */
 }
 
 

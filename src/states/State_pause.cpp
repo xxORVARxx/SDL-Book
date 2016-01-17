@@ -31,7 +31,7 @@ void State_pause::on_Enter()
 {
   std::cout << "STATE MACHINE :: Entering PAUSE-state.\n";
   SDL_SetCursor ( SDL_CreateSystemCursor( SDL_SYSTEM_CURSOR_ARROW ));
-
+  /*
   // Loading Texture with the "Singleton Class":
   the_Texture_manager::Instance().Load_image( the_Game::Instance().Get_renderer(), "RESUME_B", "assets/Resume_button.png" );
   the_Texture_manager::Instance().Load_image( the_Game::Instance().Get_renderer(), "MM_B", "assets/MM_button.png" );
@@ -50,6 +50,7 @@ void State_pause::on_Enter()
     Game_obj_sheet_parameters sheet_params( 3, 1 );
     m_objects_vec.push_back( new Game_obj_sheet_button( obj_params, sheet_params, smf_Pause_to_main ));
   }// The 'new Game_objects' are deleted in: Pause-state::on_Exit().
+  */
 }
 
 

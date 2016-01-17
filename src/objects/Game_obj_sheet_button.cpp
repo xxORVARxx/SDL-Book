@@ -8,10 +8,20 @@
 
 
 // --- BUTTON ---
+/*
 Game_obj_sheet_button::Game_obj_sheet_button( Game_obj_parameters& _obj_params, Game_obj_sheet_parameters& _sheet_params, 
 					      void (*f_Callback)()) : 
   Game_obj_sheet(_obj_params, _sheet_params), mf_Callback(f_Callback)
 {
+  m_clicked = false;
+}
+*/
+
+
+void Game_obj_sheet_button::Load( Game_obj_button_parameters& _button_params )
+{
+  Game_obj_sheet::Load( _button_params.m_sheet_params );
+  mf_Callback = _button_params.mf_Callback;
   m_clicked = false;
 }
 

@@ -9,10 +9,29 @@
 
 
 // --- Player ---
+/*
 Game_obj_sheet_player::Game_obj_sheet_player( Game_obj_parameters& _obj_params, Game_obj_sheet_parameters& _sheet_params, 
 					      Camera* _camera ) : 
   Game_obj_sheet(_obj_params, _sheet_params), m_camera(_camera)
 {
+  // Seting keys:
+  move_up_key =    SDL_SCANCODE_W ;
+  move_down_key =  SDL_SCANCODE_S ;
+  move_right_key = SDL_SCANCODE_D ;
+  move_left_key =  SDL_SCANCODE_A ;
+  move_up_key_pressed = false;
+  move_down_key_pressed = false;
+
+  m_texture_flip = SDL_FLIP_NONE;
+}
+*/
+
+
+void Game_obj_sheet_player::Load( Game_obj_player_parameters& _player_params )
+{
+  Game_obj_sheet::Load( _player_params.m_sheet_params );
+  m_camera = _player_params.m_camera;
+
   // Seting keys:
   move_up_key =    SDL_SCANCODE_W ;
   move_down_key =  SDL_SCANCODE_S ;

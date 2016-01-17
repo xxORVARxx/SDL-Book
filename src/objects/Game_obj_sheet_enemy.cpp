@@ -8,10 +8,28 @@
 
 
 // --- Enemy ---
+/*
 Game_obj_sheet_enemy::Game_obj_sheet_enemy( Game_obj_parameters& _obj_params, Game_obj_sheet_parameters& _sheet_params, 
 					    int _enemy_type ) : 
   Game_obj_sheet(_obj_params, _sheet_params), m_enemy_type(_enemy_type)
 {
+  m_frame_counter = m_enemy_type;
+  m_direction_degrees = xx::Get_random.Discrete_num( 1, 360 );
+
+  if( xx::Get_random.Discrete_num( 0, 1 ))
+    turning_speed = xx::Get_random.Real_num( 2.0f, 20.0f );
+  else
+    turning_speed = xx::Get_random.Real_num( -2.0f, -20.0f );
+  fly_speed = xx::Get_random.Real_num( 10000.0f, 500.0f );
+}
+*/
+
+
+void Game_obj_sheet_enemy::Load( Game_obj_enemy_parameters& _enemy_params )
+{
+  Game_obj_sheet::Load( _enemy_params.m_sheet_params );
+  m_enemy_type = _enemy_params.m_enemy_type;
+
   m_frame_counter = m_enemy_type;
   m_direction_degrees = xx::Get_random.Discrete_num( 1, 360 );
 

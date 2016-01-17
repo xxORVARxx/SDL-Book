@@ -6,7 +6,11 @@
 
 
 
-Game_obj_grid::Game_obj_grid( SDL_Color _color, int _size ) : m_color(_color), m_grid_size(_size) {}
+void Game_obj_grid::Load( Game_obj_grid_parameters& _grid_params )
+{
+  SDL_Color m_color = _grid_params.m_color;
+  int m_grid_size = _grid_params.m_grid_size;
+}
 
 
 

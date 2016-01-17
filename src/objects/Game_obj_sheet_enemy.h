@@ -4,6 +4,17 @@
 
 #include "Init.h"
 #include "Game_obj_sheet.h"
+#include "Factory_game_obj.h"
+
+
+
+struct Game_obj_enemy_parameters
+{
+Game_obj_enemy_parameters( Game_obj_sheet_parameters& _sheet_params, int _enemy_type ) : 
+  m_sheet_params(_sheet_params), m_enemy_type(_enemy_type) {}
+  Game_obj_sheet_parameters& m_sheet_params;
+  int m_enemy_type;
+};
 
 
 
@@ -11,8 +22,11 @@
 class Game_obj_sheet_enemy : public Game_obj_sheet
 {
  public:
-  Game_obj_sheet_enemy( Game_obj_parameters& _obj_params, Game_obj_sheet_parameters& _sheet_params, int _enemy_type );
+  Game_obj_sheet_enemy() {}
   virtual ~Game_obj_sheet_enemy() {}
+
+  // --- Functions ---
+  virtual void Load( Game_obj_enemy_parameters& _enemy_params );
 
   virtual void Update();
   virtual void Draw( Camera* _camera );
@@ -30,6 +44,16 @@ class Game_obj_sheet_enemy : public Game_obj_sheet
 
   float turning_speed;
   float fly_speed;
+};
+
+
+
+class Enemy_creator : public Base_creator
+{
+  Game_obj_default* Create_game_object() const
+  {
+    return new Game_obj_sheet_enemy;
+  }
 };
 
 

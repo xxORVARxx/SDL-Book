@@ -7,7 +7,7 @@
 
 
 // --- Game object ---
-Game_obj::Game_obj( Game_obj_parameters& _obj_params, bool is_a_sheet )
+void Game_obj::Load( Game_obj_parameters& _obj_params )
 {
   m_texture_id = _obj_params.texture_id;
   m_image_size = _obj_params.image_size;
@@ -15,14 +15,12 @@ Game_obj::Game_obj( Game_obj_parameters& _obj_params, bool is_a_sheet )
   m_scale = _obj_params.scale;
   m_size = _obj_params.size;
 
-  // If this is a 'Game_obj_sheet', then this is done in the Game_obj_sheet's constructor instead.
-  if ( ! is_a_sheet )
-    {
-      // If there is no 'size' requested ('size' is 0), then the 'image_size' is used:
-      if( m_size.x == 0 )  m_size.x = m_image_size.x;
-      if( m_size.y == 0 )  m_size.y = m_image_size.y;
-      m_size *= m_scale;
-    }
+  if( m_size.x == 0 )  
+    m_size.x = m_image_size.x;
+  if( m_size.y == 0 )  
+    m_size.y = m_image_size.y;
+
+  m_size *= m_scale;
 }
 
 

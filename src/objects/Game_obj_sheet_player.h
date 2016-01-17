@@ -4,6 +4,17 @@
 
 #include "Init.h"
 #include "Game_obj_sheet.h"
+#include "Factory_game_obj.h"
+
+
+
+struct Game_obj_player_parameters
+{
+Game_obj_player_parameters( Game_obj_sheet_parameters& _sheet_params, Camera* _camera ) : 
+  m_sheet_params(_sheet_params), m_camera(_camera) {}
+  Game_obj_sheet_parameters& m_sheet_params;
+  Camera* m_camera;
+};
 
 
 
@@ -11,8 +22,11 @@
 class Game_obj_sheet_player : public Game_obj_sheet
 {
  public:
-  Game_obj_sheet_player( Game_obj_parameters& _obj_params, Game_obj_sheet_parameters& _sheet_params, Camera* _camera );
+  Game_obj_sheet_player() {}
   virtual ~Game_obj_sheet_player() {}
+
+  // --- Functions ---
+  virtual void Load( Game_obj_player_parameters& _player_params );
 
   virtual void Update();
   virtual void Draw( Camera* _camera );
@@ -36,6 +50,16 @@ class Game_obj_sheet_player : public Game_obj_sheet
   float m_helicopter_pitch_degrees;
   glm::vec2 m_acceleration_steering;
   glm::vec2 m_velocity;
+};
+
+
+
+class Player_creator : public Base_creator
+{
+  Game_obj_default* Create_game_object() const
+  {
+    return new Game_obj_sheet_player;
+  }
 };
 
 

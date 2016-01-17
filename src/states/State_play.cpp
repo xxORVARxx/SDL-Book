@@ -32,7 +32,7 @@ void State_play::on_Enter()
 {
   std::cout << "STATE MACHINE :: Entering PLAY-state.\n";
   SDL_SetCursor ( SDL_CreateSystemCursor( SDL_SYSTEM_CURSOR_CROSSHAIR ));
-
+  /*
   m_camera.Setup();
 
   // Loading Texture with the "Singleton Class":
@@ -64,6 +64,7 @@ void State_play::on_Enter()
     Game_obj_sheet_parameters sheet_params( 3, 1 );
     m_objects_vec.push_back( new Game_obj_sheet_button( obj_params, sheet_params, smf_Play_to_pause ));
   }// The 'new Game_objects' are deleted in: Play-state::on_Exit().
+  */
 }
 
 

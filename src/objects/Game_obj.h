@@ -4,11 +4,11 @@
 
 #include "Init.h"
 #include "A_Game_obj_interface.h"
+#include "Factory_game_obj.h"
 
 
 
-// This holds the 'Parameters' to pass through the 'Object' classes.
-struct Game_obj_parameters
+struct Game_obj_parameters : public Base_game_obj_parameters
 {
 Game_obj_parameters( std::string _id, glm::vec2 _image_size, glm::vec2 _pos, 
 		     glm::vec2 _scale = glm::vec2( 1, 1 ), glm::vec2 _size = glm::vec2( 0, 0 )) :
@@ -25,10 +25,12 @@ Game_obj_parameters( std::string _id, glm::vec2 _image_size, glm::vec2 _pos,
 class Game_obj : public Game_obj_default
 {
  public:
-  Game_obj( Game_obj_parameters& _obj_params, bool is_a_sheet = false );
+  Game_obj() {}
   virtual ~Game_obj() {}
 
   // --- Functions ---
+  virtual void Load( Game_obj_parameters& _obj_params );
+
   virtual void Update() {}
   virtual void Draw( Camera* _camera );
   virtual void Clean();
@@ -40,6 +42,16 @@ class Game_obj : public Game_obj_default
   glm::vec2 m_position;
   glm::vec2 m_scale;
   glm::vec2 m_size;// The size to be rendered on the screen.
+};
+
+
+
+class Obj_creator : public Base_creator
+{
+  Game_obj_default* Create_game_object() const
+  {
+    return new Game_obj;
+  }
 };
 
 
