@@ -1,6 +1,6 @@
 
 #include "State_main_menu.h"
-#include "XML_parser.h"
+#include "XML_parser_states.h"
 #include "Input_handler.h"
 
 #include "Game_world.h"

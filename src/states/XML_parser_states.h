@@ -1,6 +1,6 @@
  
-#ifndef XML_PARSER_H
-#define XML_PARSER_H
+#ifndef XML_PARSER_STATES_H
+#define XML_PARSERXML_STATES_H
 
 #include "Init.h"
 #include "A_Game_obj_interface.h"
