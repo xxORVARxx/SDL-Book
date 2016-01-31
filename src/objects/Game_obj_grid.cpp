@@ -6,10 +6,25 @@
 
 
 
+// --- GRID ---
 void Game_obj_grid::Load( Game_obj_grid_parameters& _grid_params )
 {
-  SDL_Color m_color = _grid_params.m_color;
-  int m_grid_size = _grid_params.m_grid_size;
+   m_color = _grid_params.color;
+   m_grid_size = _grid_params.grid_size;
+}
+
+void Game_obj_grid::Parse( xml::parser& _p )
+{
+  std::cout <<"Game-Object-Grid.  ";
+  _p.next_expect( xml::parser::start_element, "game_obj_grid_parameters", xml::content::complex );
+
+  m_color = SDL_Color { (Uint8)_p.attribute< unsigned short >( "color_r" ), 
+			(Uint8)_p.attribute< unsigned short >( "color_g" ), 
+			(Uint8)_p.attribute< unsigned short >( "color_b" ), 
+			(Uint8)_p.attribute< unsigned short >( "color_a" ) };
+  m_grid_size = _p.attribute< int >( "grid_size" );
+
+  _p.next_expect( xml::parser::end_element );//game_obj_grid_parameters
 }
 
 

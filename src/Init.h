@@ -31,7 +31,11 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 
+#include <xml/parser>
+#include <xml/serializer>
+
 #include <iostream>
+#include <fstream>
 #include <algorithm>
 
 #include <string>

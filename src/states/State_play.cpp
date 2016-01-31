@@ -77,7 +77,7 @@ void State_play::Update()
     the_Game::Instance().Get_state_machine()->Push_state( new State_pause );
 
   // Updating the Game Objects:
-  std::for_each( m_objects_vec.begin(), m_objects_vec.end(), []( Game_obj_default* i ){ i->Update(); } );
+  std::for_each( m_objects_vec.begin(), m_objects_vec.end(), []( Base_game_obj* i ){ i->Update(); } );
 }
 
 
@@ -95,6 +95,6 @@ void State_play::on_Exit()
 {
   std::cout << "STATE MACHINE :: Exiting PLAY-state.\n";
   // Deleting Oblects:
-  std::for_each( m_objects_vec.begin(), m_objects_vec.end(), []( Game_obj_default* i ){ i->Clean(); delete i; } );
+  std::for_each( m_objects_vec.begin(), m_objects_vec.end(), []( Base_game_obj* i ){ i->Clean(); delete i; } );
   m_objects_vec.clear();
 }

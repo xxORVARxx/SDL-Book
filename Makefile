@@ -2,7 +2,7 @@
 
 TEST := test
 CPPFLAGS := -std=c++11 -O3
-LDFLAGS := -lSDL2 -lSDL2_image
+LDFLAGS := -lSDL2 -lSDL2_image -lstudxml
 
 
 
@@ -74,6 +74,14 @@ run: $(BUILD-Os)
 #	  g++ -std=c++11 my.o -o test -lSDL2 -lSDL2_image
 	./$(TEST)
 #	  ./test
+
+
+
+## Run the Program using Valgrind, a memory error detector.
+.PHONY: valgrind
+valgrind:
+	valgrind ./$(TEST)
+#	  valgrind ./test
 
 
 

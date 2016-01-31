@@ -6,7 +6,7 @@
 #include "A_State_interface.h"
 #include "Camera.h"
 
-class Game_obj_default;
+class Base_game_obj;
 
 
 
@@ -26,7 +26,7 @@ class State_play : public State_interface
   static const std::string sm_menu_id;
 
   Camera m_camera;
-  std::vector< Game_obj_default* > m_objects_vec;
+  std::vector< Base_game_obj* > m_objects_vec;
   // Call back functions for menu items:
   static void smf_Play_to_pause();
 };

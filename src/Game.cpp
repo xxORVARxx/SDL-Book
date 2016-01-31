@@ -5,6 +5,13 @@
 
 #include "Game_world.h"
 #include "State_main_menu.h"
+#include "Factory_game_obj.h"
+
+#include "Game.h"
+#include "Game_obj_grid.h"
+#include "Game_obj_sheet_button.h"
+#include "Game_obj_sheet_enemy.h"
+#include "Game_obj_sheet_player.h"
 
 
 
@@ -50,10 +57,17 @@ bool the_Game::Init( std::string _title )
   std::cout <<"GAME :: But we are linking against SDL version: " 
 	    << (int)linked.major <<"."<< (int)linked.minor <<"."<< (int)linked.patch << "\n";
 
- 
+
   // Opening Inputh Handler:
   the_Input_handler::Instance().Initialise_joysticks();
 
+  // Register all Game-objects:
+  the_Factory_game_obj::Instance().Register_creator( "GAME_OBJ", new Creator_game_obj );
+  the_Factory_game_obj::Instance().Register_creator( "GAME_OBJ_GRID", new Creator_game_obj_grid );
+  the_Factory_game_obj::Instance().Register_creator( "GAME_OBJ_SHEET", new Creator_game_obj_sheet );
+  the_Factory_game_obj::Instance().Register_creator( "GAME_OBJ_SHEET_BUTTON", new Creator_game_obj_button );
+  the_Factory_game_obj::Instance().Register_creator( "GAME_OBJ_SHEET_ENEMY", new Creator_game_obj_enemy );
+  the_Factory_game_obj::Instance().Register_creator( "GAME_OBJ_SHEET_PLAYER", new Creator_game_obj_player );
 
   // The Game State Machine:
   m_state_machine.Push_state( new State_main_menu );
@@ -117,6 +131,9 @@ void the_Game::Clean()
 
   // Closing Inputh Handler:
   the_Input_handler::Instance().Clean();
+
+  // Closing Factory:
+  the_Factory_game_obj::Instance().Clean();
 
   // The Game State Machine:
   m_state_machine.Clean();

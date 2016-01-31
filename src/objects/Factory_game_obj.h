@@ -3,27 +3,43 @@
 #define Factory_game_obj_h
 
 #include "Init.h"
-#include "A_Game_obj_interface.h"
+
+class Base_game_obj;
 
 
 
-class Base_creator
+class Base_creator_game_obj
 {
  public:
-  virtual Game_obj_default* Create_game_object() const = 0;
-  virtual ~Base_creator() {}
+  virtual ~Base_creator_game_obj() = default;
+  virtual Base_game_obj* Create_game_object() const = 0;
 };
 
 
 
-class Factory_game_obj
+class the_Factory_game_obj
 {
+ private:
+  the_Factory_game_obj() = default;
+  the_Factory_game_obj( const the_Factory_game_obj& ) = delete;
+  the_Factory_game_obj& operator= ( const the_Factory_game_obj& ) = delete;
+
  public:
-  bool Register_type( std::string type_id, Base_creator* ptr_creater );
-  Game_obj_default* Create( std::string type_id );
+  ~the_Factory_game_obj() = default;
+
+  static the_Factory_game_obj& Instance()
+  {
+    static the_Factory_game_obj instance;
+    return instance;
+  }
+
+  bool Register_creator( std::string _object_id, Base_creator_game_obj* _creater_ptr );
+  Base_game_obj* Create( std::string _object_id );
+
+  void Clean();
 
  private:
-  std::map< std::string, Base_creator* > m_creators;
+  std::map< const std::string, Base_creator_game_obj* > m_creators_map;
 };
 
 

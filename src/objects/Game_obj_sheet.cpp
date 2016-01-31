@@ -5,19 +5,24 @@
 #include "Game.h"
 
 
-/*
-// --- Sprite-Sheet Game object ---
-Game_obj_sheet::Game_obj_sheet( Game_obj_parameters& _obj_params, Game_obj_sheet_parameters& _sheet_params ) : 
-  Game_obj( _obj_params, true )
+
+// --- Sprite-Sheet Game Object ---
+void Game_obj_sheet::Load( Game_obj_sheet_parameters& _sheet_params )
 {
+  m_texture_id = _sheet_params.texture_id;
+  m_image_size = _sheet_params.image_size;
+  m_position = _sheet_params.position;
+  m_scale = _sheet_params.scale;
+  m_size = _sheet_params.size;
+
   m_total_num_of_frames = _sheet_params.total_num_of_frames;
   m_frames_in_a_row = _sheet_params.frames_in_a_row;
   m_frame_time = _sheet_params.frame_time;
-
   m_frame_counter = 0;
   m_frame_time_out = 0;
   m_frame_number = 1;
   m_row_number = 1;
+
   // Calculate the frame size:
   m_frame_width = ( (int)m_image_size.x / m_frames_in_a_row );
   if( m_total_num_of_frames % m_frames_in_a_row )
@@ -30,20 +35,27 @@ Game_obj_sheet::Game_obj_sheet( Game_obj_parameters& _obj_params, Game_obj_sheet
   if( m_size.y == 0 )  m_size.y = m_frame_height;
   m_size *= m_scale;
 }
-*/
 
-
-void Game_obj_sheet::Load( Game_obj_sheet_parameters& _sheet_params )
+void Game_obj_sheet::Parse( xml::parser& _p )
 {
-  m_texture_id = _sheet_params.m_obj_params.texture_id;
-  m_image_size = _sheet_params.m_obj_params.image_size;
-  m_position = _sheet_params.m_obj_params.position;
-  m_scale = _sheet_params.m_obj_params.scale;
-  m_size = _sheet_params.m_obj_params.size;
+  std::cout <<"Game-Object-Sheet.  ";
+  _p.next_expect( xml::parser::start_element, "game_obj_parameters", xml::content::complex );
 
-  m_total_num_of_frames = _sheet_params.total_num_of_frames;
-  m_frames_in_a_row = _sheet_params.frames_in_a_row;
-  m_frame_time = _sheet_params.frame_time;
+  m_texture_id = _p.attribute( "texture_id" );
+  m_image_size = glm::vec2( _p.attribute< float >( "image_size_x" ), _p.attribute< float >( "image_size_y" ));
+  m_position = glm::vec2( _p.attribute< float >( "position_x" ), _p.attribute< float >( "position_y" ));
+  m_scale = glm::vec2( _p.attribute< float >( "scale_x" ), _p.attribute< float >( "scale_y" ));
+  m_size = glm::vec2( _p.attribute< float >( "size_x" ), _p.attribute< float >( "size_y" ));
+
+  _p.next_expect( xml::parser::end_element );//game_obj_parameters
+  _p.next_expect( xml::parser::start_element, "game_obj_sheet_parameters", xml::content::complex );
+
+  m_total_num_of_frames = _p.attribute< int >( "total_num_of_frames" );
+  m_frames_in_a_row = _p.attribute< int >( "frames_in_a_row" );
+  m_frame_time = _p.attribute< float >( "frame_time" );
+
+  _p.next_expect( xml::parser::end_element );//game_obj_sheet_parameters
+
   m_frame_counter = 0;
   m_frame_time_out = 0;
   m_frame_number = 1;

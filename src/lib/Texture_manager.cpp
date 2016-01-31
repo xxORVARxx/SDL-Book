@@ -184,5 +184,7 @@ void the_Texture_manager::Clean()
   std::for_each( m_texture_map.begin(), m_texture_map.end(), 
 		 []( std::pair< const std::string, Texture_data >& i ){ SDL_DestroyTexture( i.second.Get_texture() ); } );
   m_texture_map.clear();
+
+  std::cout << "TEXTURE MANAGER :: Clean() is Done.\n";
 }
 

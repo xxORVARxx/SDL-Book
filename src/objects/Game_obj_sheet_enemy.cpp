@@ -7,12 +7,11 @@
 
 
 
-// --- Enemy ---
-/*
-Game_obj_sheet_enemy::Game_obj_sheet_enemy( Game_obj_parameters& _obj_params, Game_obj_sheet_parameters& _sheet_params, 
-					    int _enemy_type ) : 
-  Game_obj_sheet(_obj_params, _sheet_params), m_enemy_type(_enemy_type)
+// --- ENEMY ----
+void Game_obj_sheet_enemy::Load( Game_obj_enemy_parameters& _enemy_params )
 {
+  m_enemy_type = _enemy_params.m_enemy_type;
+
   m_frame_counter = m_enemy_type;
   m_direction_degrees = xx::Get_random.Discrete_num( 1, 360 );
 
@@ -22,13 +21,16 @@ Game_obj_sheet_enemy::Game_obj_sheet_enemy( Game_obj_parameters& _obj_params, Ga
     turning_speed = xx::Get_random.Real_num( -2.0f, -20.0f );
   fly_speed = xx::Get_random.Real_num( 10000.0f, 500.0f );
 }
-*/
 
-
-void Game_obj_sheet_enemy::Load( Game_obj_enemy_parameters& _enemy_params )
+void Game_obj_sheet_enemy::Parse( xml::parser& _p )
 {
-  Game_obj_sheet::Load( _enemy_params.m_sheet_params );
-  m_enemy_type = _enemy_params.m_enemy_type;
+  std::cout <<"Game-Object-Sheet-Enemy.  ";
+  Game_obj_sheet::Parse( _p );
+  _p.next_expect( xml::parser::start_element, "game_obj_enemy_parameters", xml::content::complex );
+
+  m_enemy_type = _p.attribute< int >( "enemy_type" );
+
+  _p.next_expect( xml::parser::end_element );//game_obj_enemy_parameters
 
   m_frame_counter = m_enemy_type;
   m_direction_degrees = xx::Get_random.Discrete_num( 1, 360 );
@@ -44,6 +46,7 @@ void Game_obj_sheet_enemy::Load( Game_obj_enemy_parameters& _enemy_params )
 
 void Game_obj_sheet_enemy::Update() 
 {
+  /*
   m_delta_time = (float)the_World::Instance().Get_delta_time();
   m_velocity.x = 0.0f;
   m_velocity.y = 0.0f;
@@ -52,12 +55,14 @@ void Game_obj_sheet_enemy::Update()
   this->Update_frame();
 
   m_position += ( m_velocity * m_delta_time );
+  */
 }
 
 
 
 void Game_obj_sheet_enemy::Draw( Camera* _camera )
 {
+  /*
   xx::Clamp_degrees( m_direction_degrees );
 
   glm::vec2 display_position = m_position;
@@ -67,6 +72,7 @@ void Game_obj_sheet_enemy::Draw( Camera* _camera )
   the_Texture_manager::Instance().Draw_frame_rot( the_Game::Instance().Get_renderer(), m_texture_id, display_position, 
 						  m_size, m_frame_width, m_frame_height, m_frame_number, m_row_number, 
 						  m_direction_degrees, 2.0d, 2.0d );
+  */
 }
 
 

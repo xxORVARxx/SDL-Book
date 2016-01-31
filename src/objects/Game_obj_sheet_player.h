@@ -8,11 +8,11 @@
 
 
 
-struct Game_obj_player_parameters
+struct Game_obj_player_parameters : public Game_obj_sheet_parameters
 {
-Game_obj_player_parameters( Game_obj_sheet_parameters& _sheet_params, Camera* _camera ) : 
-  m_sheet_params(_sheet_params), m_camera(_camera) {}
-  Game_obj_sheet_parameters& m_sheet_params;
+ Game_obj_player_parameters( Game_obj_sheet_parameters& _sheet_params, Camera* _camera ) : 
+  Game_obj_sheet_parameters(_sheet_params), m_camera(_camera) {}
+
   Camera* m_camera;
 };
 
@@ -26,7 +26,8 @@ class Game_obj_sheet_player : public Game_obj_sheet
   virtual ~Game_obj_sheet_player() {}
 
   // --- Functions ---
-  virtual void Load( Game_obj_player_parameters& _player_params );
+  void Load( Game_obj_player_parameters& _player_params );
+  virtual void Parse( xml::parser& _p );
 
   virtual void Update();
   virtual void Draw( Camera* _camera );
@@ -54,9 +55,9 @@ class Game_obj_sheet_player : public Game_obj_sheet
 
 
 
-class Player_creator : public Base_creator
+class Creator_game_obj_player : public Base_creator_game_obj
 {
-  Game_obj_default* Create_game_object() const
+  virtual Base_game_obj* Create_game_object() const
   {
     return new Game_obj_sheet_player;
   }

@@ -66,7 +66,7 @@ void State_pause::on_Display_resize()
 void State_pause::Update()
 {
   // Updating the Game Objects:
-  std::for_each( m_objects_vec.begin(), m_objects_vec.end(), []( Game_obj_default* i ){ i->Update(); } );
+  std::for_each( m_objects_vec.begin(), m_objects_vec.end(), []( Base_game_obj* i ){ i->Update(); } );
 }
 
 
@@ -74,7 +74,7 @@ void State_pause::Update()
 void State_pause::Render()
 {
   // Rendering the Game Objects:
-  std::for_each( m_objects_vec.begin(), m_objects_vec.end(), []( Game_obj_default* i ){ i->Draw( nullptr ); } );
+  std::for_each( m_objects_vec.begin(), m_objects_vec.end(), []( Base_game_obj* i ){ i->Draw( nullptr ); } );
 }
 
 
@@ -83,6 +83,6 @@ void State_pause::on_Exit()
 {
   std::cout << "STATE MACHINE :: Exiting PAUSE-state.\n";
   // Deleting Oblects:
-  std::for_each( m_objects_vec.begin(), m_objects_vec.end(), []( Game_obj_default* i ){ i->Clean(); delete i; } );
+  std::for_each( m_objects_vec.begin(), m_objects_vec.end(), []( Base_game_obj* i ){ i->Clean(); delete i; } );
   m_objects_vec.clear();
 }

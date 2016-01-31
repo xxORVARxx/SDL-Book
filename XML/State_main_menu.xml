@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+
+<MAIN_MENU>
+
+  <TEXTURES>
+    <texture filename="assets/Play_button.png"
+             id="PLAY_B"/>
+    <texture filename="assets/Helicopter.png"
+             id="HELI"/>
+    <texture filename="assets/Enemies_up.png"
+             id="ENEMY"/>
+
+  </TEXTURES>
+
+  <OBJECTS>
+    <!-- Grid: -->
+    <object type="GAME_OBJ_GRID" quantity="1">
+      <game_obj_grid_parameters color_r="20" 
+				color_g="20" 
+				color_b="20" 
+				color_a="255"
+				grid_size="10"/>
+    </object>
+    <!-- Object: -->
+    <object type="GAME_OBJ" quantity="1">
+      <game_obj_parameters texture_id="PLAY_B"
+                           image_size_x="255.0"
+                           image_size_y="147.0"
+                           position_x="50.0"
+                           position_y="100.0"
+                           scale_x="1.0"
+                           scale_y="1.0"
+                           size_x="0.0"
+                           size_y="0.0"/>
+    </object>
+    <!-- Play "Button": -->
+    <object type="GAME_OBJ_SHEET" quantity="1">
+      <game_obj_parameters texture_id="ENEMY"
+                           image_size_x="1056"
+                           image_size_y="510"
+                           position_x="350.0"
+                           position_y="0.0"
+                           scale_x="1.0"
+                           scale_y="1.0"
+                           size_x="360.0"
+                           size_y="480.0"/>
+      <game_obj_sheet_parameters total_num_of_frames="816"
+				 frames_in_a_row="48"
+				 frame_time="66.67"/>    
+    </object>
+    <!-- Helicopter: -->
+    <object type="GAME_OBJ_SHEET" quantity="1">
+      <game_obj_parameters texture_id="HELI"
+                           image_size_x="460.0"
+                           image_size_y="65.0"
+                           position_x="100.0"
+                           position_y="300.0"
+                           scale_x="2.0"
+                           scale_y="2.0"
+                           size_x="0.0"
+                           size_y="0.0"/>
+      <game_obj_sheet_parameters total_num_of_frames="4"
+				 frames_in_a_row="4"
+				 frame_time="66.67"/>    
+    </object>
+  </OBJECTS>
+
+</MAIN_MENU>

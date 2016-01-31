@@ -9,11 +9,11 @@
 
 
 // This holds the 'Parameters' to pass through the 'Object' classes.
-struct Game_obj_sheet_parameters
+struct Game_obj_sheet_parameters : public Game_obj_parameters
 {
-Game_obj_sheet_parameters( Game_obj_parameters& _obj_params, int frames, int row, float time = 66.67 ) : 
-  m_obj_params(_obj_params), total_num_of_frames(frames), frames_in_a_row(row), frame_time(time) {}
-  Game_obj_parameters& m_obj_params;
+ Game_obj_sheet_parameters( Game_obj_parameters& _obj_params, int frames, int row, float time = 66.67 ) : 
+  Game_obj_parameters(_obj_params), total_num_of_frames(frames), frames_in_a_row(row), frame_time(time) {}
+
   int total_num_of_frames;
   int frames_in_a_row;
   float frame_time;// <- Default = '66.67' (or '15' fps)
@@ -29,7 +29,8 @@ class Game_obj_sheet : public Game_obj
   virtual ~Game_obj_sheet() {}
 
   // --- Functions ---
-  virtual void Load( Game_obj_sheet_parameters& _sheet_params );
+  void Load( Game_obj_sheet_parameters& _sheet_params );
+  virtual void Parse( xml::parser& _p );
 
   virtual void Update();
   virtual void Draw( Camera* _camera );
@@ -51,9 +52,9 @@ class Game_obj_sheet : public Game_obj
 
 
 
-class Sheet_creator : public Base_creator
+class Creator_game_obj_sheet : public Base_creator_game_obj
 {
-  Game_obj_default* Create_game_object() const
+  virtual Base_game_obj* Create_game_object() const
   {
     return new Game_obj_sheet;
   }

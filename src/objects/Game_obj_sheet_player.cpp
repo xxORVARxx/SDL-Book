@@ -8,12 +8,11 @@
 
 
 
-// --- Player ---
-/*
-Game_obj_sheet_player::Game_obj_sheet_player( Game_obj_parameters& _obj_params, Game_obj_sheet_parameters& _sheet_params, 
-					      Camera* _camera ) : 
-  Game_obj_sheet(_obj_params, _sheet_params), m_camera(_camera)
+// --- PLAYER ---
+void Game_obj_sheet_player::Load( Game_obj_player_parameters& _player_params )
 {
+  m_camera = _player_params.m_camera;
+
   // Seting keys:
   move_up_key =    SDL_SCANCODE_W ;
   move_down_key =  SDL_SCANCODE_S ;
@@ -24,13 +23,16 @@ Game_obj_sheet_player::Game_obj_sheet_player( Game_obj_parameters& _obj_params, 
 
   m_texture_flip = SDL_FLIP_NONE;
 }
-*/
 
-
-void Game_obj_sheet_player::Load( Game_obj_player_parameters& _player_params )
+void Game_obj_sheet_player::Parse( xml::parser& _p )
 {
-  Game_obj_sheet::Load( _player_params.m_sheet_params );
-  m_camera = _player_params.m_camera;
+  std::cout <<"Game-Object-Sheet-Player.  ";
+  Game_obj_sheet::Parse( _p );
+  _p.next_expect( xml::parser::start_element, "game_obj_player_parameters", xml::content::complex );
+
+  std::string camera = _p.attribute( "camera" );
+
+  _p.next_expect( xml::parser::end_element );//game_obj_player_parameters
 
   // Seting keys:
   move_up_key =    SDL_SCANCODE_W ;
@@ -47,6 +49,7 @@ void Game_obj_sheet_player::Load( Game_obj_player_parameters& _player_params )
 
 void Game_obj_sheet_player::Update() 
 {
+  /*
   m_delta_time = (float)the_World::Instance().Get_delta_time();
   m_helicopter_middle_pos.x = ( m_position.x + ( m_size.x / 2.0f ));
   m_helicopter_middle_pos.y = ( m_position.y + ( m_size.y / 4.0f ));
@@ -63,12 +66,14 @@ void Game_obj_sheet_player::Update()
   else
     m_frame_time = 33.33f;
   Game_obj_sheet::Update();
+  */
 }
 
 
 
 void Game_obj_sheet_player::Draw( Camera* DO_NOT_USE )
 {
+  /*
   if( ! (( m_helicopter_pitch_degrees > 10.0f )&&( m_helicopter_pitch_degrees < 350.0f )))
     {
       if(( m_velocity.x > 0.0f )&&( m_mouse_pos.x > m_helicopter_middle_pos.x ))  
@@ -81,6 +86,7 @@ void Game_obj_sheet_player::Draw( Camera* DO_NOT_USE )
   the_Texture_manager::Instance().Draw_frame_rot( the_Game::Instance().Get_renderer(), m_texture_id, display_position, 
 						  m_size, m_frame_width, m_frame_height, m_frame_number, m_row_number, 
 						  m_helicopter_pitch_degrees, 2.0d, 4.0d, m_texture_flip );
+  */
 }
 
 

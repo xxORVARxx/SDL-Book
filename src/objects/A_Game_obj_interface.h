@@ -4,6 +4,8 @@
 
 #include "Init.h"
 #include "Camera.h"
+#include "Factory_game_obj.h"
+//#include "Base_game_obj_parameters.h"
 
 
 
@@ -22,7 +24,7 @@ class Game_obj_interface
   virtual ~Game_obj_interface() {}
 
  public:
-  virtual void Load( Base_game_obj_parameters& _obj_params ) = 0;
+  virtual void Parse( xml::parser& _p ) = 0;
 
   virtual void Update() = 0;
   virtual void Draw( Camera* _camera ) = 0;
@@ -31,14 +33,15 @@ class Game_obj_interface
 
 
 
-// This is the default 'Game-object' class which other 'Object' classes can 'inharents' from. 
-class Game_obj_default : public Game_obj_interface
+// This is the base/default 'Game-object' class which other 'Object' classes can 'inharents' from. 
+class Base_game_obj : public Game_obj_interface
 {
  public:
-  virtual ~Game_obj_default() {}
+  virtual ~Base_game_obj() {}
 
   // --- Functions ---
-  virtual void Load( Base_game_obj_parameters& _obj_params ) {}
+  void Load( Base_game_obj_parameters& _obj_params ) {}
+  virtual void Parse( xml::parser& _p ) {}
 
   virtual void Update() {}
   virtual void Draw( Camera* _camera ) {}

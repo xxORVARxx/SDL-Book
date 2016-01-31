@@ -8,11 +8,11 @@
 
 
 
-struct Game_obj_button_parameters
+struct Game_obj_button_parameters : public Game_obj_sheet_parameters
 {
-Game_obj_button_parameters( Game_obj_sheet_parameters& _sheet_params, void (*_f_Callback)() ) : 
-  m_sheet_params(_sheet_params), mf_Callback(_f_Callback) {}
-  Game_obj_sheet_parameters& m_sheet_params;
+ Game_obj_button_parameters( Game_obj_sheet_parameters& _sheet_params, void (*_f_Callback)() ) : 
+  Game_obj_sheet_parameters(_sheet_params), mf_Callback(_f_Callback) {}
+
   void (*mf_Callback)();
 };
 
@@ -26,7 +26,8 @@ class Game_obj_sheet_button : public Game_obj_sheet
   virtual ~Game_obj_sheet_button() {}
 
   // --- Functions ---
-  virtual void Load( Game_obj_button_parameters& _button_params );
+  void Load( Game_obj_button_parameters& _button_params );
+  virtual void Parse( xml::parser& _p );
 
   virtual void Update();
   virtual void Draw( Camera* _camera );
@@ -46,9 +47,9 @@ class Game_obj_sheet_button : public Game_obj_sheet
 
 
 
-class Button_creator : public Base_creator
+class Creator_game_obj_button : public Base_creator_game_obj
 {
-  Game_obj_default* Create_game_object() const
+  virtual Base_game_obj* Create_game_object() const
   {
     return new Game_obj_sheet_button;
   }
