@@ -68,8 +68,9 @@ namespace xx
   public:
   Random( bool _use_seed = false, int _seed = 0 ) : m_seed(_seed)
     {
-      if( _use_seed )  m_engine.seed( _seed );
-      else  m_engine.seed( m_true_random_devic() );
+      if( _use_seed == false ) 
+	_seed = std::chrono::system_clock::now().time_since_epoch().count(); 
+      m_engine.seed( _seed );
     }
     template< typename T >
       T Discrete_num( T _a, T _b )
@@ -83,10 +84,10 @@ namespace xx
 	std::uniform_real_distribution< T > real_dist( _a, _b );
 	return real_dist( m_engine );
       }
+    int Get_seed() { return m_seed; }
   private:
     // --- Variables ---
     int m_seed;
-    std::random_device m_true_random_devic;
     std::mt19937 m_engine;
   } static Get_random;
 };

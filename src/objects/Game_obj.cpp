@@ -3,6 +3,7 @@
 #include "Texture_manager.h"
 
 #include "Game.h"
+#include "XML_parser_states.h"
 
 
 
@@ -28,11 +29,15 @@ void Game_obj::Parse( xml::parser& _p )
   std::cout <<"Game-Object.  ";
   _p.next_expect( xml::parser::start_element, "game_obj_parameters", xml::content::complex );
 
-  m_texture_id = _p.attribute( "texture_id" );
-  m_image_size = glm::vec2( _p.attribute< float >( "image_size_x" ), _p.attribute< float >( "image_size_y" ));
-  m_position = glm::vec2( _p.attribute< float >( "position_x" ), _p.attribute< float >( "position_y" ));
-  m_scale = glm::vec2( _p.attribute< float >( "scale_x" ), _p.attribute< float >( "scale_y" ));
-  m_size = glm::vec2( _p.attribute< float >( "size_x" ), _p.attribute< float >( "size_y" ));
+  m_texture_id = _p.element( "texture" );
+  m_image_size.x = Parse_type< float >( _p, "image_size_x" );
+  m_image_size.y = Parse_type< float >( _p, "image_size_y" );
+  m_position.x = Parse_type< float >( _p, "position_x" );
+  m_position.y = Parse_type< float >( _p, "position_y" );
+  m_scale.x = Parse_type< float >( _p, "scale_x" );
+  m_scale.y = Parse_type< float >( _p, "scale_y" );
+  m_size.x = Parse_type< float >( _p, "size_x" );
+  m_size.y = Parse_type< float >( _p, "size_y" );
 
   _p.next_expect( xml::parser::end_element );//game_obj_parameters
 
@@ -48,14 +53,14 @@ void Game_obj::Parse( xml::parser& _p )
 
 void Game_obj::Draw( Camera* _camera )
 {
-
   glm::vec2 display_position = m_position;
   if( _camera != nullptr )
     display_position -= _camera->Get_position();
 
   the_Texture_manager::Instance().Draw( the_Game::Instance().Get_renderer(), m_texture_id, display_position, m_size );
- 
 }
+
+
 
 void Game_obj::Clean()
 {

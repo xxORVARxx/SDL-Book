@@ -5,12 +5,10 @@
 #include "Init.h"
 #include "A_State_interface.h"
 
-class Base_game_obj;
-
 
 
 // --- PAUSE STATE ---
-class State_pause : public State_interface
+class State_pause : public Base_state
 {
  public:
   virtual ~State_pause() {}
@@ -19,16 +17,10 @@ class State_pause : public State_interface
   virtual void Update();
   virtual void Render();
   virtual void on_Exit();
-  virtual std::string Get_state_id() const { return sm_pause_id; }
+  virtual std::string Get_state_id() const { return sm_state_id; }
 
  private:
-  static const std::string sm_pause_id;
-
-  std::vector< Base_game_obj* > m_objects_vec;
-
-  // Call back functions for pause items:
-  static void smf_Pause_to_main();
-  static void smf_Pause_to_play();
+  static const std::string sm_state_id;
 };
 
 

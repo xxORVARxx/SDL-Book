@@ -10,10 +10,8 @@
 
 struct Game_obj_player_parameters : public Game_obj_sheet_parameters
 {
- Game_obj_player_parameters( Game_obj_sheet_parameters& _sheet_params, Camera* _camera ) : 
-  Game_obj_sheet_parameters(_sheet_params), m_camera(_camera) {}
-
-  Camera* m_camera;
+ Game_obj_player_parameters( Game_obj_sheet_parameters& _sheet_params ) : 
+  Game_obj_sheet_parameters(_sheet_params) {}
 };
 
 
@@ -31,7 +29,7 @@ class Game_obj_sheet_player : public Game_obj_sheet
 
   virtual void Update();
   virtual void Draw( Camera* _camera );
-  virtual void Clean() { std::cout << "PLAYER :: Clean() is Done,  &  "; Game_obj_sheet::Clean(); }
+  virtual void Clean();
 
  private:
   void Update_camera();

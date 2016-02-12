@@ -8,6 +8,22 @@ class Base_game_obj;
 
 
 
+// All Game-Object that the 'Factory' can create:
+namespace fac
+{
+  enum game_object
+  {
+    GAME_OBJ,
+    GAME_OBJ_GRID,
+    GAME_OBJ_SHEET,
+    GAME_OBJ_SHEET_BUTTON,
+    GAME_OBJ_SHEET_ENEMY,
+    GAME_OBJ_SHEET_PLAYER
+  };
+}
+
+
+
 class Base_creator_game_obj
 {
  public:
@@ -33,13 +49,13 @@ class the_Factory_game_obj
     return instance;
   }
 
-  bool Register_creator( std::string _object_id, Base_creator_game_obj* _creater_ptr );
-  Base_game_obj* Create( std::string _object_id );
+  bool Register_creator( fac::game_object _object_id, Base_creator_game_obj* _creater_ptr );
+  Base_game_obj* Create( fac::game_object _object_id );
 
   void Clean();
 
  private:
-  std::map< const std::string, Base_creator_game_obj* > m_creators_map;
+  std::map< const fac::game_object, Base_creator_game_obj* > m_creators_map;
 };
 
 

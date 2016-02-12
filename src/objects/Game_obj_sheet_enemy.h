@@ -31,7 +31,7 @@ class Game_obj_sheet_enemy : public Game_obj_sheet
 
   virtual void Update();
   virtual void Draw( Camera* _camera );
-  virtual void Clean() { std::cout << "ENEMY :: Clean() is Done,  &  "; Game_obj_sheet::Clean(); }
+  virtual void Clean();
 
  private:
   void Update_frame();

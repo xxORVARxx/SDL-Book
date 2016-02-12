@@ -5,7 +5,6 @@
 #include "Init.h"
 #include "Camera.h"
 #include "Factory_game_obj.h"
-//#include "Base_game_obj_parameters.h"
 
 
 

@@ -4,14 +4,11 @@
 
 #include "Init.h"
 #include "A_State_interface.h"
-#include "Camera.h"
-
-class Base_game_obj;
 
 
 
 // --- PLAY STATE ---
-class State_play : public State_interface
+class State_play : public Base_state
 {
  public:
   virtual ~State_play() {}
@@ -20,15 +17,10 @@ class State_play : public State_interface
   virtual void Update();
   virtual void Render();
   virtual void on_Exit();
-  virtual std::string Get_state_id() const { return sm_menu_id; };
+  virtual std::string Get_state_id() const { return sm_state_id; };
 
  private:
-  static const std::string sm_menu_id;
-
-  Camera m_camera;
-  std::vector< Base_game_obj* > m_objects_vec;
-  // Call back functions for menu items:
-  static void smf_Play_to_pause();
+  static const std::string sm_state_id;
 };
 
 

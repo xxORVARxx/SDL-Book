@@ -3,6 +3,7 @@
 
 #include "Game_world.h"
 #include "Game.h"
+#include "XML_parser_states.h"
 
 
 
@@ -18,16 +19,14 @@ void Game_obj_grid::Parse( xml::parser& _p )
   std::cout <<"Game-Object-Grid.  ";
   _p.next_expect( xml::parser::start_element, "game_obj_grid_parameters", xml::content::complex );
 
-  m_color = SDL_Color { (Uint8)_p.attribute< unsigned short >( "color_r" ), 
-			(Uint8)_p.attribute< unsigned short >( "color_g" ), 
-			(Uint8)_p.attribute< unsigned short >( "color_b" ), 
-			(Uint8)_p.attribute< unsigned short >( "color_a" ) };
-  m_grid_size = _p.attribute< int >( "grid_size" );
+  m_color.r = (Uint8)Parse_type< unsigned int >( _p, "color_r" );
+  m_color.g = (Uint8)Parse_type< unsigned int >( _p, "color_g" );
+  m_color.b = (Uint8)Parse_type< unsigned int >( _p, "color_b" );
+  m_color.a = (Uint8)Parse_type< unsigned int >( _p, "color_a" );
+  m_grid_size = Parse_type< unsigned int >( _p, "grid_size" );
 
   _p.next_expect( xml::parser::end_element );//game_obj_grid_parameters
 }
-
-
 
 void Game_obj_grid::Draw( Camera* _camera )
 {

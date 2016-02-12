@@ -1,0 +1,172 @@
+<?xml version="1.0"?>
+
+<PLAY>
+  <TEXTURES>
+
+    <texture filename="assets/Helicopter.png"
+             id="HELI"/>
+    <texture filename="assets/Enemies.png"
+             id="ENEMIES"/>
+    <texture filename="assets/Round_button.png"
+             id="ROUND_B"/>
+
+  </TEXTURES>
+  <OBJECTS>
+
+    <!-- Grid: -->
+    <object type="GAME_OBJ_GRID">
+      <game_obj_grid_parameters>
+	<color_r type="UINT" value="20"/>
+	<color_g type="UINT" value="20"/>
+	<color_b type="UINT" value="20"/>
+	<color_a type="UINT" value="255"/>
+	<grid_size type="UINT" value="50"/>
+      </game_obj_grid_parameters>
+    </object>
+    <!-- Big Grid: -->
+    <object type="GAME_OBJ_GRID">
+      <game_obj_grid_parameters>
+	<color_r type="RANDOM_UINT" min="40" max="255"/>
+	<color_g type="RANDOM_UINT" min="40" max="255"/>
+	<color_b type="RANDOM_UINT" min="40" max="255"/>
+	<color_a type="UINT" value="255"/>
+	<grid_size type="UINT" value="10000"/>
+      </game_obj_grid_parameters>
+    </object>
+
+    <!-- Enemys: -->
+    <object type="GAME_OBJ_SHEET_ENEMY">
+      <game_obj_parameters>
+	<texture>ENEMIES</texture>
+	<image_size_x type="FLOAT" value="510.0"/>
+	<image_size_y type="FLOAT" value="1056.0"/>
+	<position_x type="RANDOM_FLOAT" min="-10.0" max="10.0"/>
+	<position_y type="RANDOM_FLOAT" min="-10.0" max="10.0"/>
+	<scale_x type="FLOAT" value="1.0"/>
+	<scale_y type="FLOAT" value="1.0"/>
+	<size_x type="FLOAT" value="0.0"/>
+	<size_y type="FLOAT" value="0.0"/>
+      </game_obj_parameters>
+      <game_obj_sheet_parameters>
+	<total_num_of_frames type="INT" value="816"/>
+	<frames_in_a_row type="INT" value="17"/>
+	<frame_time type="FLOAT" value="66.67"/>
+      </game_obj_sheet_parameters>
+      <game_obj_enemy_parameters>
+	<enemy_type type="RANDOM_INT" min="1" max="17"/>
+      </game_obj_enemy_parameters>
+    </object>
+
+    <object type="GAME_OBJ_SHEET_ENEMY">
+      <game_obj_parameters>
+	<texture>ENEMIES</texture>
+	<image_size_x type="FLOAT" value="510.0"/>
+	<image_size_y type="FLOAT" value="1056.0"/>
+	<position_x type="RANDOM_FLOAT" min="-10.0" max="10.0"/>
+	<position_y type="RANDOM_FLOAT" min="-10.0" max="10.0"/>
+	<scale_x type="FLOAT" value="1.0"/>
+	<scale_y type="FLOAT" value="1.0"/>
+	<size_x type="FLOAT" value="0.0"/>
+	<size_y type="FLOAT" value="0.0"/>
+      </game_obj_parameters>
+      <game_obj_sheet_parameters>
+	<total_num_of_frames type="INT" value="816"/>
+	<frames_in_a_row type="INT" value="17"/>
+	<frame_time type="FLOAT" value="66.67"/>
+      </game_obj_sheet_parameters>
+      <game_obj_enemy_parameters>
+	<enemy_type type="RANDOM_INT" min="1" max="17"/>
+      </game_obj_enemy_parameters>
+    </object>
+
+    <object type="GAME_OBJ_SHEET_ENEMY">
+      <game_obj_parameters>
+	<texture>ENEMIES</texture>
+	<image_size_x type="FLOAT" value="510.0"/>
+	<image_size_y type="FLOAT" value="1056.0"/>
+	<position_x type="RANDOM_FLOAT" min="-1000.0" max="1000.0"/>
+	<position_y type="RANDOM_FLOAT" min="-1000.0" max="1000.0"/>
+	<scale_x type="FLOAT" value="1.0"/>
+	<scale_y type="FLOAT" value="1.0"/>
+	<size_x type="FLOAT" value="0.0"/>
+	<size_y type="FLOAT" value="0.0"/>
+      </game_obj_parameters>
+      <game_obj_sheet_parameters>
+	<total_num_of_frames type="INT" value="816"/>
+	<frames_in_a_row type="INT" value="17"/>
+	<frame_time type="FLOAT" value="66.67"/>
+      </game_obj_sheet_parameters>
+      <game_obj_enemy_parameters>
+	<enemy_type type="RANDOM_INT" min="1" max="17"/>
+      </game_obj_enemy_parameters>
+    </object>
+
+    <object type="GAME_OBJ_SHEET_ENEMY">
+      <game_obj_parameters>
+	<texture>ENEMIES</texture>
+	<image_size_x type="FLOAT" value="510.0"/>
+	<image_size_y type="FLOAT" value="1056.0"/>
+	<position_x type="RANDOM_FLOAT" min="-1000.0" max="1000.0"/>
+	<position_y type="RANDOM_FLOAT" min="-1000.0" max="1000.0"/>
+	<scale_x type="FLOAT" value="1.0"/>
+	<scale_y type="FLOAT" value="1.0"/>
+	<size_x type="FLOAT" value="0.0"/>
+	<size_y type="FLOAT" value="0.0"/>
+      </game_obj_parameters>
+      <game_obj_sheet_parameters>
+	<total_num_of_frames type="INT" value="816"/>
+	<frames_in_a_row type="INT" value="17"/>
+	<frame_time type="FLOAT" value="66.67"/>
+      </game_obj_sheet_parameters>
+      <game_obj_enemy_parameters>
+	<enemy_type type="RANDOM_INT" min="1" max="17"/>
+      </game_obj_enemy_parameters>
+    </object>
+
+    <!-- Player's Helicopter: -->
+    <object type="GAME_OBJ_SHEET_PLAYER">
+      <game_obj_parameters>
+	<texture>HELI</texture>
+        <image_size_x type="FLOAT" value="460.0"/>
+        <image_size_y type="FLOAT" value="65.0"/>
+        <position_x type="FLOAT" value="0.0"/>
+        <position_y type="FLOAT" value="0.0"/>
+        <scale_x type="FLOAT" value="1.0"/>
+        <scale_y type="FLOAT" value="1.0"/>
+        <size_x type="FLOAT" value="0.0"/>
+        <size_y type="FLOAT" value="0.0"/>
+      </game_obj_parameters>
+      <game_obj_sheet_parameters>
+	<total_num_of_frames type="INT" value="4"/>
+	<frames_in_a_row type="INT" value="4"/>
+	<frame_time type="FLOAT" value="66.67"/>
+      </game_obj_sheet_parameters>
+      <game_obj_player_parameters>
+      </game_obj_player_parameters>
+    </object>
+
+    <!-- Round "Button": -->
+    <object type="GAME_OBJ_SHEET_BUTTON">
+      <game_obj_parameters>
+	<texture>ROUND_B</texture>
+        <image_size_x type="FLOAT" value="223.0"/>
+        <image_size_y type="FLOAT" value="669.0"/>
+        <position_x type="FLOAT" value="5.0"/>
+        <position_y type="FLOAT" value="5.0"/>
+        <scale_x type="FLOAT" value="0.15"/>
+        <scale_y type="FLOAT" value="0.15"/>
+        <size_x type="FLOAT" value="0.0"/>
+        <size_y type="FLOAT" value="0.0"/>
+      </game_obj_parameters>
+      <game_obj_sheet_parameters>
+	<total_num_of_frames type="INT" value="3"/>
+	<frames_in_a_row type="INT" value="1"/>
+	<frame_time type="FLOAT" value="66.67"/>
+      </game_obj_sheet_parameters>
+      <game_obj_button_parameters>
+	<callback_function pointer="POINTER_PLAY_TO_PAUSE"/>
+      </game_obj_button_parameters>
+    </object>
+
+  </OBJECTS>
+</PLAY>

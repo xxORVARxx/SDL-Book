@@ -5,14 +5,16 @@
 
 #include "Game_world.h"
 #include "Game.h"
+#include "XML_parser_states.h"
 
 
 
 // --- PLAYER ---
 void Game_obj_sheet_player::Load( Game_obj_player_parameters& _player_params )
 {
-  m_camera = _player_params.m_camera;
+  Game_obj_sheet::Load( _player_params );
 
+  m_camera = nullptr;
   // Seting keys:
   move_up_key =    SDL_SCANCODE_W ;
   move_down_key =  SDL_SCANCODE_S ;
@@ -28,12 +30,11 @@ void Game_obj_sheet_player::Parse( xml::parser& _p )
 {
   std::cout <<"Game-Object-Sheet-Player.  ";
   Game_obj_sheet::Parse( _p );
+
   _p.next_expect( xml::parser::start_element, "game_obj_player_parameters", xml::content::complex );
-
-  std::string camera = _p.attribute( "camera" );
-
   _p.next_expect( xml::parser::end_element );//game_obj_player_parameters
 
+  m_camera = nullptr;
   // Seting keys:
   move_up_key =    SDL_SCANCODE_W ;
   move_down_key =  SDL_SCANCODE_S ;
@@ -49,12 +50,12 @@ void Game_obj_sheet_player::Parse( xml::parser& _p )
 
 void Game_obj_sheet_player::Update() 
 {
-  /*
   m_delta_time = (float)the_World::Instance().Get_delta_time();
   m_helicopter_middle_pos.x = ( m_position.x + ( m_size.x / 2.0f ));
   m_helicopter_middle_pos.y = ( m_position.y + ( m_size.y / 4.0f ));
 
-  this->Update_camera();
+  if( m_camera )
+    this->Update_camera();
   this->Hendle_input();
   this->Other_forces();
   m_position += (( m_velocity + m_velocity ) * m_delta_time );
@@ -66,14 +67,14 @@ void Game_obj_sheet_player::Update()
   else
     m_frame_time = 33.33f;
   Game_obj_sheet::Update();
-  */
 }
 
 
 
-void Game_obj_sheet_player::Draw( Camera* DO_NOT_USE )
+void Game_obj_sheet_player::Draw( Camera* _camera )
 {
-  /*
+  m_camera = _camera;
+
   if( ! (( m_helicopter_pitch_degrees > 10.0f )&&( m_helicopter_pitch_degrees < 350.0f )))
     {
       if(( m_velocity.x > 0.0f )&&( m_mouse_pos.x > m_helicopter_middle_pos.x ))  
@@ -86,7 +87,14 @@ void Game_obj_sheet_player::Draw( Camera* DO_NOT_USE )
   the_Texture_manager::Instance().Draw_frame_rot( the_Game::Instance().Get_renderer(), m_texture_id, display_position, 
 						  m_size, m_frame_width, m_frame_height, m_frame_number, m_row_number, 
 						  m_helicopter_pitch_degrees, 2.0d, 4.0d, m_texture_flip );
-  */
+}
+
+
+
+void Game_obj_sheet_player::Clean()
+{
+  std::cout << "Game_obj_player.Clean() is Done  &  ";
+  Game_obj_sheet::Clean();
 }
 
 

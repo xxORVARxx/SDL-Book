@@ -4,12 +4,14 @@
 
 #include "Game_world.h"
 #include "Game.h"
+#include "XML_parser_states.h"
 
 
 
 // --- ENEMY ----
 void Game_obj_sheet_enemy::Load( Game_obj_enemy_parameters& _enemy_params )
 {
+  Game_obj_sheet::Load( _enemy_params );
   m_enemy_type = _enemy_params.m_enemy_type;
 
   m_frame_counter = m_enemy_type;
@@ -26,10 +28,9 @@ void Game_obj_sheet_enemy::Parse( xml::parser& _p )
 {
   std::cout <<"Game-Object-Sheet-Enemy.  ";
   Game_obj_sheet::Parse( _p );
+
   _p.next_expect( xml::parser::start_element, "game_obj_enemy_parameters", xml::content::complex );
-
-  m_enemy_type = _p.attribute< int >( "enemy_type" );
-
+  m_enemy_type = Parse_type< int >( _p, "enemy_type" );
   _p.next_expect( xml::parser::end_element );//game_obj_enemy_parameters
 
   m_frame_counter = m_enemy_type;
@@ -46,7 +47,6 @@ void Game_obj_sheet_enemy::Parse( xml::parser& _p )
 
 void Game_obj_sheet_enemy::Update() 
 {
-  /*
   m_delta_time = (float)the_World::Instance().Get_delta_time();
   m_velocity.x = 0.0f;
   m_velocity.y = 0.0f;
@@ -55,14 +55,12 @@ void Game_obj_sheet_enemy::Update()
   this->Update_frame();
 
   m_position += ( m_velocity * m_delta_time );
-  */
 }
 
 
 
 void Game_obj_sheet_enemy::Draw( Camera* _camera )
 {
-  /*
   xx::Clamp_degrees( m_direction_degrees );
 
   glm::vec2 display_position = m_position;
@@ -72,7 +70,14 @@ void Game_obj_sheet_enemy::Draw( Camera* _camera )
   the_Texture_manager::Instance().Draw_frame_rot( the_Game::Instance().Get_renderer(), m_texture_id, display_position, 
 						  m_size, m_frame_width, m_frame_height, m_frame_number, m_row_number, 
 						  m_direction_degrees, 2.0d, 2.0d );
-  */
+}
+
+
+
+void Game_obj_sheet_enemy::Clean()
+{
+  std::cout << "Game_obj_enemy.Clean() is Done  &  ";
+  Game_obj_sheet::Clean();
 }
 
 

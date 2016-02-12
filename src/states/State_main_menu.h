@@ -5,12 +5,10 @@
 #include "Init.h"
 #include "A_State_interface.h"
 
-class Base_game_obj;
-
 
 
 // --- MAIN MENU STATE ---
-class State_main_menu : public State_interface
+class State_main_menu : public Base_state
 {
  public:
   virtual ~State_main_menu() {}
@@ -19,16 +17,10 @@ class State_main_menu : public State_interface
   virtual void Update();
   virtual void Render();
   virtual void on_Exit();
-  virtual std::string Get_state_id() const { return sm_main_menu_id; }
+  virtual std::string Get_state_id() const { return sm_state_id; }
 
  private:
-  static const std::string sm_main_menu_id;
-
-  std::vector< Base_game_obj* > m_objects_vec;
-
-  // Call back functions for menu items:
-  static void smf_Menu_to_play();
-  static void smf_Exit_from_menu();
+  static const std::string sm_state_id;
 };
 
 

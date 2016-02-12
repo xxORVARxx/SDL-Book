@@ -1,12 +1,74 @@
 
 #include "XML_parser_states.h"
+#include "Input_handler.h"
 #include "Texture_manager.h"
 
 #include "Game.h"
-#include "Factory_game_obj.h"
+#include "Game_world.h"
+#include "State_main_menu.h"
+#include "State_play.h"
+#include "State_pause.h"
 
 
 
+// Get display size:
+float f_display_width( float prosents, float add ) {
+  return (( (float)the_World::Instance().Get_display_width() * ( prosents / 100 )) + add );
+}
+float f_display_height( float prosents, float add ) {
+  return (( (float)the_World::Instance().Get_display_height() * ( prosents / 100 )) + add );
+}
+// Call back functions for 'button-objects':
+void f_Menu_to_play() {
+  the_Game::Instance().Get_state_machine()->Change_state( new State_play );
+}
+void f_Exit_from_menu() {
+  the_Input_handler::Instance().Quit();
+}
+void f_Pause_to_main() {
+  the_Game::Instance().Get_state_machine()->Change_state( new State_main_menu );
+}
+void f_Pause_to_play() {
+  the_Game::Instance().Get_state_machine()->Pop_state();
+}
+void f_Play_to_pause() {
+  the_Game::Instance().Get_state_machine()->Push_state( new State_pause );
+}
+
+
+
+// Game-Objects use this function to parse different pointers for the addresses:
+void Parse_pointer( xml::parser& _p, std::string _expect, void (*&_ptr)() )
+{
+  _p.next_expect( xml::parser::start_element, _expect, xml::content::complex );
+
+  switch( _p.attribute< xml::parsable_pointer >( "pointer" ))
+    {
+    case xml::POINTER_EXIT_FROM_MENU :
+      _ptr = f_Exit_from_menu;
+      break;
+    case xml::POINTER_MENU_TO_PLAY :
+      _ptr = f_Menu_to_play;
+      break;
+    case xml::POINTER_PAUSE_TO_MAIN :
+      _ptr = f_Pause_to_main;
+      break;
+    case xml::POINTER_PAUSE_TO_PLAY :
+      _ptr = f_Pause_to_play;
+      break;
+    case xml::POINTER_PLAY_TO_PAUSE :
+      _ptr = f_Play_to_pause;
+      break;
+    default:
+      throw xml::parsing( _p, "STATE PARSER :: Invalid parsable_pointer: '" + _expect + "'!" );
+    }
+
+  _p.next_expect( xml::parser::end_element );
+}
+
+
+
+// --- STATE PARSER ---
 bool State_parser::Parse_state( const std::string _state_file, std::string _state_id, std::vector< Base_game_obj* >& _objects_vec )
 {
   std::ifstream ifs( _state_file );
@@ -94,22 +156,14 @@ bool State_parser::Parse_objects( xml::parser& _p, std::vector< Base_game_obj* >
     {
       _p.next_expect( xml::parser::start_element, "object", xml::content::complex );
 
+      fac::game_object object_type = _p.attribute< fac::game_object >( "type" );
+      Base_game_obj* the_object = the_Factory_game_obj::Instance().Create( object_type );
 
-      std::string object_type = _p.attribute( "type" );
-      unsigned int quantity =_p.attribute< unsigned int >( "quantity" );
+      std::cout <<"\t\tObject:  ";
+      the_object->Parse( _p );
+      std::cout <<"\n";
 
-
-      for( unsigned int i = 0 ; i < quantity ; ++i )
-	{
-	  Base_game_obj* the_object = the_Factory_game_obj::Instance().Create( object_type );
-
-	  std::cout <<"\t\tObject:  ";
-	  the_object->Parse( _p );
-	  std::cout <<"\n";
-
-	  _objects_vec.push_back( the_object );
-	}
-
+      _objects_vec.push_back( the_object );
 
       _p.next_expect( xml::parser::end_element );//object
     } while( _p.peek () == xml::parser::start_element );
