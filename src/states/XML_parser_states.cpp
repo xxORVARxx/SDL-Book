@@ -1,7 +1,7 @@
 
 #include "XML_parser_states.h"
 #include "Input_handler.h"
-#include "Texture_manager.h"
+#include "Texture_manager_v2.h"
 
 #include "Game.h"
 #include "Game_world.h"
@@ -26,6 +26,7 @@ void f_Exit_from_menu() {
   the_Input_handler::Instance().Quit();
 }
 void f_Pause_to_main() {
+  the_Game::Instance().Get_state_machine()->Pop_state();
   the_Game::Instance().Get_state_machine()->Change_state( new State_main_menu );
 }
 void f_Pause_to_play() {
@@ -133,17 +134,27 @@ bool State_parser::Parse_state( const std::string _state_file, std::string _stat
 bool State_parser::Parse_textures( xml::parser& _p, std::vector< Base_game_obj* >& _objects_vec )
 {
   std::cout <<"\tHere we have some Textures:\n";
+
+  _p.next_expect( xml::parser::start_element, "options" );
+  bool Swap_and_clear_texture_map = _p.attribute< bool >( "Swap_and_clear_texture_map" );
+  _p.next_expect( xml::parser::end_element );//options
+
+  if( Swap_and_clear_texture_map )
+    the_Texture_manager_v2::Instance().Swap_maps();   
   do
     {
       _p.next_expect( xml::parser::start_element, "texture" );
 
       std::cout <<"\t\tImage: '"<< _p.attribute( "filename" ) <<"',  id: '"<< _p.attribute( "id" ) <<"'.\n";
-      the_Texture_manager::Instance().Load_image( the_Game::Instance().Get_renderer(), 
-						  _p.attribute( "id" ), _p.attribute( "filename" ));
+      the_Texture_manager_v2::Instance().Move_or_load_texture( the_Game::Instance().Get_renderer(), 
+							       _p.attribute( "id" ), 
+							       _p.attribute( "filename" ));
 
       _p.next_expect( xml::parser::end_element );//texture
     } while( _p.peek () == xml::parser::start_element );
 
+  if( Swap_and_clear_texture_map )
+    the_Texture_manager_v2::Instance().Clear_map();
   return true;
 }
 

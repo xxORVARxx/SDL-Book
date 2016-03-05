@@ -15,7 +15,7 @@ void Display_resized( int _display_width, int _display_height )
 
 
 
-int main ( int argc, char* args[] )
+int main( int argc, char* args[] )
 {
   the_World::Instance().Setup();
 

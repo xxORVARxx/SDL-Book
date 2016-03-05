@@ -1,7 +1,7 @@
 
 #include "Game.h"
 #include "Input_handler.h"
-#include "Texture_manager.h"
+#include "Texture_manager_v2.h"
 
 #include "Game_world.h"
 #include "State_main_menu.h"
@@ -125,7 +125,7 @@ void the_Game::Render()
 void the_Game::Clean()
 {
   // Closing the Texture Manager:
-  the_Texture_manager::Instance().Clean();
+  the_Texture_manager_v2::Instance().Clean();
 
   // Closing Inputh Handler:
   the_Input_handler::Instance().Clean();

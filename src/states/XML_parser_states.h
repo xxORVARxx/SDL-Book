@@ -36,7 +36,7 @@ namespace xml
     POINTER_PAUSE_TO_PLAY,
     POINTER_PLAY_TO_PAUSE
   };
-}
+}//xml
 
 
 // Make the 'Parser' convert from 'String/Text' to 'enum', to enforces type-checking & type-safety.
@@ -115,7 +115,7 @@ namespace xml
 	  throw xml::parsing( _p, "STATE PARSER :: Invalid parsable fac::game_object: '" + _str + "'!" );
       }
     };
-}
+}//xml
 
 
 

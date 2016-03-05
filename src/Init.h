@@ -45,6 +45,8 @@
 #include <chrono>
 #include <random>
 
+#include <assert.h> 
+
 
 
 namespace xx
@@ -57,7 +59,7 @@ namespace xx
 
   float Vec_to_degrees( const glm::vec2& _vec );
   glm::vec2 Degrees_to_vec( const float& _degrees );
-};
+}//xx
 
 
 
@@ -90,7 +92,7 @@ namespace xx
     int m_seed;
     std::mt19937 m_engine;
   } static Get_random;
-};
+}//xx
 
 
 

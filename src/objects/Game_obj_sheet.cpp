@@ -1,6 +1,6 @@
 
 #include "Game_obj_sheet.h"
-#include "Texture_manager.h"
+#include "Texture_manager_v2.h"
 
 #include "Game.h"
 #include "XML_parser_states.h"
@@ -109,8 +109,8 @@ void Game_obj_sheet::Draw( Camera* _camera )
   if( _camera != nullptr )
     display_position -= _camera->Get_position();
 
-  the_Texture_manager::Instance().Draw_frame( the_Game::Instance().Get_renderer(), m_texture_id, display_position, 
-					      m_size, m_frame_width, m_frame_height, m_frame_number, m_row_number );
+  the_Texture_manager_v2::Instance().Draw_frame( the_Game::Instance().Get_renderer(), m_texture_id, display_position, 
+						 m_size, m_frame_width, m_frame_height, m_frame_number, m_row_number );
 }
 
 

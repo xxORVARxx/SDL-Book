@@ -49,4 +49,4 @@ namespace xx
   {
     return glm::vec2( std::cos( _degrees * M_PI / 180.0f ), std::sin( _degrees * M_PI / 180.0f ));
   }
-};
+}//xx

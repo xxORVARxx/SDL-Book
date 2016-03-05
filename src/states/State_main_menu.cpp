@@ -16,7 +16,7 @@ void State_main_menu::on_Enter()
 {
   std::cout << "STATE MACHINE :: Entering MAIN-MENU-state.\n";
   SDL_SetCursor ( SDL_CreateSystemCursor( SDL_SYSTEM_CURSOR_ARROW ));
-
+  
   // Using the 'State-Parser' to loading the 'Textures'(with the 'Singleton-Class') and make the Game-Objects:
   State_parser main_menu_parser;
   main_menu_parser.Parse_state( "XML/State_main_menu.xml", sm_state_id, m_objects_vec );

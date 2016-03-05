@@ -20,7 +20,7 @@ namespace fac
     GAME_OBJ_SHEET_ENEMY,
     GAME_OBJ_SHEET_PLAYER
   };
-}
+}//fac
 
 
 

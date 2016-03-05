@@ -2,6 +2,7 @@
 
 <PLAY>
   <TEXTURES>
+    <options Swap_and_clear_texture_map="true"/>
 
     <texture filename="assets/Helicopter.png"
              id="HELI"/>

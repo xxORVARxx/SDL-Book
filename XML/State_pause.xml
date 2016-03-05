@@ -2,6 +2,7 @@
 
 <PAUSE>
   <TEXTURES>
+    <options Swap_and_clear_texture_map="false"/>
 
     <texture filename="assets/Resume_button.png"
              id="RESUME_B"/>

@@ -1,6 +1,6 @@
 
 #include "Game_obj_sheet_enemy.h"
-#include "Texture_manager.h"
+#include "Texture_manager_v2.h"
 
 #include "Game_world.h"
 #include "Game.h"
@@ -67,9 +67,9 @@ void Game_obj_sheet_enemy::Draw( Camera* _camera )
   if( _camera != nullptr )
     display_position -= _camera->Get_position();
 
-  the_Texture_manager::Instance().Draw_frame_rot( the_Game::Instance().Get_renderer(), m_texture_id, display_position, 
-						  m_size, m_frame_width, m_frame_height, m_frame_number, m_row_number, 
-						  m_direction_degrees, 2.0d, 2.0d );
+  the_Texture_manager_v2::Instance().Draw_frame_rot( the_Game::Instance().Get_renderer(), m_texture_id, display_position, 
+						     m_size, m_frame_width, m_frame_height, m_frame_number, m_row_number, 
+						     m_direction_degrees, 2.0d, 2.0d );
 }
 
 

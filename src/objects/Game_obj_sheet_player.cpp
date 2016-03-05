@@ -1,7 +1,7 @@
 
 #include "Game_obj_sheet_player.h"
 #include "Input_handler.h"
-#include "Texture_manager.h"
+#include "Texture_manager_v2.h"
 
 #include "Game_world.h"
 #include "Game.h"
@@ -84,9 +84,9 @@ void Game_obj_sheet_player::Draw( Camera* _camera )
     }
 
   glm::vec2 display_position = ( m_position - m_camera->Get_position());
-  the_Texture_manager::Instance().Draw_frame_rot( the_Game::Instance().Get_renderer(), m_texture_id, display_position, 
-						  m_size, m_frame_width, m_frame_height, m_frame_number, m_row_number, 
-						  m_helicopter_pitch_degrees, 2.0d, 4.0d, m_texture_flip );
+  the_Texture_manager_v2::Instance().Draw_frame_rot( the_Game::Instance().Get_renderer(), m_texture_id, display_position, 
+						     m_size, m_frame_width, m_frame_height, m_frame_number, m_row_number, 
+						     m_helicopter_pitch_degrees, 2.0d, 4.0d, m_texture_flip );
 }
 
 

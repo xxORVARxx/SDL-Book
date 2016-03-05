@@ -28,6 +28,8 @@ void Game_obj_grid::Parse( xml::parser& _p )
   _p.next_expect( xml::parser::end_element );//game_obj_grid_parameters
 }
 
+
+
 void Game_obj_grid::Draw( Camera* _camera )
 {
   int position_x = 0;

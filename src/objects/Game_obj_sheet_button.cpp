@@ -1,7 +1,7 @@
 
 #include "Game_obj_sheet_button.h"
 #include "Input_handler.h"
-#include "Texture_manager.h"
+#include "Texture_manager_v2.h"
 
 #include "Game.h"
 #include "XML_parser_states.h"
@@ -72,8 +72,8 @@ void Game_obj_sheet_button::Draw( Camera* _camera )
     row_number = ( m_frame_counter / m_frames_in_a_row );
   int frame_number = (( m_frame_counter - (( row_number - 1 ) * m_frames_in_a_row )));
 
-  the_Texture_manager::Instance().Draw_frame( the_Game::Instance().Get_renderer(), m_texture_id, m_position, m_size,
-					      m_frame_width, m_frame_height, frame_number, row_number );
+  the_Texture_manager_v2::Instance().Draw_frame( the_Game::Instance().Get_renderer(), m_texture_id, m_position, m_size,
+						 m_frame_width, m_frame_height, frame_number, row_number );
 }
 
 
