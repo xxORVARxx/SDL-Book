@@ -8,6 +8,13 @@
 
 namespace xx
 {
+  /* This is a 'wrapper'-class for std::string, to cheat type-safety. 
+   * It IS a string that can be 'implicitly'-converted to most built-in-types
+   * and, constructed from most built-in-types. Most 'operators' have been 
+   * overloaded to work with most built-in-types, making this class work 
+   * well in/with templates that do(or can/could do) mathematical operations.
+   */
+
   struct String_cast
   {
     // Convert Types to String:

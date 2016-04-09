@@ -2,8 +2,8 @@
 #include "State_main_menu.h"
 
 #include "XML_parser_states.h"
-
-
+#include "SDL_gobj.h"
+#include "xx_String_cast.h"
 
 // --- MAIN MENU STATE ---
 // --- Static Variables: ---
@@ -21,6 +21,14 @@ void State_main_menu::on_Enter()
   State_parser main_menu_parser;
   main_menu_parser.Parse_state( "XML/State_main_menu.xml", sm_state_id, m_objects_vec );
   // The 'Game_objects' are deleted in: Base-state::on_Exit().
+
+
+
+  // FOR TESTING:
+  SDL_gobj obj( "SDL_gobj_1" );
+  obj.Create();
+
+
 }
 
 
