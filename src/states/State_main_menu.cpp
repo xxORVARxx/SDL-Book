@@ -21,14 +21,6 @@ void State_main_menu::on_Enter()
   State_parser main_menu_parser;
   main_menu_parser.Parse_state( "XML/State_main_menu.xml", sm_state_id, m_objects_vec );
   // The 'Game_objects' are deleted in: Base-state::on_Exit().
-
-
-
-  // FOR TESTING:
-  SDL_gobj obj( "SDL_gobj_1" );
-  obj.Create();
-
-
 }
 
 

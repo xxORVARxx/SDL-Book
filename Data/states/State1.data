@@ -1,0 +1,22 @@
+
+f_Make_camera
+
+f_Swap_texture_maps
+
+f_Move_or_load_texture
+  PLAY_B
+  assets/Play_button.png
+
+f_Move_or_load_texture
+  EXIT_B
+  assets/Exit_button.png
+
+f_Clear_texture_map
+
+f_Make_SDL_gobj
+  SDL_gobj_PLAY_B
+
+f_Make_SDL_gobj
+  SDL_gobj_EXIT_B
+
+f_Done

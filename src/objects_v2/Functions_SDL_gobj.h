@@ -167,7 +167,7 @@ namespace sgo
       value = f_Random_real_num< T >( _file );
 
     else
-      throw std::ios::failure( "Error data file corrupted!" );
+      throw std::ios::failure( "Error object's data file corrupted!" );
 
     return value;
   }

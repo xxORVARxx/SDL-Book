@@ -13,6 +13,8 @@
 #include "Game_obj_sheet_enemy.h"
 #include "Game_obj_sheet_player.h"
 
+#include "State.h"
+
 
 
 // --- Constructors ---
@@ -69,7 +71,16 @@ bool the_Game::Init( std::string _title )
   the_Factory_game_obj::Instance().Register_creator( fac::GAME_OBJ_SHEET_PLAYER, new Creator_game_obj_player );
 
   // The Game State Machine:
-  m_state_machine.Push_state( new State_main_menu );
+  //m_state_machine.Push_state( new State_main_menu );
+
+
+
+  // FOR TESTING:
+  State state( "State1" );
+  state.Create();
+  state.Clean();
+
+
 
   return true;
 }

@@ -23,7 +23,7 @@ public:
   virtual void Draw( Camera* _camera ) {}
   virtual void Clean();
 
-  virtual std::string Get_id() { return "SDL_gobj"; }
+  virtual const std::string Get_id() const { return "SDL_gobj"; }
 
 protected:
   virtual void Parse_data_file( std::ifstream& _file );
@@ -31,9 +31,9 @@ protected:
   // --- Variables ---
   std::string m_texture_id;
   glm::vec2 m_image_size;// The size of the image itself, should not be changed.
-  glm::dvec2 m_position;
   glm::vec2 m_scale;
   glm::vec2 m_size;// The size to be rendered on the screen.
+  glm::dvec2 m_position;
 };
 
 

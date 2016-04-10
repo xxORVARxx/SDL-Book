@@ -557,7 +557,7 @@ namespace xx
 
 
     // Overload Random-Access Operator:
-    char& operator[]( const int i ) throw( std::length_error ) {
+    char& operator[]( const int i ) {
       if( str.empty())
 	throw std::length_error( "(xx) Indexing an empty string." );
       if(( i >= str.size() )&&( i < -str.size() ))
@@ -565,7 +565,7 @@ namespace xx
       if( i >= 0 )  return str[ i ];
       else  return str[ str.size() + i ];
     }
-    const char& operator[]( const int i ) const throw( std::length_error ) {
+    const char& operator[]( const int i ) const {
       if( str.empty())
 	throw std::length_error( "(xx) Indexing an empty string." );
       if(( i >= str.size() )&&( i < -str.size() ))

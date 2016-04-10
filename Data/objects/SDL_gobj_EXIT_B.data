@@ -1,0 +1,30 @@
+f_String
+  EXIT_B
+
+f_Texture_width
+  EXIT_B
+  
+f_Texture_height
+  EXIT_B
+
+f_Float
+  0.5
+
+f_Float
+  0.5
+
+f_Float
+  0.0
+
+f_Float
+  0.0
+
+f_Divide
+  f_Display_width
+  f_Float
+    1.666
+    
+f_Divide
+  f_Display_height
+  f_Float
+    1.666

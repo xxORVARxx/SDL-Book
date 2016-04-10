@@ -3,7 +3,7 @@
 
 
 
-Base_SDL_game_obj::Base_SDL_game_obj( std::string _file ) : file_name(_file)
+Base_SDL_game_obj::Base_SDL_game_obj( std::string _file ) : m_file_name(_file)
 {
 
 }
@@ -15,14 +15,14 @@ Base_SDL_game_obj::Create()
 {
   try
     {
-      std::ifstream data_file( "Data/" + file_name + ".data" );
+      std::ifstream data_file( "Data/objects/" + m_file_name + ".data" );
       if( data_file.is_open() && data_file.good())
 	{
 	  this->Parse_data_file( data_file );
 	  data_file.close();
 	}
       else 
-	throw std::ios::failure( "(xx) Error opening data file!" );
+	throw std::ios::failure( "(xx) Error opening object's data file!" );
     }
   catch( const std::exception& e )
     {

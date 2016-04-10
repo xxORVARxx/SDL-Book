@@ -7,6 +7,7 @@
 
 
 
+// Interface Class:
 class Interface_SDL_game_obj
 {
  protected:
@@ -20,7 +21,7 @@ class Interface_SDL_game_obj
   virtual void Draw( Camera* _camera ) = 0;
   virtual void Clean() = 0;
 
-  virtual std::string Get_id() = 0;
+  virtual const std::string Get_id() const = 0;
 
  protected:
   virtual void Parse_data_file( std::ifstream& _file ) = 0;
@@ -28,6 +29,7 @@ class Interface_SDL_game_obj
 
 
 
+// Base Class:
 class Base_SDL_game_obj : public Interface_SDL_game_obj
 {
  public:
@@ -45,13 +47,13 @@ class Base_SDL_game_obj : public Interface_SDL_game_obj
   virtual void Draw( Camera* _camera ) {}
   virtual void Clean() {}
 
-  virtual std::string Get_id() { return "Base_SDL_game_obj"; }
+  virtual const std::string Get_id() const { return "Base_SDL_game_obj"; }
 
 protected:
   virtual void Parse_data_file( std::ifstream& _file ) {}
 
   // --- Variables ---
-  std::string file_name;
+  const std::string m_file_name;
 };
 
 
