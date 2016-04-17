@@ -1,4 +1,4 @@
-f_String
+b_String
   PLAY_B
 
 f_Texture_width
@@ -7,24 +7,24 @@ f_Texture_width
 f_Texture_height
   PLAY_B
 
-f_Float
+b_Float
   0.5
 
-f_Float
+b_Float
   0.5
 
-f_Float
-  0.0
+b_Float
+  100.0
 
-f_Float
-  0.0
+b_Float
+  100.0
 
-f_Divide
+m_Divide
   f_Display_width
-  f_Int
-    3
+  b_Float
+    3.3
     
-f_Divide
+m_Divide
   f_Display_height
-  f_Int
-    3
+  b_Float
+    3.3

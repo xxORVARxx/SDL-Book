@@ -9,6 +9,7 @@
 #include "Camera.h"
 #include "SDL_gobj.h"
 
+/*
 namespace gs { 
   void Get_value( State* _state, std::ifstream& _file ); 
 }
@@ -45,7 +46,7 @@ namespace gs {
   }
 
   void f_Make_camera( State* _state, std::ifstream& _file ) {
-    _state->m_camera_ptr = new Camera;
+    //_state->m_camera_ptr = new Camera;
   }
 }//gs
 
@@ -82,6 +83,7 @@ namespace gs {
       }
   }
 }//gs
+*/
 
 
 

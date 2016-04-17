@@ -6,7 +6,9 @@
 
 
 State::State( std::string _file ) : m_file_name(_file), 
-				    m_camera_ptr(nullptr)
+				    m_camera_ptr(nullptr),
+				    disable_logic(false),
+				    disable_render(false)
 {
   std::cout <<"State created\n";
 }
@@ -29,7 +31,9 @@ State::Create()
       std::ifstream data_file( "Data/states/" + m_file_name + ".data" );
       if( data_file.is_open() && data_file.good())
 	{
-	  gs::Get_value( this, data_file );
+	  //gs::Get_value( this, data_file );
+	  data::Parser p;
+	  p.Parse_file( this, data_file );
 	  data_file.close();
 	}
       else 
@@ -43,16 +47,20 @@ State::Create()
 
 
 
-void State::Update()
+void State::Update() const
 {
+  if( disable_logic )
+    return;
   for( const auto& i: m_objects_vec )
     i->Update();
 }
 
 
 
-void State::Render()
+void State::Render() const
 {
+  if( disable_render )
+    return;
   for( const auto& i: m_objects_vec )
     i->Draw( m_camera_ptr );
 }

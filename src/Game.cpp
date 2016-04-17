@@ -4,6 +4,7 @@
 #include "Texture_manager_v2.h"
 
 #include "Game_world.h"
+/*
 #include "State_main_menu.h"
 #include "Factory_game_obj.h"
 
@@ -12,8 +13,7 @@
 #include "Game_obj_sheet_button.h"
 #include "Game_obj_sheet_enemy.h"
 #include "Game_obj_sheet_player.h"
-
-#include "State.h"
+*/
 
 
 
@@ -62,6 +62,7 @@ bool the_Game::Init( std::string _title )
   // Opening Inputh Handler:
   the_Input_handler::Instance().Initialise_joysticks();
 
+  /*
   // Register all Game-objects:
   the_Factory_game_obj::Instance().Register_creator( fac::GAME_OBJ, new Creator_game_obj );
   the_Factory_game_obj::Instance().Register_creator( fac::GAME_OBJ_GRID, new Creator_game_obj_grid );
@@ -71,14 +72,14 @@ bool the_Game::Init( std::string _title )
   the_Factory_game_obj::Instance().Register_creator( fac::GAME_OBJ_SHEET_PLAYER, new Creator_game_obj_player );
 
   // The Game State Machine:
-  //m_state_machine.Push_state( new State_main_menu );
+  m_state_machine.Push_state( new State_main_menu );
+  */
 
 
 
   // FOR TESTING:
-  State state( "State1" );
-  state.Create();
-  state.Clean();
+  m_state_ptr = new State( "State1" );
+  m_state_ptr->Create();
 
 
 
@@ -89,7 +90,7 @@ bool the_Game::Init( std::string _title )
 
 void the_Game::on_Display_resize()
 {
-  m_state_machine.on_Display_resize();
+  //m_state_machine.on_Display_resize();
 }
 
 
@@ -104,8 +105,15 @@ void the_Game::Handle_events()
 
 void the_Game::Update()
 {
+
+
+
   // The Game State Machine:
-  m_state_machine.Update();
+  //m_state_machine.Update();
+  m_state_ptr->Update();
+
+
+
 }
 
 
@@ -114,8 +122,13 @@ void the_Game::Render()
 {
   SDL_RenderClear( m_renderer_ptr );
 
+
+
   // The Game State Machine:
-  m_state_machine.Render();
+  //m_state_machine.Render();
+  m_state_ptr->Render();
+
+
 
   /*
   glm::vec2 display( the_World::Instance().Get_display_size());
@@ -142,10 +155,16 @@ void the_Game::Clean()
   the_Input_handler::Instance().Clean();
 
   // Closing Factory:
-  the_Factory_game_obj::Instance().Clean();
+  //the_Factory_game_obj::Instance().Clean();
+
+
 
   // The Game State Machine:
-  m_state_machine.Clean();
+  //m_state_machine.Clean();
+  m_state_ptr->Clean();
+  delete m_state_ptr;
+
+
 
   // Closing SDL:
   SDL_DestroyRenderer( m_renderer_ptr );

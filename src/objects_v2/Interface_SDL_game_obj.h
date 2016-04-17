@@ -3,13 +3,18 @@
 #define INTERFACE_SDL_GAME_OBJ_H
 
 #include "Init.h"
+#include "Parser.h"
 #include "Camera.h"
+
+namespace data { class Parser; }
 
 
 
 // Interface Class:
 class Interface_SDL_game_obj
 {
+  friend class data::Parser;
+
  protected:
   virtual ~Interface_SDL_game_obj() {}
 
@@ -32,6 +37,8 @@ class Interface_SDL_game_obj
 // Base Class:
 class Base_SDL_game_obj : public Interface_SDL_game_obj
 {
+  friend class data::Parser;
+
  public:
   Base_SDL_game_obj( std::string _file );
   virtual ~Base_SDL_game_obj() {}

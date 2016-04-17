@@ -20,20 +20,20 @@ float f_display_height( float prosents, float add ) {
 }
 // Call back functions for 'button-objects':
 void f_Menu_to_play() {
-  the_Game::Instance().Get_state_machine()->Change_state( new State_play );
+  //the_Game::Instance().Get_state_machine()->Change_state( new State_play );
 }
 void f_Exit_from_menu() {
   the_Input_handler::Instance().Quit();
 }
 void f_Pause_to_main() {
-  the_Game::Instance().Get_state_machine()->Pop_state();
-  the_Game::Instance().Get_state_machine()->Change_state( new State_main_menu );
+  //the_Game::Instance().Get_state_machine()->Pop_state();
+  //the_Game::Instance().Get_state_machine()->Change_state( new State_main_menu );
 }
 void f_Pause_to_play() {
-  the_Game::Instance().Get_state_machine()->Pop_state();
+  //the_Game::Instance().Get_state_machine()->Pop_state();
 }
 void f_Play_to_pause() {
-  the_Game::Instance().Get_state_machine()->Push_state( new State_pause );
+  //the_Game::Instance().Get_state_machine()->Push_state( new State_pause );
 }
 
 
@@ -181,3 +181,4 @@ bool State_parser::Parse_objects( xml::parser& _p, std::vector< Base_game_obj* >
 
   return true;
 }
+

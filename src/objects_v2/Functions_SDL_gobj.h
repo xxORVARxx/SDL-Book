@@ -6,7 +6,7 @@
 #include "Game_world.h"
 #include "Texture_manager_v2.h"
 #include "xx_String_cast.h"
-
+/*
 namespace sgo {
   template< typename T > T Get_value( std::ifstream& _file );
 }//sgo
@@ -172,7 +172,7 @@ namespace sgo
     return value;
   }
 }//sgo
-
+*/
 
 
 std::string Make_file_name( std::string _id, std::string _name = "" )

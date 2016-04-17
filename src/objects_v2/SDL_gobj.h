@@ -9,6 +9,8 @@
 
 class SDL_gobj : public Base_SDL_game_obj
 {
+  friend class data::Parser;
+
 public:
   SDL_gobj( std::string _file );
   virtual ~SDL_gobj() {}
@@ -19,8 +21,8 @@ public:
   virtual void Save() {}
   virtual void Load() {}
 
-  virtual void Update() {}
-  virtual void Draw( Camera* _camera ) {}
+  virtual void Update();
+  virtual void Draw( Camera* _camera );
   virtual void Clean();
 
   virtual const std::string Get_id() const { return "SDL_gobj"; }

@@ -4,17 +4,17 @@
 
 #include "Init.h"
 
+namespace data { class Parser; }
 class Camera;
 class Base_SDL_game_obj;
 class State;
-namespace gs { 
-  void f_Make_camera( State* _state, std::ifstream& _file ); 
-}
 
 
 
 class State
 {
+  friend class data::Parser;
+
 public:
   State( std::string _file );
   ~State();
@@ -22,8 +22,8 @@ public:
   // --- Functions ---
   void Create();
 
-  void Update();
-  void Render();
+  void Update() const;
+  void Render() const;
 
   void Clean();
 
@@ -31,9 +31,10 @@ public:
   void Add_object( Base_SDL_game_obj* _obj ) { m_objects_vec.push_back( _obj ); }
 
 private:
-  friend void gs::f_Make_camera( State* _state, std::ifstream& _file );
-
   // --- Variables ---
+  bool disable_logic;
+  bool disable_render;
+
   const std::string m_file_name;
   std::string m_state_id;
 
