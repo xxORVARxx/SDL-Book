@@ -3,7 +3,6 @@
 #define INTERFACE_SDL_GAME_OBJ_H
 
 #include "Init.h"
-#include "Parser.h"
 #include "Camera.h"
 
 namespace data { class Parser; }

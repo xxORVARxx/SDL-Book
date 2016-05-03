@@ -2,8 +2,10 @@
 #include "SDL_gobj.h"
 #include "Functions_SDL_gobj.h"
 #include "Texture_manager_v2.h"
+#include "xx_String_cast.h"
 
 #include "Game.h"
+#include "Parser.h"
 
 
 
@@ -46,15 +48,17 @@ void
 SDL_gobj::Parse_data_file( std::ifstream& _file )
 {
   Base_SDL_game_obj::Parse_data_file( _file );
-
+  
   data::Parser p;
-  m_texture_id = std::string( p.Parse_value< xx::String_cast >( _file ));
-  m_image_size.x = p.Parse_value< float >( _file );
-  m_image_size.y = p.Parse_value< float >( _file );
-  m_scale.x = p.Parse_value< float >( _file );
-  m_scale.y = p.Parse_value< float >( _file );
-  m_size.x = p.Parse_value< float >( _file );
-  m_size.y = p.Parse_value< float >( _file );
-  m_position.x = p.Parse_value< double >( _file );
-  m_position.y = p.Parse_value< double >( _file );
+  m_texture_id = std::string( p.Parse_file< xx::String_cast >( _file ));
+  m_image_size.x = p.Parse_file< float >( _file );
+  m_image_size.y = p.Parse_file< float >( _file );
+  m_scale.x = p.Parse_file< float >( _file );
+  m_scale.y = p.Parse_file< float >( _file );
+  m_size.x = p.Parse_file< float >( _file );
+  m_size.y = p.Parse_file< float >( _file );
+  m_position.x = p.Parse_file< double >( _file );
+  m_position.y = p.Parse_file< double >( _file );
+
+  p.Parse_file( _file );
 }

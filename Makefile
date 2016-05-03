@@ -20,8 +20,10 @@ BUILD := build
 # Source variables:
 SRC-CPPs := $(subst ./,,$(shell find $(SRC)/ -name '*.cpp'))
 SRC-Hs := $(subst ./,,$(shell find $(SRC)/ -name '*.h'))
+SRC-TPPs := $(subst ./,,$(shell find $(SRC)/ -name '*.tpp'))
 SRC-CPP-DIRs := $(sort $(dir $(SRC-CPPs)))
 SRC-H-DIRs := $(sort $(dir $(SRC-Hs)))
+SRC-TPP-DIRs := $(sort $(dir $(SRC-TPPs)))
 
 # Build variables:
 S-DIR := $(BUILD)/s
@@ -31,6 +33,7 @@ M-DIR := $(BUILD)/m
 
 BUILD-CPPs := $(addprefix $(S-DIR)/,$(notdir $(SRC-CPPs)))
 BUILD-Hs := $(addprefix $(S-DIR)/,$(notdir $(SRC-Hs)))
+BUILD-TPPs := $(addprefix $(S-DIR)/,$(notdir $(SRC-TPPs)))
 BUILD-Ds := $(addprefix $(D-DIR)/,$(addsuffix .d,$(notdir $(basename $(BUILD-CPPs)))))
 BUILD-Os := $(addprefix $(O-DIR)/,$(addsuffix .o,$(notdir $(basename $(BUILD-CPPs)))))
 
@@ -57,7 +60,7 @@ all: create_copy_rules
 
 ## Copy Source-Files from all source-directories into a singla build-directory.
 PHONY: copy
-copy: $(BUILD-CPPs) $(BUILD-Hs)
+copy: $(BUILD-CPPs) $(BUILD-Hs) $(BUILD-TPPs)
 
 
 

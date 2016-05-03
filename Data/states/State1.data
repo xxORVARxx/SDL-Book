@@ -1,22 +1,38 @@
 
-f_Make_camera
+## s_Make_camera() ##
 
-t_Swap_texture_maps
+t_Swap_texture_maps()
 
-t_Move_or_load_texture
-  PLAY_B
-  assets/Play_button.png
+t_Move_or_load_texture(PP)
+  b_String()R
+    "PLAY_B"
+  b_String()R
+    "assets/Play_button.png"
 
-t_Move_or_load_texture
-  EXIT_B
-  assets/Exit_button.png
+t_Move_or_load_texture(PP)
+  b_String()R
+    "EXIT_B"
+  b_String()R
+    "assets/Exit_button.png"
 
-t_Clear_texture_map
+t_Clear_texture_map()
 
-o_Make_SDL_gobj
+#################
+o_Make_SDL_gobj()
   SDL_gobj_PLAY_B
 
-o_Make_SDL_gobj
+o_Make_SDL_gobj()
   SDL_gobj_EXIT_B
+#################
 
-p_Done
+c_Container_add(PT)  Int
+  b_String()R
+    "THE_ID"
+  b_Int()R
+    55
+
+c_Container_erase(P)
+  b_String()R
+    "THE_ID"
+
+Done

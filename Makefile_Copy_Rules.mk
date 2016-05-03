@@ -35,6 +35,7 @@ create_copy_rules: dir
 	-$(shell mkdir -p $(COPY-RULES-DIR)/)
 	@-$(foreach i,$(SRC-CPP-DIRs),$(call create-make-files,$i,cpp))
 	@-$(foreach i,$(SRC-H-DIRs),$(call create-make-files,$i,h))
+	@-$(foreach i,$(SRC-TPP-DIRs),$(call create-make-files,$i,tpp))
 	$(info ----------   Copy Rules Found: $(words $(COPY-RULES))   ----------)
 
 

@@ -2,6 +2,7 @@
 #include "State.h"
 #include "Functions_state.h"
 #include "Interface_SDL_game_obj.h"
+#include "Parser.h"
 
 
 
@@ -31,9 +32,8 @@ State::Create()
       std::ifstream data_file( "Data/states/" + m_file_name + ".data" );
       if( data_file.is_open() && data_file.good())
 	{
-	  //gs::Get_value( this, data_file );
 	  data::Parser p;
-	  p.Parse_file( this, data_file );
+	  p.Parse_file( data_file );
 	  data_file.close();
 	}
       else 

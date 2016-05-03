@@ -6,80 +6,80 @@
 namespace data
 {
   void 
-  Container::Container_add_type( const int _value, 
-				 data::Type_union& tu )
+  Container::Container_add_type( data::Type_union& tu, 
+				 const int _value )
   {
     tu.type.i = _value;
     tu.type_id = 1;
   }
 
   void 
-  Container::Container_add_type( const long int _value, 
-				 data::Type_union& tu )
+  Container::Container_add_type( data::Type_union& tu, 
+				 const long int _value )
   {
     tu.type.li = _value;
     tu.type_id = 2;
   }
 
   void 
-  Container::Container_add_type( const unsigned _value, 
-				 data::Type_union& tu )
+  Container::Container_add_type( data::Type_union& tu, 
+				 const unsigned _value )
   {
     tu.type.u = _value;
     tu.type_id = 3;
   }
 
   void 
-  Container::Container_add_type( const long unsigned _value, 
-				 data::Type_union& tu )
+  Container::Container_add_type( data::Type_union& tu, 
+				 const long unsigned _value )
   {
     tu.type.lu = _value;
     tu.type_id = 4;
   }
 
   void 
-  Container::Container_add_type( const float _value, 
-				 data::Type_union& tu )
+  Container::Container_add_type( data::Type_union& tu, 
+				 const float _value )
   {
     tu.type.f = _value;
     tu.type_id = 5;
   }
 
   void 
-  Container::Container_add_type( const double _value, 
-				 data::Type_union& tu )
+  Container::Container_add_type( data::Type_union& tu, 
+				 const double _value )
   {
     tu.type.d = _value;
     tu.type_id = 6;
   }
 
   void 
-  Container::Container_add_type( const long double _value, 
-				 data::Type_union& tu )
+  Container::Container_add_type( data::Type_union& tu, 
+				 const long double _value )
   {
     tu.type.ld = _value;
     tu.type_id = 7;
   }
 
   void 
-  Container::Container_add_type( const bool _value, 
-				 data::Type_union& tu )
+  Container::Container_add_type( data::Type_union& tu, 
+				 const bool _value )
   {
     tu.type.b = _value;
     tu.type_id = 8;
   }
 
   void 
-  Container::Container_add_type( const char _value, 
-				 data::Type_union& tu )
+  Container::Container_add_type( data::Type_union& tu, 
+				 const char _value )
   {
     tu.type.c = _value;
     tu.type_id = 9;
   }
 
   void 
-  Container::Container_add_type( const xx::String_cast _value, 
-				 data::Type_union& tu )
+  Container::Container_add_type( data::Type_union& tu, 
+				 const xx::String_cast _value )
   {
     tu.s = _value;
     tu.type.i = 0;
@@ -92,8 +92,8 @@ namespace data
 namespace data
 {
   bool 
-  Container::Container_set_type( const int _value, 
-				 data::Type_union& tu )
+  Container::Container_set_type( data::Type_union& tu, 
+				 const int _value )
   {
     if( tu.type_id != 1 )
       return false;
@@ -102,8 +102,8 @@ namespace data
   }
 
   bool 
-  Container::Container_set_type( const long int _value, 
-				 data::Type_union& tu )
+  Container::Container_set_type( data::Type_union& tu, 
+				 const long int _value )
   {
     if( tu.type_id != 2 )
       return false;
@@ -112,8 +112,8 @@ namespace data
   }
 
   bool 
-  Container::Container_set_type( const unsigned _value, 
-				 data::Type_union& tu )
+  Container::Container_set_type( data::Type_union& tu, 
+				 const unsigned _value )
   {
     if( tu.type_id != 3 )
       return false;
@@ -122,8 +122,8 @@ namespace data
   }
 
   bool 
-  Container::Container_set_type( const long unsigned _value, 
-				 data::Type_union& tu )
+  Container::Container_set_type( data::Type_union& tu, 
+				 const long unsigned _value )
   {
     if( tu.type_id != 4 )
       return false;
@@ -132,8 +132,8 @@ namespace data
   }
 
   bool 
-  Container::Container_set_type( const float _value, 
-				 data::Type_union& tu )
+  Container::Container_set_type( data::Type_union& tu, 
+				 const float _value )
   {
     if( tu.type_id != 5 )
       return false;
@@ -142,8 +142,8 @@ namespace data
   }
 
   bool 
-  Container::Container_set_type( const double _value, 
-				 data::Type_union& tu )
+  Container::Container_set_type( data::Type_union& tu, 
+				 const double _value )
   {
     if( tu.type_id != 6 )
       return false;
@@ -152,8 +152,8 @@ namespace data
   }
 
   bool 
-  Container::Container_set_type( const long double _value, 
-				 data::Type_union& tu )
+  Container::Container_set_type( data::Type_union& tu, 
+				 const long double _value )
   {
     if( tu.type_id != 7 )
       return false;
@@ -162,8 +162,8 @@ namespace data
   }
 
   bool 
-  Container::Container_set_type( const bool _value, 
-				 data::Type_union& tu )
+  Container::Container_set_type( data::Type_union& tu, 
+				 const bool _value )
   {
     if( tu.type_id != 8 )
       return false;
@@ -172,8 +172,8 @@ namespace data
   }
 
   bool 
-  Container::Container_set_type( const char _value, 
-				 data::Type_union& tu )
+  Container::Container_set_type( data::Type_union& tu, 
+				 const char _value )
   {
     if( tu.type_id != 9 )
       return false;
@@ -182,8 +182,8 @@ namespace data
   }
 
   bool 
-  Container::Container_set_type( const xx::String_cast _value, 
-				 data::Type_union& tu )
+  Container::Container_set_type( data::Type_union& tu, 
+				 const xx::String_cast _value )
   {
     if( tu.type_id != 10 )
       return false;
@@ -197,8 +197,8 @@ namespace data
 namespace data
 {
   bool 
-  Container::Container_get_type( int& _value, 
-				 const data::Type_union& tu ) const
+  Container::Container_get_type( const data::Type_union& tu, 
+				 int& _value ) const
   {
     if( tu.type_id != 1 )
       return false;
@@ -207,8 +207,8 @@ namespace data
   }
 
   bool 
-  Container::Container_get_type( long int& _value, 
-				 const data::Type_union& tu ) const
+  Container::Container_get_type( const data::Type_union& tu, 
+				 long int& _value ) const
   {
     if( tu.type_id != 2 )
       return false;
@@ -217,8 +217,8 @@ namespace data
   }
 
   bool 
-  Container::Container_get_type( unsigned& _value, 
-				 const data::Type_union& tu ) const
+  Container::Container_get_type( const data::Type_union& tu, 
+				 unsigned& _value ) const
   {
     if( tu.type_id != 3 )
       return false;
@@ -227,8 +227,8 @@ namespace data
   }
 
   bool 
-  Container::Container_get_type( long unsigned& _value, 
-				 const data::Type_union& tu ) const
+  Container::Container_get_type( const data::Type_union& tu, 
+				 long unsigned& _value ) const
   {
     if( tu.type_id != 4 )
       return false;
@@ -237,8 +237,8 @@ namespace data
   }
 
   bool 
-  Container::Container_get_type( float& _value, 
-				 const data::Type_union& tu ) const
+  Container::Container_get_type( const data::Type_union& tu, 
+				 float& _value ) const
   {
     if( tu.type_id != 5 )
       return false;
@@ -247,8 +247,8 @@ namespace data
   }
 
   bool 
-  Container::Container_get_type( double& _value, 
-				 const data::Type_union& tu ) const
+  Container::Container_get_type( const data::Type_union& tu, 
+				 double& _value ) const
   {
     if( tu.type_id != 6 )
       return false;
@@ -257,8 +257,8 @@ namespace data
   }
 
   bool 
-  Container::Container_get_type( long double& _value, 
-				 const data::Type_union& tu ) const
+  Container::Container_get_type( const data::Type_union& tu, 
+				 long double& _value ) const
   {
     if( tu.type_id != 7 )
       return false;
@@ -267,8 +267,8 @@ namespace data
   }
 
   bool 
-  Container::Container_get_type( bool& _value, 
-				 const data::Type_union& tu ) const
+  Container::Container_get_type( const data::Type_union& tu, 
+				 bool& _value ) const
   {
     if( tu.type_id != 8 )
       return false;
@@ -277,8 +277,8 @@ namespace data
   }
 
   bool 
-  Container::Container_get_type( char& _value, 
-				 const data::Type_union& tu ) const
+  Container::Container_get_type( const data::Type_union& tu, 
+				 char& _value ) const
   {
     if( tu.type_id != 9 )
       return false;
@@ -287,8 +287,8 @@ namespace data
   }
 
   bool 
-  Container::Container_get_type( xx::String_cast& _value, 
-				 const data::Type_union& tu ) const
+  Container::Container_get_type( const data::Type_union& tu, 
+				 xx::String_cast& _value ) const
   {
     if( tu.type_id != 10 )
       return false;

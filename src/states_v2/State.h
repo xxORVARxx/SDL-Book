@@ -7,7 +7,6 @@
 namespace data { class Parser; }
 class Camera;
 class Base_SDL_game_obj;
-class State;
 
 
 
