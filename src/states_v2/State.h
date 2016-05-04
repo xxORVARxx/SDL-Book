@@ -20,13 +20,15 @@ public:
 
   // --- Functions ---
   void Create();
+  void Load() {}
+  void Save() {}
 
   void Update() const;
   void Render() const;
 
   void Clean();
 
-  const std::string Get_id() const { return m_state_id; }
+  const std::string Get_id() const { return m_name_id; }
   void Add_object( Base_SDL_game_obj* _obj ) { m_objects_vec.push_back( _obj ); }
 
 private:
@@ -35,7 +37,7 @@ private:
   bool disable_render;
 
   const std::string m_file_name;
-  std::string m_state_id;
+  std::string m_name_id;
 
   Camera* m_camera_ptr;
   std::vector< Base_SDL_game_obj* > m_objects_vec;

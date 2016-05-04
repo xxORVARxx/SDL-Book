@@ -4,16 +4,6 @@
 #include "Texture_manager_v2.h"
 
 #include "Game_world.h"
-/*
-#include "State_main_menu.h"
-#include "Factory_game_obj.h"
-
-#include "Game.h"
-#include "Game_obj_grid.h"
-#include "Game_obj_sheet_button.h"
-#include "Game_obj_sheet_enemy.h"
-#include "Game_obj_sheet_player.h"
-*/
 
 
 
@@ -62,26 +52,8 @@ bool the_Game::Init( std::string _title )
   // Opening Inputh Handler:
   the_Input_handler::Instance().Initialise_joysticks();
 
-  /*
-  // Register all Game-objects:
-  the_Factory_game_obj::Instance().Register_creator( fac::GAME_OBJ, new Creator_game_obj );
-  the_Factory_game_obj::Instance().Register_creator( fac::GAME_OBJ_GRID, new Creator_game_obj_grid );
-  the_Factory_game_obj::Instance().Register_creator( fac::GAME_OBJ_SHEET, new Creator_game_obj_sheet );
-  the_Factory_game_obj::Instance().Register_creator( fac::GAME_OBJ_SHEET_BUTTON, new Creator_game_obj_button );
-  the_Factory_game_obj::Instance().Register_creator( fac::GAME_OBJ_SHEET_ENEMY, new Creator_game_obj_enemy );
-  the_Factory_game_obj::Instance().Register_creator( fac::GAME_OBJ_SHEET_PLAYER, new Creator_game_obj_player );
-
   // The Game State Machine:
-  m_state_machine.Push_state( new State_main_menu );
-  */
-
-
-
-  // FOR TESTING:
-  m_state_ptr = new State( "State1" );
-  m_state_ptr->Create();
-
-
+  m_state_machine.To_do( SMF_parameters( SMF::CREATE_AT_FRONT, "State1", "", "" ));
 
   return true;
 }
@@ -105,15 +77,9 @@ void the_Game::Handle_events()
 
 void the_Game::Update()
 {
-
-
-
   // The Game State Machine:
-  //m_state_machine.Update();
-  m_state_ptr->Update();
-
-
-
+  m_state_machine.Flush();
+  m_state_machine.Update();
 }
 
 
@@ -122,13 +88,8 @@ void the_Game::Render()
 {
   SDL_RenderClear( m_renderer_ptr );
 
-
-
   // The Game State Machine:
-  //m_state_machine.Render();
-  m_state_ptr->Render();
-
-
+  m_state_machine.Render();
 
   /*
   glm::vec2 display( the_World::Instance().Get_display_size());
@@ -154,17 +115,8 @@ void the_Game::Clean()
   // Closing Inputh Handler:
   the_Input_handler::Instance().Clean();
 
-  // Closing Factory:
-  //the_Factory_game_obj::Instance().Clean();
-
-
-
-  // The Game State Machine:
-  //m_state_machine.Clean();
-  m_state_ptr->Clean();
-  delete m_state_ptr;
-
-
+  // The State Machine:
+  m_state_machine.Clean();
 
   // Closing SDL:
   SDL_DestroyRenderer( m_renderer_ptr );

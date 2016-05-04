@@ -24,7 +24,7 @@ State::~State()
 
 
 
-void 
+void
 State::Create()
 {
   try
@@ -33,16 +33,21 @@ State::Create()
       if( data_file.is_open() && data_file.good())
 	{
 	  data::Parser p;
+
+	  m_name_id = std::string( p.Parse_file< xx::String_cast >( data_file ));
 	  p.Parse_file( data_file );
+
 	  data_file.close();
 	}
       else 
-	throw std::ios::failure( "(xx) Error opening state's data file!" );
+	throw std::ios::failure( "(xx) STATE ERROR :: When opening state's data file!" );
     }
   catch( const std::exception& e )
     {
       std::cerr << e.what() <<'\n';
     }
+  if( m_name_id.empty())
+    throw std::logic_error( "(xx) STATE ERROR :: The state's 'name_id' cannot be an empty string!" );
 }
 
 
@@ -76,4 +81,5 @@ State::Clean()
       delete i;
     }
   m_objects_vec.clear();
+  std::cout << "STATE :: '"<< m_name_id <<"'.Clean() is Done.\n";
 }

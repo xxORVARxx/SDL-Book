@@ -3,7 +3,7 @@
 #define GAME_H
 
 #include "Init.h"
-//#include "Game_state_machine.h"
+#include "State_machine.h"
 #include "State.h"
 
 
@@ -33,20 +33,14 @@ class the_Game
   void Clean();
 
   SDL_Renderer* Get_renderer() const { return m_renderer_ptr; }
-  //Game_state_machine* Get_state_machine() { return &m_state_machine; }
+  State_machine* Get_state_machine() { return &m_state_machine; }
 
   // --- Variables ---
  private:
   SDL_Window* m_display_ptr;
   SDL_Renderer* m_renderer_ptr;
 
-
-
-  //Game_state_machine m_state_machine;
-  State* m_state_ptr;
-
-
-
+  State_machine m_state_machine;
 };
 
 
