@@ -7,8 +7,9 @@
 
 
 
-enum SMF
-  {
+enum class SMF
+{
+  VOID = 0,
     CREATE_AT_FRONT, //  ( "filename", "", "" )
     CREATE_FRONT_OF, //  ( "filename", "", "destination_id" )
     CREATE_BEHIND_OF, // ( "filename", "", "destination_id" )
@@ -29,8 +30,9 @@ enum SMF
     REMOVE, //       ( "", "id", "" )
     REMOVE_FRONT, // ( "", "",   "" )
     REMOVE_BACK, //  ( "", "",   "" )
-    REMOVE_ALL //    ( "", "",   "" )
-  };
+    REMOVE_ALL, //   ( "", "",   "" )
+    MAX
+};
 
 
 
@@ -59,14 +61,7 @@ public:
   void Render();
   void Clean();
 
-  bool Has_state( const std::string _id, State* _state );
-
-  void Print()
-  {
-    for( auto itr = m_state_vec.begin() ; itr != m_state_vec.end() ; ++itr )
-      std::cout <<"'"<< (*itr)->Get_id() <<"'    ";
-    std::cout <<"\n";
-  }
+  bool Has_state( const std::string _id, State* _state = nullptr )  const;
 
 private:
   State* Create_state( const std::string& _filename );

@@ -1,30 +1,60 @@
-b_String
-  EXIT_B
 
-f_Texture_width
-  EXIT_B
-  
-f_Texture_height
-  EXIT_B
+#################### BASE ####################
 
-b_Float
-  0.5
+Return                           #--Name-ID--#
+  b_String()R
+    "EXIT_B"
 
-b_Float
-  0.5
 
-b_Float
-  100.0
+#################### GOBJ ####################
 
-b_Float
-  100.0
+Return                        #--Texture-Id--#
+  b_String()R
+    "EXIT_B"
 
-m_Divide
-  f_Display_width
-  b_Float
-    1.666
-    
-m_Divide
-  f_Display_height
-  b_Float
-    1.666
+
+Return                      #--Image-Size-X--#
+  t_Texture_width(P)R
+    b_String()R
+      "EXIT_B"
+
+Return                      #--Image-Size-Y--#
+  t_Texture_height(P)R
+    b_String()R
+      "EXIT_B"
+
+
+Return                           #--Scale-X--#
+  b_Float()R
+    0.25
+
+Return                           #--Scale-Y--#
+  b_Float()R
+    0.25
+
+
+Return                            #--Size-X--#
+  b_Float()R
+    100
+
+Return                            #--Size-Y--#
+  b_Float()R
+    100
+
+
+Return                        #--Position-X--#
+  m_Divide(TT)T  Double
+    w_Display_width()R
+  b_Double()R
+    2
+
+Return                        #--Position-Y--#
+  m_Multiply(TT)T  Double
+    w_Display_height()R
+  b_Double()R
+    0.6667
+
+
+#################### FILE ####################
+
+Done

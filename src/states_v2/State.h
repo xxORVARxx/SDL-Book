@@ -30,7 +30,7 @@ public:
 
   const std::string Get_id() const { return m_name_id; }
   void Add_object( Base_SDL_game_obj* _obj ) { m_objects_vec.push_back( _obj ); }
-
+  void Make_camera();
 private:
   // --- Variables ---
   bool disable_logic;

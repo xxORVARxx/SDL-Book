@@ -82,6 +82,13 @@ namespace data
 	throw std::invalid_argument( "(xx) Parsing ERROR! When ERASING a value. No value with the name: '" + _name + "' is in the container!" );
     }
 
+    bool Has( const std::string _name ) const
+    {
+      if( m_container_map.count( _name ) == 0 )
+	return false;
+      return true;
+    }
+
   private:
     void Container_add_type( data::Type_union& tu, const int _value );
     void Container_add_type( data::Type_union& tu, const long int _value );

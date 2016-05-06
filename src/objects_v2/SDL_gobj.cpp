@@ -6,12 +6,15 @@
 
 #include "Game.h"
 #include "Parser.h"
+#include "State.h"
 
 
 
-SDL_gobj::SDL_gobj( std::string _file ) : Base_SDL_game_obj( _file )
+SDL_gobj::SDL_gobj( std::string _file, 
+		    State* _state ) : 
+  Base_SDL_game_obj( _file, _state )
 {
-  std::cout <<"Obj created\n";
+
 }
 
 
@@ -45,20 +48,21 @@ SDL_gobj::Clean()
 
 
 void 
-SDL_gobj::Parse_data_file( std::ifstream& _file )
+SDL_gobj::Parse_data_file( std::ifstream& _file, data::Parser* _p, bool _set_p )
 {
-  Base_SDL_game_obj::Parse_data_file( _file );
-  
-  data::Parser p;
-  m_texture_id = std::string( p.Parse_file< xx::String_cast >( _file ));
-  m_image_size.x = p.Parse_file< float >( _file );
-  m_image_size.y = p.Parse_file< float >( _file );
-  m_scale.x = p.Parse_file< float >( _file );
-  m_scale.y = p.Parse_file< float >( _file );
-  m_size.x = p.Parse_file< float >( _file );
-  m_size.y = p.Parse_file< float >( _file );
-  m_position.x = p.Parse_file< double >( _file );
-  m_position.y = p.Parse_file< double >( _file );
+  if( _set_p )
+    _p->Set_this( m_this_state, this );
+  Base_SDL_game_obj::Parse_data_file( _file, _p, false );
 
-  p.Parse_file( _file );
+  m_texture_id = std::string( _p->Parse_file< xx::String_cast >( _file ));
+  m_image_size.x = _p->Parse_file< float >( _file );
+  m_image_size.y = _p->Parse_file< float >( _file );
+  m_scale.x = _p->Parse_file< float >( _file );
+  m_scale.y = _p->Parse_file< float >( _file );
+
+
+  m_size.x = _p->Parse_file< float >( _file );
+  m_size.y = _p->Parse_file< float >( _file );
+  m_position.x = _p->Parse_file< double >( _file );
+  m_position.y = _p->Parse_file< double >( _file );
 }

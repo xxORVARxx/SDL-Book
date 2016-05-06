@@ -2,7 +2,6 @@
 #ifndef SDL_GOBJ_H
 #define SDL_GOBJ_H
 
-#include "Init.h"
 #include "Interface_SDL_game_obj.h"
 
 
@@ -12,7 +11,7 @@ class SDL_gobj : public Base_SDL_game_obj
   friend class data::Parser;
 
 public:
-  SDL_gobj( std::string _file );
+  SDL_gobj( std::string _file, State* _state );
   virtual ~SDL_gobj() {}
 
   // --- Functions ---
@@ -25,10 +24,10 @@ public:
   virtual void Draw( Camera* _camera );
   virtual void Clean();
 
-  virtual const std::string Get_id() const { return "SDL_gobj"; }
+  virtual const Object_type Get_type_id() const { return Object_type::SDL_GOBJ; }
 
 protected:
-  virtual void Parse_data_file( std::ifstream& _file );
+  virtual void Parse_data_file( std::ifstream& _file, data::Parser* _p, bool _set_p );
 
   // --- Variables ---
   std::string m_texture_id;

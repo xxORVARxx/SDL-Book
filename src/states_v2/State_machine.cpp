@@ -113,7 +113,8 @@ State_machine::Clean()
 
 
 bool
-State_machine::Has_state( const std::string _id, State* _state = nullptr )
+State_machine::Has_state( const std::string _id, 
+			  State* _state ) const
 {
   for( auto state_ptr : m_state_vec )
     if( state_ptr->Get_id() == _id )
@@ -155,7 +156,8 @@ State_machine::Put_at_front( State* _state_ptr )
 }
 
 void
-State_machine::Put_front_of( State* _state_ptr, const std::string& _id )
+State_machine::Put_front_of( State* _state_ptr, 
+			     const std::string& _id )
 {
   auto itr = this->Find( _id );
   if( itr == m_state_vec.end())
@@ -164,7 +166,8 @@ State_machine::Put_front_of( State* _state_ptr, const std::string& _id )
 }
 
 void
-State_machine::Put_behind_of( State* _state_ptr, const std::string& _id )
+State_machine::Put_behind_of( State* _state_ptr, 
+			      const std::string& _id )
 {
   auto itr = this->Find( _id );
   if( itr == m_state_vec.end())
@@ -205,7 +208,8 @@ State_machine::Move_forward( const std::string& _id )
 }
 
 void
-State_machine::Move_front_of( const std::string& _id, const std::string& _destination_id )
+State_machine::Move_front_of( const std::string& _id, 
+			      const std::string& _destination_id )
 {
   auto itr = this->Find( _id );
   if( itr == m_state_vec.end())
@@ -221,7 +225,8 @@ State_machine::Move_front_of( const std::string& _id, const std::string& _destin
 }
 
 void
-State_machine::Move_behind_of( const std::string& _id, const std::string& _destination_id )
+State_machine::Move_behind_of( const std::string& _id, 
+			       const std::string& _destination_id )
 {
   auto itr = this->Find( _id );
   if( itr == m_state_vec.end())
