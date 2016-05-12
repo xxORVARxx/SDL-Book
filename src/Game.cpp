@@ -2,6 +2,7 @@
 #include "Game.h"
 #include "Input_handler.h"
 #include "Texture_manager_v2.h"
+#include "Printer.h"
 
 #include "Game_world.h"
 
@@ -111,6 +112,9 @@ void the_Game::Clean()
 {
   // Closing the Texture Manager:
   the_Texture_manager_v2::Instance().Clean();
+
+  // Closing the Printing Manager:
+  the_Printing_manager::Instance().Clean();
 
   // Closing Inputh Handler:
   the_Input_handler::Instance().Clean();

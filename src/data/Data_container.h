@@ -42,7 +42,7 @@ namespace data
     void Add( const std::string _name, const T _value )
     {
       if( m_container_map.count( _name ) != 0 )
-	throw std::invalid_argument( "(xx) Parsing ERROR! When ADDING a value to the container. The name: '" + _name + "' is allready in use!" );
+	throw std::invalid_argument( "(xx) Parsing ERROR! When ADDING a value to the container. The name: '" + _name + "' is allready in use! " );
       data::Type_union tu;
       this->Container_add_type( tu, _value );
       m_container_map[ _name ] = tu;
@@ -52,34 +52,34 @@ namespace data
     void Set( const std::string _name, const T _value )
     {
       if( m_container_map.count( _name ) == 0 )
-	throw std::invalid_argument( "(xx) Parsing ERROR! When SETTING a value: No value with the name: '" + _name + "' is in the container!" );
+	throw std::invalid_argument( "(xx) Parsing ERROR! When SETTING a value: No value with the name: '" + _name + "' is in the container! " );
       if( ! this->Container_set_type( m_container_map[ _name ], _value ))
-	throw std::invalid_argument( "(xx) Parsing ERROR! When SETTING a value with the name: '" + _name + "'. Variables types do not match!" );
+	throw std::invalid_argument( "(xx) Parsing ERROR! When SETTING a value with the name: '" + _name + "'. Variables types do not match! " );
     }
 
     template< typename T >
     void Get( const std::string _name, T& _value )
     {
       if( m_container_map.count( _name ) == 0 )
-	throw std::invalid_argument( "(xx) Parsing ERROR! When GETTING a value: No value with the name: '" + _name + "' is in the container!" );
+	throw std::invalid_argument( "(xx) Parsing ERROR! When GETTING a value: No value with the name: '" + _name + "' is in the container! " );
       if( ! this->Container_get_type( m_container_map[ _name ], _value ))
-	throw std::invalid_argument( "(xx) Parsing ERROR! When GETTING a value with the name: '" + _name + "'. Variables types do not match!" );
+	throw std::invalid_argument( "(xx) Parsing ERROR! When GETTING a value with the name: '" + _name + "'. Variables types do not match! " );
     }
 
     template< typename T >
     void Take( const std::string _name, T& _value )
     {
       if( m_container_map.count( _name ) == 0 )
-	throw std::invalid_argument( "(xx) Parsing ERROR! When TAKING a value: No value with the name: '" + _name + "' is in the container!" );
+	throw std::invalid_argument( "(xx) Parsing ERROR! When TAKING a value: No value with the name: '" + _name + "' is in the container! " );
       if( ! this->Container_get_type( m_container_map[ _name ], _value ))
-	throw std::invalid_argument( "(xx) Parsing ERROR! When TAKING a value with the name: '" + _name + "'. Variables types do not match!" );
+	throw std::invalid_argument( "(xx) Parsing ERROR! When TAKING a value with the name: '" + _name + "'. Variables types do not match! " );
       m_container_map.erase( _name );
     }
 
     void Erase( const std::string _name )
     {
       if( m_container_map.erase( _name ) == 0 )
-	throw std::invalid_argument( "(xx) Parsing ERROR! When ERASING a value. No value with the name: '" + _name + "' is in the container!" );
+	throw std::invalid_argument( "(xx) Parsing ERROR! When ERASING a value. No value with the name: '" + _name + "' is in the container! " );
     }
 
     bool Has( const std::string _name ) const

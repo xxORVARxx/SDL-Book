@@ -26,11 +26,11 @@ Return                      #--Image-Size-Y--#
 
 Return                           #--Scale-X--#
   b_Float()R
-    0.25
+    0.0
 
 Return                           #--Scale-Y--#
   b_Float()R
-    0.25
+    0.0
 
 
 Return                            #--Size-X--#

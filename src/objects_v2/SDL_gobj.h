@@ -15,8 +15,6 @@ public:
   virtual ~SDL_gobj() {}
 
   // --- Functions ---
-
-
   virtual void Save() {}
   virtual void Load() {}
 
@@ -30,11 +28,16 @@ protected:
   virtual void Parse_data_file( std::ifstream& _file, data::Parser* _p, bool _set_p );
 
   // --- Variables ---
-  std::string m_texture_id;
-  glm::vec2 m_image_size;// The size of the image itself, should not be changed.
-  glm::vec2 m_scale;
-  glm::vec2 m_size;// The size to be rendered on the screen.
   glm::dvec2 m_position;
+  glm::vec2 m_size;// The size to be rendered on the screen.
+  glm::vec2 m_scale;
+
+  struct Print_data
+  {
+    std::string m_texture_id;
+    glm::vec2 m_image_size;// The size of the image itself, should not be changed.
+    glm::vec2 m_print_offset;
+  } m_print;
 };
 
 

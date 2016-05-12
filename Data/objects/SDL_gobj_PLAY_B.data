@@ -57,4 +57,34 @@ Return                        #--Position-Y--#
 
 #################### FILE ####################
 
+i_Make_frame_printer(PPRR)
+  s_This_state()R
+  o_This_object()R
+  Return                         #--SCALE-X--#
+    b_Float()R
+      1.0
+  Return                         #--SCALE-Y--#
+    b_Float()R
+      1.0
+
+i_Make_action(PPPPRRRR)
+  s_This_state()R
+  o_This_object()R
+  b_String()R
+    "TEST"
+  b_String()R
+    "SEQUENCE-0"
+  Return                      #--ACTIONS-ID--#
+    b_String()R
+      "ATTACK"
+  Return                      #--TEXTURE-ID--#
+    b_String()R
+      "PLAY_B"
+  Return                         #--SCALE-X--#
+    b_Float()R
+      1.0
+  Return                         #--SCALE-Y--#
+    b_Float()R
+      1.0
+
 Done

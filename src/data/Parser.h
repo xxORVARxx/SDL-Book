@@ -22,11 +22,12 @@ namespace data
 
   public:
     Parser() : 
-      m_value_from_file(false), m_is_this_object(false), m_this_state(nullptr), m_this_object(nullptr) {}
+      m_value_from_file(false), m_disabled(false), m_this_state(nullptr), m_this_object(nullptr), m_do_functions(&m_disabled), m_get_functions(&m_disabled) {}
 
     // --- Functions ---
     void Set_this( State* _state );
     void Set_this( State* _state, Base_SDL_game_obj* _object );
+    bool Disabled() { return m_disabled; }
 
     template< typename T > 
     T Parse_file( std::ifstream& _file );
@@ -34,32 +35,32 @@ namespace data
     void Parse_file( std::ifstream& _file );
 
   private:
-    void Next_do_functions( bool _disabled, std::ifstream& _file, std::string& _function );
+    void Next_do_functions( std::ifstream& _file, std::string& _function );
 
     template< typename T > 
-    T Next_get_functions( bool _disabled, std::ifstream& _file, std::string& _function );
+    T Next_get_functions( std::ifstream& _file, std::string& _function );
 
 
-    void Select_type_for_do( bool _disabled, std::ifstream& _file, std::string& _function );
+    void Select_type_for_do( std::ifstream& _file, std::string& _function );
 
     template< typename T > 
-    T Select_type_for_get( bool _disabled, std::ifstream& _file, std::string& _function );
+    T Select_type_for_get( std::ifstream& _file, std::string& _function );
 
  
-    void List_of_do_functions( bool _disabled, std::ifstream& _file, std::string& _function );
+    void List_of_do_functions( std::ifstream& _file, std::string& _function );
 
     template< typename T > 
-    void List_of_template_do_functions( bool _disabled, std::ifstream& _file, std::string& _function );
+    void List_of_template_do_functions( std::ifstream& _file, std::string& _function );
 
     template< typename T > 
-    T List_of_get_functions( bool _disabled, std::ifstream& _file, std::string& _function );
+    T List_of_get_functions( std::ifstream& _file, std::string& _function );
 
     template< typename T > 
-    T List_of_template_get_functions( bool _disabled, std::ifstream& _file, std::string& _function );
+    T List_of_template_get_functions( std::ifstream& _file, std::string& _function );
 
     // --- Variables ---
     bool m_value_from_file;
-    bool m_is_this_object;
+    bool m_disabled;
 
     State* m_this_state;
     Base_SDL_game_obj* m_this_object;

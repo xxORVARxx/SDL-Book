@@ -7,6 +7,7 @@
 
 namespace data { class Parser; }
 class State;
+class Printer;
 
 
 
@@ -54,7 +55,7 @@ class Base_SDL_game_obj : public Interface_SDL_game_obj
   virtual ~Base_SDL_game_obj() {}
 
   // --- Functions ---
-  void Create();
+  bool Create();
   void Clone();
 
   virtual void Save();
@@ -63,6 +64,9 @@ class Base_SDL_game_obj : public Interface_SDL_game_obj
   virtual void Update() {}
   virtual void Draw( Camera* _camera ) {}
   virtual void Clean() {}
+
+  void Set_printer( Printer* _printer ) { m_printer = _printer; }
+  Printer* Get_printer() const { return m_printer; }
 
   virtual const Object_type Get_type_id() const { return Object_type::BASE_SDL_GAME_OBJ; }
   const std::string Get_name_id() const { return m_name_id; }
@@ -74,6 +78,7 @@ protected:
   const std::string m_file_name;
   std::string m_name_id;
   State* m_this_state;
+  Printer* m_printer;
 };
 
 
