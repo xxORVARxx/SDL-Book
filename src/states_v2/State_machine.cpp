@@ -76,7 +76,7 @@ State_machine::Flush()
 	  break;
 
 	default:
-	  throw std::invalid_argument( "(xx) STATE MACHINE ERROR :: when Flush-ing." );
+	  throw std::invalid_argument( "(xx) State Machine ERROR! when Flush-ing. " );
 	}//switch
     }//for
   m_todo_list.clear();
@@ -87,21 +87,21 @@ State_machine::Flush()
 void
 State_machine::Update()
 {
-  for( auto state_ptr : m_state_vec )
+  for( auto& state_ptr : m_state_vec )
     state_ptr->Update();
 }
 
 void
 State_machine::Render()
 {
-  for( auto state_ptr : m_state_vec )
+  for( auto& state_ptr : m_state_vec )
     state_ptr->Render();
 }
 
 void
 State_machine::Clean()
 {
-  for( auto state_ptr : m_state_vec )
+  for( auto& state_ptr : m_state_vec )
     {
       state_ptr->Clean();
       delete state_ptr;
@@ -116,7 +116,7 @@ bool
 State_machine::Has_state( const std::string _id, 
 			  State* _state ) const
 {
-  for( auto state_ptr : m_state_vec )
+  for( auto& state_ptr : m_state_vec )
     if( state_ptr->Get_id() == _id )
       {
 	_state = state_ptr;
@@ -133,7 +133,7 @@ State_machine::Create_state( const std::string& _filename )
   State* state_ptr = new State( _filename );
   state_ptr->Create();
   if( this->Find( state_ptr->Get_id()) != m_state_vec.end())
-    throw std::invalid_argument( "(xx) STATE MACHINE ERROR :: When CREATING a State. The name-id: '" + state_ptr->Get_id() + "' is allready in use!" );
+    throw std::invalid_argument( "(xx) State Machine ERROR! When CREATING a State. The name-id: '" + state_ptr->Get_id() + "' is allready in use! " );
   return state_ptr;
 }
 
@@ -144,7 +144,7 @@ State_machine::Load_state( const std::string& _filename )
   state_ptr->Load();
   if( this->Find( state_ptr->Get_id()) == m_state_vec.end())
     return state_ptr;
-  throw std::invalid_argument( "(xx) STATE MACHINE ERROR :: When LOADING a State. The name-id: '" + state_ptr->Get_id() + "' is allready in use!" );
+  throw std::invalid_argument( "(xx) State Machine ERROR! When LOADING a State. The name-id: '" + state_ptr->Get_id() + "' is allready in use! " );
 }
 
 
@@ -161,7 +161,7 @@ State_machine::Put_front_of( State* _state_ptr,
 {
   auto itr = this->Find( _id );
   if( itr == m_state_vec.end())
-    throw std::invalid_argument( "(xx) STATE MACHINE ERROR :: No state with the name-id: '" + _id + "'!" );
+    throw std::invalid_argument( "(xx) State Machine ERROR! No state with the name-id: '" + _id + "'! " );
   m_state_vec.insert( ++itr, _state_ptr );
 }
 
@@ -171,7 +171,7 @@ State_machine::Put_behind_of( State* _state_ptr,
 {
   auto itr = this->Find( _id );
   if( itr == m_state_vec.end())
-    throw std::invalid_argument( "(xx) STATE MACHINE ERROR :: No state with the name-id: '" + _id + "'!" );
+    throw std::invalid_argument( "(xx) State Machine ERROR! No state with the name-id: '" + _id + "'! " );
   m_state_vec.insert( itr, _state_ptr );
 }
 
@@ -188,7 +188,7 @@ State_machine::Move_to_front( const std::string& _id )
 {
   auto itr = this->Find( _id );
   if( itr == m_state_vec.end())
-    throw std::invalid_argument( "(xx) STATE MACHINE ERROR :: No state with the name-id: '" + _id + "'!" );
+    throw std::invalid_argument( "(xx) State Machine ERROR! No state with the name-id: '" + _id + "'! " );
   if( (itr+1) == m_state_vec.end())
     return;
   State* state_ptr = *itr;
@@ -201,7 +201,7 @@ State_machine::Move_forward( const std::string& _id )
 {
   auto itr = this->Find( _id );
   if( itr == m_state_vec.end())
-    throw std::invalid_argument( "(xx) STATE MACHINE ERROR :: No state with the name-id: '" + _id + "'!" );
+    throw std::invalid_argument( "(xx) State Machine ERROR! No state with the name-id: '" + _id + "'! " );
   if( (itr+1) == m_state_vec.end())
     return;
   std::swap( *itr, *(itr+1) );
@@ -213,10 +213,10 @@ State_machine::Move_front_of( const std::string& _id,
 {
   auto itr = this->Find( _id );
   if( itr == m_state_vec.end())
-    throw std::invalid_argument( "(xx) STATE MACHINE ERROR :: No state with the name-id: '" + _id + "'!" );
+    throw std::invalid_argument( "(xx) State Machine ERROR! No state with the name-id: '" + _id + "'! " );
   auto destination_itr = this->Find( _destination_id );
   if( destination_itr == m_state_vec.end())
-    throw std::invalid_argument( "(xx) STATE MACHINE ERROR :: No state with the name-id: '" + _destination_id + "'!" );
+    throw std::invalid_argument( "(xx) State Machine ERROR! No state with the name-id: '" + _destination_id + "'! " );
   if(( itr == destination_itr )||( (itr-1) == destination_itr ))
     return;
   m_state_vec.insert( ++destination_itr, *itr );
@@ -230,10 +230,10 @@ State_machine::Move_behind_of( const std::string& _id,
 {
   auto itr = this->Find( _id );
   if( itr == m_state_vec.end())
-    throw std::invalid_argument( "(xx) STATE MACHINE ERROR :: No state with the name-id: '" + _id + "'!" );
+    throw std::invalid_argument( "(xx) State Machine ERROR! No state with the name-id: '" + _id + "'! " );
   auto destination_itr = this->Find( _destination_id );
   if( destination_itr == m_state_vec.end())
-    throw std::invalid_argument( "(xx) STATE MACHINE ERROR :: No state with the name-id: '" + _destination_id + "'!" );
+    throw std::invalid_argument( "(xx) State Machine ERROR! No state with the name-id: '" + _destination_id + "'! " );
   if(( itr == destination_itr )||( (itr+1) == destination_itr ))
     return;
   m_state_vec.insert( destination_itr, *itr );
@@ -246,7 +246,7 @@ State_machine::Move_backward( const std::string& _id )
 {
   auto itr = this->Find( _id );
   if( itr == m_state_vec.end())
-    throw std::invalid_argument( "(xx) STATE MACHINE ERROR :: No state with the name-id: '" + _id + "'!" );
+    throw std::invalid_argument( "(xx) State Machine ERROR! No state with the name-id: '" + _id + "'! " );
   if( itr == m_state_vec.begin())
     return;
   std::swap( *itr, *(itr-1) );
@@ -257,7 +257,7 @@ State_machine::Move_to_back( const std::string& _id )
 {
   auto itr = this->Find( _id );
   if( itr == m_state_vec.end())
-    throw std::invalid_argument( "(xx) STATE MACHINE ERROR :: No state with the name-id: '" + _id + "'!" );
+    throw std::invalid_argument( "(xx) State Machine ERROR! No state with the name-id: '" + _id + "'! " );
   if( itr == m_state_vec.begin())
     return;
   State* state_ptr = *itr;
@@ -272,7 +272,7 @@ State_machine::Remove( const std::string& _id )
 {
   auto itr = this->Find( _id );
   if( itr == m_state_vec.end())
-    throw std::invalid_argument( "(xx) STATE MACHINE ERROR :: When REMOVING state. No state with the name-id: '" + _id + "'!" );
+    throw std::invalid_argument( "(xx) State Machine ERROR! When REMOVING state. No state with the name-id: '" + _id + "'! " );
   (*itr)->Clean();
   delete *itr;
   m_state_vec.erase( itr );
@@ -282,7 +282,7 @@ void
 State_machine::Remove_front()
 {
   if( m_state_vec.empty())
-    throw std::invalid_argument( "(xx) STATE MACHINE ERROR :: When REMOVING. No states!" );
+    throw std::invalid_argument( "(xx) State Machine ERROR! When REMOVING. No states! " );
   m_state_vec.back()->Clean();
   delete m_state_vec.back();
   m_state_vec.pop_back();
@@ -292,7 +292,7 @@ void
 State_machine::Remove_back()
 {
   if( m_state_vec.empty())
-    throw std::invalid_argument( "(xx) STATE MACHINE ERROR :: When REMOVING. No states!" );
+    throw std::invalid_argument( "(xx) State Machine ERROR! When REMOVING. No states! " );
   m_state_vec.front()->Clean();
   delete m_state_vec.front();
   m_state_vec.erase( m_state_vec.begin());
@@ -301,7 +301,7 @@ State_machine::Remove_back()
 void
 State_machine::Remove_all()
 {
-  for( auto state_ptr : m_state_vec )
+  for( auto& state_ptr : m_state_vec )
     {
       state_ptr->Clean();
       delete state_ptr;

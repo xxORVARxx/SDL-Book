@@ -23,6 +23,8 @@ public:
   void Load() {}
   void Save() {}
 
+  Base_SDL_game_obj* Find_object( std::string& object_name_id );
+
   void Update() const;
   void Render() const;
 

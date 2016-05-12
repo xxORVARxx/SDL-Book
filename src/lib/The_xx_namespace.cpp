@@ -5,6 +5,44 @@
 
 namespace xx
 {
+  std::string Read_string_from_file( std::ifstream& _file, std::string _str )
+  {
+    if( _str.empty())
+      _file >> _str;
+    if( *_str.begin() != '"' )
+      throw std::ios::failure( "(xx) String not starting with a double-quote: \" !" );
+    if( *_str.rbegin() == '"' )
+      return std::string( _str.begin() + 1, _str.end() - 1 );
+    _str.erase( 0, 1 );
+    while( _file.good())
+      {
+	char c;
+        _file.get( c );
+	if( c == '"' )
+	  return _str;
+	_str += c;
+      }//while
+    throw std::ios::failure( "(xx) String not ending with a double-quote: \" !" );
+  }
+}//xx
+
+
+
+namespace xx
+{
+  void Zero_out_SDL_Rect( SDL_Rect& _r )
+  {
+    _r.x = _r.y = 0;
+    _r.w = _r.h = 0;
+  }
+
+  void Zero_out_SDL_Point( SDL_Point& _p )
+  {
+    _p.x = _p.y = 0;
+  }
+
+
+
   bool Point_in_rect( const glm::vec2& _p, const glm::vec4& _r )
   {
     return (( _p.x >= _r.x )&&( _p.x < ( _r.x + _r.z ))&&

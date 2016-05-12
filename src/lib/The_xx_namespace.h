@@ -8,6 +8,7 @@
 #include <SDL2/SDL.h>
 
 #include <iostream>
+#include <fstream>
 #include <string>
 
 #include <ctime>
@@ -18,6 +19,16 @@
 
 namespace xx
 {
+  std::string Read_string_from_file( std::ifstream& _file, std::string _str = std::string());
+}//xx
+
+
+
+namespace xx
+{
+  void Zero_out_SDL_Rect( SDL_Rect& _r );
+  void Zero_out_SDL_Point( SDL_Point& _p );
+
   bool Point_in_rect( const glm::vec2& _p, const glm::vec4& _r );
   bool Point_in_rect( const SDL_Point& _p, const SDL_Rect& _r );
 
@@ -26,6 +37,26 @@ namespace xx
 
   float Vec_to_degrees( const glm::vec2& _vec );
   glm::vec2 Degrees_to_vec( const float& _degrees );
+}//xx
+
+
+
+namespace xx
+{
+  template< typename T >
+  void Set_value_from_scale( const T& _original_value, T& _value, const T& _scale )
+  {
+    _value = _original_value * _scale;
+  }
+
+  template< typename T >
+  void Set_scale_from_value( const T& _original_value, const T& _value, T& _scale )
+  {
+    if( _original_value )
+      _scale = _value / _original_value;
+    else
+      _scale = 1;
+  }
 }//xx
 
 

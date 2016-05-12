@@ -44,20 +44,32 @@ State::Create()
 	  data_file.close();
 	}
       else 
-	throw std::ios::failure( "(xx) Parsing ERROR! When opening state's data-file: '" + prefix + m_file_name + suffix + "'!" );
+	throw std::ios::failure( "(xx) Parsing ERROR! When opening state's data-file: '" + prefix + m_file_name + suffix + "'! " );
     }
   catch( const std::exception& e )
     {
-      std::cout <<"PARSER ERROR :: When parsing the state's data-file: '"<< prefix << m_file_name << suffix <<"'!\n";
+      std::cerr <<"PARSER ERROR :: When parsing the state's data-file: '"<< prefix << m_file_name << suffix <<"'!\n";
       std::cerr <<"\t"<< e.what() <<'\n';
     }
   if( m_name_id.empty())
-    throw std::logic_error( "(xx) STATE ERROR :: The state's 'name_id' cannot be an empty string!" );
+    throw std::logic_error( "(xx) State ERROR! The state's 'name_id' cannot be an empty string! " );
 }
 
 
 
-void State::Update() const
+Base_SDL_game_obj* 
+State::Find_object( std::string& object_name_id )
+{
+  for( auto& i: m_objects_vec )
+    if( i->Get_name_id() == object_name_id )
+      return i;
+  return nullptr;
+}
+
+
+
+void 
+State::Update() const
 {
   if( disable_logic )
     return;
@@ -67,7 +79,8 @@ void State::Update() const
 
 
 
-void State::Render() const
+void 
+State::Render() const
 {
   if( disable_render )
     return;
