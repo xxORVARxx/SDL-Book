@@ -3,11 +3,32 @@
 #define PRINTING_MANAGER_H
 
 #include "Init.h"
-#include <unordered_map>
 
-namespace data{ class Parser; }
 class Printer;
-class Image_data;
+class the_Printing_manager;
+namespace data{ class Parser; }
+
+
+
+// The 'Image-Data' is shared between 'Objects'.
+class Image_data
+{
+  friend the_Printing_manager;
+  friend Printer;
+  struct Frame
+  {
+    Frame( SDL_Rect& _xywh, float& _m, SDL_Point& _oxy );
+    SDL_Rect m_src_rec;
+    float m_ms;
+    SDL_Point m_offset;
+  };
+  Image_data( glm::vec2& _size, std::vector< Image_data::Frame >& _frames, std::map< const std::string, std::vector< unsigned short > >& _sequences );
+  const std::vector< unsigned short >* Get_sequence_vec( const std::string& _sequence_id );
+  // --- Variables ---
+  const glm::vec2 m_image_size;
+  const std::vector< Image_data::Frame > m_frames_vec;
+  const std::map< const std::string, std::vector< unsigned short > > m_sequence_map;
+};
 
 
 
@@ -40,12 +61,10 @@ public:
   void Clean();
 
 private:
-  void Parser_image_data( std::ifstream& _file, Image_data* _images_data );
-  void Parser_image_frames( std::ifstream& _file, Image_data* _images_data );
-  void Parser_image_sequence( std::ifstream& _file, Image_data* _images_data, std::string& _str );
+  Image_data* Parser_image_data( std::ifstream& _file );
 
   // --- Variables ---
-  std::unordered_map< std::string, Image_data* > m_image_data_map;
+  std::map< std::string, Image_data* > m_image_data_map;
 };
 
 

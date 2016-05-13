@@ -86,6 +86,19 @@ namespace data
 
 
   void
+  Do_functions::s_Make_camera( std::ifstream& _file, 
+			       data::Parser* _p ) const
+  {
+    std::string function = data::Next_line_from_file( _file );
+    std::string state_name_id = _p->Next_get_functions< xx::String_cast >( _file, function );
+    if( *m_disabled )
+      return;
+    data::Get_state( state_name_id, _p->m_this_state )->Make_camera();
+  }
+
+
+
+  void
   Do_functions::o_Make_SDL_gobj( std::ifstream& _file, 
 				 data::Parser* _p ) const
   {
@@ -219,19 +232,6 @@ namespace data
       }
     else
       the_Printing_manager::Instance().Make_action( _file, _p, nullptr, image_data_id, sequence_id );
-  }
-
-
-
-  void
-  Do_functions::s_Make_camera( std::ifstream& _file, 
-			       data::Parser* _p ) const
-  {
-    std::string function = data::Next_line_from_file( _file );
-    std::string state_name_id = _p->Next_get_functions< xx::String_cast >( _file, function );
-    if( *m_disabled )
-      return;
-    data::Get_state( state_name_id, _p->m_this_state )->Make_camera();
   }
 }//data
 

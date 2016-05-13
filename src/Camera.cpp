@@ -3,7 +3,7 @@
 
 
 
-Camera::Camera() : m_position_x(0.0d), m_position_y(0.0d) {}
+Camera::Camera() : m_position( 0.0f, 0.0f ) {}
 
 
 

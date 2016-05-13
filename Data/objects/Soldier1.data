@@ -1,0 +1,170 @@
+
+#################### BASE ####################
+
+Return                           #--Name-ID--#
+  b_String()R
+    "SOLDIER-1"
+
+
+################# MAKE PRITER ################
+
+i_Make_frame_printer(PPRRRR)
+  s_This_state()R
+  o_This_object()R
+
+  Return                      #--Position-X--#
+    m_Divide(TT)T  Double
+      w_Display_width()R
+    b_Double()R
+      2
+
+  Return                      #--Position-Y--#
+    m_Multiply(TT)T  Double
+      w_Display_height()R
+    b_Double()R
+      0.3333
+
+  Return                         #--SCALE-X--#
+    b_Float()R
+      4.0
+
+  Return                         #--SCALE-Y--#
+    b_Float()R
+      4.0
+
+
+############ ACTION-1: "0-WALK" ##############
+
+i_Make_action(PPPPRRRR)
+  s_This_state()R
+  o_This_object()R
+  b_String()R
+    "SOLDIER"
+  b_String()R
+    "0-WALK"
+
+  Return                      #--ACTIONS-ID--#
+    b_String()R
+      "0-WALK"
+
+  Return                      #--TEXTURE-ID--#
+    b_String()R
+      "SOLDIER"
+
+  Return                         #--SCALE-X--#
+    b_Float()R
+      1.0
+
+  Return                         #--SCALE-Y--#
+    b_Float()R
+      1.0
+
+
+############ ACTION-2: "45-WALK" #############
+
+i_Make_action(PPPPRRRR)
+  s_This_state()R
+  o_This_object()R
+  b_String()R
+    "SOLDIER"
+  b_String()R
+    "45-WALK"
+
+  Return                      #--ACTIONS-ID--#
+    b_String()R
+      "45-WALK"
+
+  Return                      #--TEXTURE-ID--#
+    b_String()R
+      "SOLDIER"
+
+  Return                         #--SCALE-X--#
+    b_Float()R
+      1.0
+
+  Return                         #--SCALE-Y--#
+    b_Float()R
+      1.0
+
+
+############ ACTION-3: "90-WALK" #############
+
+i_Make_action(PPPPRRRR)
+  s_This_state()R
+  o_This_object()R
+  b_String()R
+    "SOLDIER"
+  b_String()R
+    "90-WALK"
+
+  Return                      #--ACTIONS-ID--#
+    b_String()R
+      "90-WALK"
+
+  Return                      #--TEXTURE-ID--#
+    b_String()R
+      "SOLDIER"
+
+  Return                         #--SCALE-X--#
+    b_Float()R
+      1.0
+
+  Return                         #--SCALE-Y--#
+    b_Float()R
+      1.0
+
+
+############ ACTION-4: "135-WALK" ############
+
+i_Make_action(PPPPRRRR)
+  s_This_state()R
+  o_This_object()R
+  b_String()R
+    "SOLDIER"
+  b_String()R
+    "135-WALK"
+
+  Return                      #--ACTIONS-ID--#
+    b_String()R
+      "135-WALK"
+
+  Return                      #--TEXTURE-ID--#
+    b_String()R
+      "SOLDIER"
+
+  Return                         #--SCALE-X--#
+    b_Float()R
+      1.0
+
+  Return                         #--SCALE-Y--#
+    b_Float()R
+      1.0
+
+
+############ ACTION-5: "180-WALK" ############
+
+i_Make_action(PPPPRRRR)
+  s_This_state()R
+  o_This_object()R
+  b_String()R
+    "SOLDIER"
+  b_String()R
+    "180-WALK"
+
+  Return                      #--ACTIONS-ID--#
+    b_String()R
+      "180-WALK"
+
+  Return                      #--TEXTURE-ID--#
+    b_String()R
+      "SOLDIER"
+
+  Return                         #--SCALE-X--#
+    b_Float()R
+      1.0
+
+  Return                         #--SCALE-Y--#
+    b_Float()R
+      1.0
+
+Done

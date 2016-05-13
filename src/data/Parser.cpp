@@ -246,7 +246,7 @@ namespace data
 	  m_do_functions.i_Load_image_data( _file, this );
 	else if( _function == "i_Erase_image_data(P)" )
 	  m_do_functions.i_Erase_image_data( _file, this );
-	else if( _function == "i_Make_frame_printer(PPRR)" )
+	else if( _function == "i_Make_frame_printer(PPRRRR)" )
 	  m_do_functions.i_Make_frame_printer( _file, this );
 	else if( _function == "i_Make_action(PPPPRRRR)" )
 	  m_do_functions.i_Make_action( _file, this );

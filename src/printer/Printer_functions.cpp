@@ -17,6 +17,48 @@ Check_for_line_comments( std::ifstream& _file )
 
 
 
+void
+Parser_image_size( std::ifstream& _file, glm::vec2& _image_size )
+{
+  bool w_ok = false;
+  bool h_ok = false;
+  int size_x = 0;
+  int size_y = 0;
+  char c = '?';
+  for( int i = 0 ; i < 2 ; ++i )
+    {
+      Check_for_line_comments( _file );
+      _file >> c;
+      switch( c )
+	{
+	case 'w':
+	case 'W':
+	  Check_for_line_comments( _file );
+	  _file >> size_x;
+	  _image_size.x = size_x;
+	  w_ok = true;
+	  break;
+	case 'h':
+	case 'H':
+	  Check_for_line_comments( _file );
+	  _file >> size_y;
+	  _image_size.y = size_y;
+	  h_ok = true;
+	  break;
+	default:
+	  throw xx::Missing_argument( "(xx) Printer ERROR! Expected the 'Image-Data' file to begin with:  w  or  h ! " );
+	}//switch
+      if( ! _file.good())
+	throw std::ios::failure( "(xx) Printer ERROR! file corrupted. When reading WIDTH and HEIGHT! " );
+    }//for
+  if(( ! w_ok )||( size_x <= 0 ))
+    throw xx::Missing_argument( "(xx) Printer ERROR! Expected:  w  and then the image's WIDTH in pixels. The width cannot zero! " );
+  if(( ! h_ok )||( size_y <= 0 ))
+    throw xx::Missing_argument( "(xx) Printer ERROR! Expected:  h  and then the image's HEIGHT in pixels. The height cannot zero! " );
+}
+
+
+
 void 
 Parse_xywh( std::ifstream& _file,
 	    SDL_Rect& _xywh, 
@@ -120,4 +162,47 @@ Parse_offset( std::ifstream& _file,
     throw xx::Missing_argument( "(xx) Printer ERROR! Expected:  x  and then the frame's printing offset, in pixels on the x axis! " );
   if( ! y_ok )
     throw xx::Missing_argument( "(xx) Printer ERROR! Expected:  y  and then the frame's printing offset, in pixels on the y axis! " );
+}
+
+
+
+void
+Parse_sequences( std::ifstream& _file, 
+		 std::string& _sequence_id,
+		 std::map< const std::string, std::vector< unsigned short > >& _sequence_map,
+		 unsigned int _frames_count )
+{
+  std::vector< unsigned short > sequence_vec;
+  _sequence_id = xx::Read_string_from_file( _file, _sequence_id );
+  while( _file.good())
+    {
+      do
+	{ 
+	  int index = -1;
+	  Check_for_line_comments( _file );
+	  _file >> index;
+	  --index;
+
+	  if( _file.fail())// not a number.
+	    throw std::invalid_argument( xx::String_cast( "(xx) Printer ERROR! Expected: Indices from  1  to  " ) + 
+					 _frames_count +" . Or a String starting with a double-quote: \" ! " );
+	  if(( index < 0 )||( index >= _frames_count ))
+	    throw std::invalid_argument( xx::String_cast( "(xx) Printer ERROR! Expected: Indices from  1  to  " ) + 
+					 _frames_count +" . Unexpected index of: "+ (index+1) +"! " );
+
+	  sequence_vec.push_back( index );
+
+	  Check_for_line_comments( _file );
+	  _file >> std::ws;
+	}
+      while(( _file.peek() != '"' )&& _file.good());
+
+      auto pair = _sequence_map.insert( std::make_pair( _sequence_id, sequence_vec ));
+      sequence_vec.clear();
+
+      if( ! pair.second )
+	throw std::invalid_argument( "(xx) Printer ERROR! When Creating a SEQUENCE. The sequence-name-id: '" + _sequence_id + "' is allready in use! " );
+      if( _file.good())
+	_sequence_id = xx::Read_string_from_file( _file );
+    }//while
 }

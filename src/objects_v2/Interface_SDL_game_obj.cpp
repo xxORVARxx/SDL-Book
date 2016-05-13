@@ -1,14 +1,14 @@
  
 #include "Interface_SDL_game_obj.h"
 #include "Parser.h"
+#include "Printer.h"
 
 
 
 Base_SDL_game_obj::Base_SDL_game_obj( std::string _file, 
 				      State* _state ) : 
-  m_file_name(_file), m_this_state(_state)
+  m_file_name(_file), m_this_state_ptr(_state), m_printer_ptr(nullptr)
 {
-
 }
 
 
@@ -69,12 +69,22 @@ Base_SDL_game_obj::Load()
 
 
 void 
+Base_SDL_game_obj::Clean()
+{
+  if( m_printer_ptr )
+    delete m_printer_ptr;
+  std::cout << "Base_SDL_game_obj.Clean() is Done.\n";
+}
+
+
+
+void 
 Base_SDL_game_obj::Parse_data_file( std::ifstream& _file, 
 				    data::Parser* _p, 
 				    bool _set_p )
 {
   if( _set_p )
-    _p->Set_this( m_this_state, this );
+    _p->Set_this( m_this_state_ptr, this );
 
   m_name_id = std::string( _p->Parse_file< xx::String_cast >( _file ));
 }

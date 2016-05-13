@@ -4,9 +4,40 @@
 #include "Parser.h"
 
 void Check_for_line_comments( std::ifstream& _file );
+void Parser_image_size( std::ifstream& _file, glm::vec2& _image_size );
 void Parse_xywh( std::ifstream& _file, SDL_Rect& _xywh, std::string& _order );
 void Parse_milliseconds( std::ifstream& _file, float& _ms );
 void Parse_offset( std::ifstream& _file, SDL_Point& _oxy, std::string& _order );
+void Parse_sequences( std::ifstream& _file, std::string& _sequence_id, std::map< const std::string, std::vector< unsigned short > >& _sequence_map, unsigned int _frames_count );
+
+
+
+Image_data::Frame::Frame( SDL_Rect& _xywh, 
+			  float& _m, 
+			  SDL_Point& _oxy ) : 
+  m_src_rec(_xywh), m_ms(_m), m_offset(_oxy) 
+{
+}
+
+
+
+Image_data::Image_data( glm::vec2& _size, 
+			std::vector< Image_data::Frame >& _frames, 
+			std::map< const std::string, std::vector< unsigned short > >& _sequences ) :
+  m_image_size(_size), m_frames_vec(_frames), m_sequence_map(_sequences)
+{
+}
+
+
+
+const std::vector< unsigned short >* 
+Image_data::Get_sequence_vec( const std::string& _sequence_id )
+{
+  auto sequence_itr = m_sequence_map.find( _sequence_id );
+  if( sequence_itr == m_sequence_map.end())
+    return nullptr;
+  return &sequence_itr->second;
+}
 
 
 
@@ -16,18 +47,17 @@ the_Printing_manager::Load_image_data( std::string& _file_name,
 {
   std::string prefix = "Data/images/";
   std::string suffix = ".data";
-
-  if( this->Has_image_data( _image_data_id ))
-    throw std::invalid_argument( "(xx) Printer ERROR! When LOADING 'Image-Data'. The ID: '"+ _image_data_id +"' is allready in use! " );
-  Image_data* image_data_ptr = new Image_data;
+  Image_data* image_data_ptr = nullptr;
   try
     {
       std::ifstream data_file( prefix + _file_name + suffix );
       if( data_file.is_open() && data_file.good())
 	{
-	  this->Parser_image_data( data_file, image_data_ptr );
+	  image_data_ptr = this->Parser_image_data( data_file );
 
-	  m_image_data_map[ _image_data_id ] = image_data_ptr;
+	  auto pair = m_image_data_map.insert( std::make_pair( _image_data_id, image_data_ptr ));
+	  if( ! pair.second )
+	    throw std::invalid_argument( "(xx) Printer ERROR! When LOADING 'Image-Data'. The ID: '"+ _image_data_id +"' is allready in use! " );
 
 	  data_file.close();
 	}
@@ -80,74 +110,37 @@ the_Printing_manager::Clean()
 
 
 
-void 
-the_Printing_manager::Parser_image_data( std::ifstream& _file, 
-					 Image_data* _images_data )
+Image_data*
+the_Printing_manager::Parser_image_data( std::ifstream& _file )
 {
-  bool w_ok = false;
-  bool h_ok = false;
-  int size = 0;
-  char c = '?';
-  for( int i = 0 ; i < 2 ; ++i )
-    {
-      Check_for_line_comments( _file );
-      _file >> c;
-      switch( c )
-	{
-	case 'w':
-	case 'W':
-	  Check_for_line_comments( _file );
-	  _file >> size;
-	  _images_data->m_image_size.x = size;
-	  w_ok = true;
-	  break;
-	case 'h':
-	case 'H':
-	  Check_for_line_comments( _file );
-	  _file >> size;
-	  _images_data->m_image_size.y = size;
-	  h_ok = true;
-	  break;
-	default:
-	  throw xx::Missing_argument( "(xx) Printer ERROR! Expected the 'Image-Data' file to begin with:  w  or  h ! " );
-	}//switch
-      if( ! _file.good())
-	throw std::ios::failure( "(xx) Printer ERROR! file corrupted. When reading WIDTH and HEIGHT! " );
-    }//for
-  if(( ! w_ok )||( _images_data->m_image_size.x <= 0 ))
-    throw xx::Missing_argument( "(xx) Printer ERROR! Expected:  w  and then the image's WIDTH in pixels. The width cannot zero! " );
-  if(( ! h_ok )||( _images_data->m_image_size.y <= 0 ))
-    throw xx::Missing_argument( "(xx) Printer ERROR! Expected:  h  and then the image's HEIGHT in pixels. The height cannot zero! " );
+  glm::vec2 image_size;
+  std::vector< Image_data::Frame > frames_vec;
+  std::map< const std::string, std::vector< unsigned short > > sequence_map;
 
-  this->Parser_image_frames( _file, _images_data );
-}
+  // Get the Image Size:
+  Parser_image_size( _file, image_size );
 
-
-
-void 
-the_Printing_manager::Parser_image_frames( std::ifstream& _file, 
-					   Image_data* _images_data )
-{
   std::string function;
   Check_for_line_comments( _file );
   _file >> function;
   if( function.size() != 4 )
     throw std::invalid_argument( "(xx) Printer ERROR! Expected: Only the characters:  xywh  (but in any order). And not this: '"+ function +"'! " );
 
+  // Get all the Frames:
   while( _file.good())
     {
       SDL_Rect xywh;  xx::Zero_out_SDL_Rect( xywh );
       float ms = 0.0f;
       SDL_Point oxy;  xx::Zero_out_SDL_Point( oxy );
 
-      // Getting the Source Rectangle:
+      // Getting the Frame's Source Rectangle:
       Parse_xywh( _file, xywh, function );
-      if(( xywh.x + xywh.w ) > _images_data->m_image_size.x )
-	throw xx::Image_size_mismatch( "(xx) Printer ERROR! frame outside the image. (frame x + frame w > image w)! " );
-      if(( xywh.y + xywh.h ) > _images_data->m_image_size.y )
-	throw xx::Image_size_mismatch( "(xx) Printer ERROR! frame outside the image. (frame y + frame h > image h)! " );
+      if(( xywh.x + xywh.w ) > image_size.x )
+	throw xx::Image_size_mismatch( xx::String_cast( "(xx) Printer ERROR! frame outside the image. " ) + xywh.x +"+"+ xywh.w +">"+ image_size.x +" (frame x + frame w > image w)! " );
+      if(( xywh.y + xywh.h ) > image_size.y )
+	throw xx::Image_size_mismatch( xx::String_cast( "(xx) Printer ERROR! frame outside the image. " ) + xywh.y +"+"+ xywh.h +">"+ image_size.y +" (frame y + frame h > image h)! " );
 
-      // Getting the Milliseconds:
+      // Getting the Frame's Milliseconds:
       Parse_milliseconds( _file, ms );
 
       Check_for_line_comments( _file );
@@ -155,7 +148,7 @@ the_Printing_manager::Parser_image_frames( std::ifstream& _file,
       if(( function.size() == 0 )||( ! _file.good()))
 	throw std::ios::failure( "(xx) Printer ERROR! file corrupted! " );
 
-      // Getting the Offset:
+      // Getting the Frame's Offset:
       if(( function[0] == 'o' )||( function[0] == 'O' ))
 	{
 	  Parse_offset( _file, oxy, function );
@@ -164,7 +157,7 @@ the_Printing_manager::Parser_image_frames( std::ifstream& _file,
 	}
 
       // Saving the Frame:
-      _images_data->m_frames_vec.push_back( Image_data::Frame( xywh, ms, oxy ));
+      frames_vec.push_back( Image_data::Frame( xywh, ms, oxy ));
 
       if( function[0] == '"' )
 	break;
@@ -174,51 +167,13 @@ the_Printing_manager::Parser_image_frames( std::ifstream& _file,
 	throw std::invalid_argument( "(xx) Printer ERROR! Expected: The characters:  xywh  (but in any order) or:  oxy  or:  oyx  or a String, starting with a double-quote: \" . Unexpected: '"+ function +"'! " );
     }//while
 
-  this->Parser_image_sequence( _file, _images_data, function );
-}
+  // Getting the all the Sequences:
+  Parse_sequences( _file, function, sequence_map, frames_vec.size());
 
+  // Make and return the Image Data:
+  return new Image_data( image_size, frames_vec, sequence_map );
 
-
-void
-the_Printing_manager::Parser_image_sequence( std::ifstream& _file, 
-					    Image_data* _images_data, 
-					    std::string& _sequence_id )
-{
-  std::vector< unsigned short > sequence_vec;
-  _sequence_id = xx::Read_string_from_file( _file, _sequence_id );
-  while( _file.good())
-    {
-      do
-	{ 
-	  int index = -1;
-	  Check_for_line_comments( _file );
-	  _file >> index;
-	  --index;
-
-	  if( _file.fail())// not a number.
-	    throw std::invalid_argument( xx::String_cast( "(xx) Printer ERROR! Expected: Indices from  1  to  " ) + 
-					 _images_data->m_frames_vec.size() +" . Or a String starting with a double-quote: \" ! " );
-	  if(( index < 0 )||( index >= _images_data->m_frames_vec.size()))
-	    throw std::invalid_argument( xx::String_cast( "(xx) Printer ERROR! Expected: Indices from  1  to  " ) + 
-					 _images_data->m_frames_vec.size() +" . Unexpected index of: "+ (index+1) +"! " );
-
-	  sequence_vec.push_back( index );
-
-	  Check_for_line_comments( _file );
-	  _file >> std::ws;
-	}
-      while(( _file.peek() != '"' )&& _file.good());
-
-      auto pair = _images_data->m_sequence_map.insert( std::make_pair( _sequence_id, sequence_vec ));
-      sequence_vec.clear();
-
-      if( ! pair.second )
-	throw std::invalid_argument( "(xx) Printer ERROR! When Creating a SEQUENCE. The sequence-name-id: '" + _sequence_id + "' is allready in use! " );
-      if( _file.good())
-	_sequence_id = xx::Read_string_from_file( _file );
-    }//while
-
-  /*/  PRINT FARIM DATA:
+  /*/  PRINT FRAME'S DATA:
   std::cout <<"\n---------->"<< _images_data->m_image_size.x <<"\t"<< _images_data->m_image_size.y <<"\n";
   for( auto& frame : _images_data->m_frames_vec )
     {
@@ -251,11 +206,15 @@ the_Printing_manager::Make_printer( std::ifstream& _file,
     {
       if( ! _p->Disabled())
 	{
+	  printer_ptr->m_position.x = _p->Parse_file< float >( _file );
+	  printer_ptr->m_position.y = _p->Parse_file< float >( _file );
 	  printer_ptr->m_scale.x = _p->Parse_file< float >( _file );
 	  printer_ptr->m_scale.y = _p->Parse_file< float >( _file );
 	}
       else
 	{
+	  _p->Parse_file< float >( _file );
+	  _p->Parse_file< float >( _file );
 	  _p->Parse_file< float >( _file );
 	  _p->Parse_file< float >( _file );
 	  return nullptr;
@@ -282,7 +241,7 @@ the_Printing_manager::Make_action( std::ifstream& _file,
     {
       if( ! _p->Disabled())
 	{
-	  std::string actions_id = std::string( _p->Parse_file< xx::String_cast >( _file ));
+	  std::string action_id = std::string( _p->Parse_file< xx::String_cast >( _file ));
 	  std::string texture_id = std::string( _p->Parse_file< xx::String_cast >( _file ));
 	  glm::vec2 scale( _p->Parse_file< float >( _file ),
 			   _p->Parse_file< float >( _file ));
@@ -292,23 +251,23 @@ the_Printing_manager::Make_action( std::ifstream& _file,
 	  if( image_data_itr == m_image_data_map.end())
 	    throw std::invalid_argument("(xx) Printer ERROR! When make an Action. No Image-Data with the ID: '"+ _image_data_id +"'! ");
 
-	  // Find the 'Sequence' in the Image-Data:
-	  auto sequence_itr = image_data_itr->second->m_sequence_map.find( _sequence_id );
-	  if( sequence_itr == image_data_itr->second->m_sequence_map.end())
+	  // Get pointer to the Sequence vector:
+	  auto sequence_vec_ptr = image_data_itr->second->Get_sequence_vec( _sequence_id );
+	  if( sequence_vec_ptr == nullptr )
 	    throw std::invalid_argument("(xx) Printer ERROR! When make an Action. The Image-Data with the ID: '"+ _image_data_id +
 					"', does not contain any Sequence with the ID: '"+ _sequence_id +"'! ");
 
-	  // Create the 'Action' and add it to the Printer:
-	  auto action_itr = _printer_ptr->m_actions_map.insert( std::make_pair( actions_id, Printer::Action()));
-	  if( ! action_itr.second )
-	    throw std::invalid_argument("(xx) Printer ERROR! When make an Action. The actions ID: '" + actions_id + "' is allready in use! ");
+	  // Get pointer to the Frames vector:
+	  auto frames_vec_ptr = &image_data_itr->second->m_frames_vec;
 
-	  // Set the Action's 'Values':
-	  Printer::Action* action_ptr = &(*action_itr.first).second;
-	  action_ptr->m_texture_id = texture_id;
-	  action_ptr->m_scale = scale;
-	  action_ptr->m_frames_vec_ptr = &image_data_itr->second->m_frames_vec;
-	  action_ptr->m_sequence_vec_ptr = &sequence_itr->second;
+	  // Create the 'Action' and add it to the Printer:
+	  auto action_pair = _printer_ptr->m_actions_map.insert( std::make_pair( action_id, Printer::Action( texture_id,
+													     &image_data_itr->second->m_image_size,
+													     scale, 
+													     frames_vec_ptr, 
+													     sequence_vec_ptr )));
+	  if( action_pair.second == false )
+	    throw std::invalid_argument("(xx) Printer ERROR! When make an Action. The actions ID: '" + action_id + "' is allready in use! ");
 	}
       else
 	{

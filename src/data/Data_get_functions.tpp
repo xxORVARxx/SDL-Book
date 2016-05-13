@@ -132,31 +132,6 @@ namespace data
 
 
 
-  xx::String_cast 
-  Get_functions::o_This_object( data::Parser* _p ) const
-  {
-    if( *m_disabled )
-      return xx::String_cast();
-    if( _p->m_this_object )
-      return xx::String_cast( _p->m_this_object->Get_name_id());
-    throw std::runtime_error( "(xx) Parsing ERROR! No 'THIS-OBJECT' found! " );
-  }
-
-
-
-  bool 
-  Get_functions::i_Has_image_data( std::ifstream& _file, 
-				   data::Parser* _p ) const
-  {
-    std::string function = data::Next_line_from_file( _file );
-    std::string image_data_id = _p->Next_get_functions< xx::String_cast >( _file, function );
-    if( *m_disabled )
-      return false;
-    return the_Printing_manager::Instance().Has_image_data( image_data_id );
-  }
-
-
-
   xx::String_cast
   Get_functions::s_This_state( data::Parser* _p ) const
   {
@@ -176,6 +151,18 @@ namespace data
     if( *m_disabled )
       return false;
     return the_Game::Instance().Get_state_machine()->Has_state( name_id );
+  }
+
+
+
+  xx::String_cast 
+  Get_functions::o_This_object( data::Parser* _p ) const
+  {
+    if( *m_disabled )
+      return xx::String_cast();
+    if( _p->m_this_object )
+      return xx::String_cast( _p->m_this_object->Get_name_id());
+    throw std::runtime_error( "(xx) Parsing ERROR! No 'THIS-OBJECT' found! " );
   }
 
 
@@ -208,6 +195,21 @@ namespace data
     else
       throw std::invalid_argument( "(xx) Parsing ERROR! When geting texture's HEIGHT. No texture with the ID: '" + id + "'! " );
   }
+
+
+
+  bool 
+  Get_functions::i_Has_image_data( std::ifstream& _file, 
+				   data::Parser* _p ) const
+  {
+    std::string function = data::Next_line_from_file( _file );
+    std::string image_data_id = _p->Next_get_functions< xx::String_cast >( _file, function );
+    if( *m_disabled )
+      return false;
+    return the_Printing_manager::Instance().Has_image_data( image_data_id );
+  }
+
+
 
   int
   Get_functions::w_Display_width() const

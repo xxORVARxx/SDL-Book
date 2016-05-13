@@ -1,0 +1,109 @@
+
+## Image width and height:
+w 450
+h 500
+
+
+## Frame 1:
+xywh	0	2	41	59
+m	100.0
+
+## Frame 2:
+xywh	42	2	35	59
+m	100.0
+
+## Frame 3:
+xywh	78	2	42	59
+m	100.0
+
+## Frame 4:
+xywh	121	2	45	59
+m	100.0
+
+## Frame 5:
+xywh	167	2	36	59
+m	100.0
+
+## Frame 6:
+xywh	204	2	37	59
+m	100.0
+
+## Frame 7:
+xywh	242	2	35	59
+m	100.0
+
+## Frame 8:
+xywh	278	2	36	58
+m	100.0
+
+## Frame 9:
+xywh	315	2	41	59
+m	100.0
+
+## Frame 10:
+xywh	357	2	35	59
+m	100.0
+
+
+## Frame 11:
+xywh	0	68	38	59
+m	100.0
+
+## Frame 12:
+xywh	39	68	37	59
+m	100.0
+
+## Frame 13:
+xywh	77	68	38	59
+m	100.0
+
+## Frame 14:
+xywh	116	68	41	59
+m	100.0
+
+## Frame 15:
+xywh	158	68	34	59
+m	100.0
+
+## Frame 16:
+xywh	193	68	40	59
+m	100.0
+
+## Frame 17:
+xywh	234	68	35	59
+m	100.0
+
+## Frame 18:
+xywh	270	68	34	59
+m	100.0
+
+## Frame 19:
+xywh	305	68	40	59
+m	100.0
+
+## Frame 20:
+xywh	346	68	35	59
+m	100.0
+
+
+## Sequence 1:
+"0-WALK"
+1 6 11 16
+
+## Sequence 2:
+"45-WALK"
+2 7 12 17
+
+## Sequence 3:
+"90-WALK" 
+3 8 13 18
+
+## Sequence 4:
+"135-WALK" 
+4 9 14 19
+
+## Sequence 5:
+"180-WALK" 
+5 10 15 20
+
+

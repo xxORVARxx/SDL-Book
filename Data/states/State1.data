@@ -3,46 +3,40 @@
 
 Return
   b_String()R
-    "MAIN_MENU_STATE"
+    "TEST-STATE"
 
 #-------------------------#
 
 s_Make_camera(P)
   s_This_state()R
 
+
+
 t_Swap_texture_maps()
 
 t_Move_or_load_texture(PP)
   b_String()R
-    "PLAY_B"
+    "SOLDIER"
   b_String()R
-    "assets/Play_button.png"
-
-t_Move_or_load_texture(PP)
-  b_String()R
-    "EXIT_B"
-  b_String()R
-    "assets/Exit_button.png"
+    "assets/Soldier.png"
 
 t_Clear_texture_map()
 
+
+
 i_Load_image_data(PP)
   b_String()R
-    "TEST"
+    "SOLDIER"
   b_String()R
-    "test"
+    "Soldier"
 
 
 
 o_Make_SDL_gobj(PP)
   s_This_state()R
   b_String()R
-    "SDL_gobj_PLAY_B"
+    "Soldier1"
 
-o_Make_SDL_gobj(PP)
-  s_This_state()R
-  b_String()R
-    "SDL_gobj_EXIT_B"
 
 Done
 

@@ -34,7 +34,7 @@ class Interface_SDL_game_obj
   virtual void Load() = 0;
 
   virtual void Update() = 0;
-  virtual void Draw( Camera* _camera ) = 0;
+  virtual void Draw( Camera* _camera_ptr ) = 0;
   virtual void Clean() = 0;
 
   virtual const Object_type Get_type_id() const = 0;
@@ -62,11 +62,11 @@ class Base_SDL_game_obj : public Interface_SDL_game_obj
   virtual void Load();
 
   virtual void Update() {}
-  virtual void Draw( Camera* _camera ) {}
-  virtual void Clean() {}
+  virtual void Draw( Camera* _camera_ptr ) {}
+  virtual void Clean();
 
-  void Set_printer( Printer* _printer ) { m_printer = _printer; }
-  Printer* Get_printer() const { return m_printer; }
+  void Set_printer( Printer* _printer ) { m_printer_ptr = _printer; }
+  Printer* Get_printer() const { return m_printer_ptr; }
 
   virtual const Object_type Get_type_id() const { return Object_type::BASE_SDL_GAME_OBJ; }
   const std::string Get_name_id() const { return m_name_id; }
@@ -77,8 +77,9 @@ protected:
   // --- Variables ---
   const std::string m_file_name;
   std::string m_name_id;
-  State* m_this_state;
-  Printer* m_printer;
+  State* m_this_state_ptr;
+  Printer* m_printer_ptr;
+  std::string m_action;
 };
 
 

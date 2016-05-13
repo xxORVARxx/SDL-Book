@@ -44,6 +44,17 @@ namespace xx
 namespace xx
 {
   template< typename T >
+  T Clip( const T& _n, const T& _lower, const T& _upper )
+  {
+    return std::max( _lower, std::min( _n, _upper ));
+  }
+}//xx
+
+
+
+namespace xx
+{
+  template< typename T >
   void Set_value_from_scale( const T& _original_value, T& _value, const T& _scale )
   {
     _value = _original_value * _scale;

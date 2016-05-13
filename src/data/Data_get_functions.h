@@ -14,6 +14,7 @@ namespace data
   public:
     Get_functions( bool* _disabled ) : m_disabled(_disabled) {}
 
+    // --- Functions ---
     // List of Get Functions:
     int b_Int( std::ifstream& _file ) const;
     long int b_Long_int( std::ifstream& _file ) const;
@@ -28,15 +29,16 @@ namespace data
 
     bool c_Container_has( std::ifstream& _file, data::Parser* _p ) const;
 
-    xx::String_cast o_This_object( data::Parser* _p ) const;
-
-    bool i_Has_image_data( std::ifstream& _file, data::Parser* _p ) const;
-
     xx::String_cast s_This_state( data::Parser* _p ) const;
     bool s_Has_state( std::ifstream& _file, data::Parser* _p ) const;
 
+    xx::String_cast o_This_object( data::Parser* _p ) const;
+
     int t_Texture_width( std::ifstream& _file, data::Parser* _p ) const;
     int t_Texture_height( std::ifstream& _file, data::Parser* _p ) const;
+
+    bool i_Has_image_data( std::ifstream& _file, data::Parser* _p ) const;
+
     int w_Display_width() const;
     int w_Display_height() const;
 
@@ -67,6 +69,7 @@ namespace data
     template< typename T >
     T c_Container_take( std::ifstream& _file, data::Parser* _p ) const;
 
+    // --- Variables ---
     bool* m_disabled;
   };
 }//data
