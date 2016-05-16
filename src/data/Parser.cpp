@@ -221,6 +221,13 @@ namespace data
 	  Throw_invalid_argument( _function );
 	break;
 
+      case 's': // State:
+	if( _function == "s_Make_camera(P)" )
+	  m_do_functions.s_Make_camera( _file, this );
+	else
+	  Throw_invalid_argument( _function );
+	break;
+
       case 'o': // Object:
 	if( _function == "o_Make_SDL_gobj(PP)" )
 	  m_do_functions.o_Make_SDL_gobj( _file, this );
@@ -254,9 +261,9 @@ namespace data
 	  Throw_invalid_argument( _function );
 	break;
 
-      case 's': // State:
-	if( _function == "s_Make_camera(P)" )
-	  m_do_functions.s_Make_camera( _file, this );
+      case 'e': // Events:
+	if( _function == "e_Make_event(PPPPPP)" )
+	  m_do_functions.e_Make_event( _file, this );
 	else
 	  Throw_invalid_argument( _function );
 	break;

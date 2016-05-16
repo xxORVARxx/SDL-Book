@@ -4,6 +4,8 @@
 
 #include "Interface_SDL_game_obj.h"
 
+class Printer;
+
 
 
 class SDL_gobj : public Base_SDL_game_obj
@@ -28,7 +30,10 @@ protected:
   virtual void Parse_data_file( std::ifstream& _file, data::Parser* _p, bool _set_p );
 
   // --- Variables ---
-  Uint8 move_up_key, move_down_key, move_right_key, move_left_key;
+  Uint8 m_move_up_key, m_move_down_key, m_move_right_key, m_move_left_key;
+
+  Event_trigger_T< bool > m_trigger_flip_right;
+  Event_trigger_T< bool > m_trigger_flip_left;
 };
 
 

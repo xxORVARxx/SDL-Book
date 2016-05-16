@@ -7,6 +7,8 @@
 class Printer;
 class the_Printing_manager;
 namespace data{ class Parser; }
+class Interface_event_trigger;
+class Interface_event_hook;
 
 
 
@@ -57,6 +59,9 @@ public:
 
   Printer* Make_printer( std::ifstream& _file, data::Parser* _p );
   void Make_action( std::ifstream& _file, data::Parser* _p, Printer* _printer_ptr, std::string& _image_data_id, std::string& _sequence_id );
+
+  void Harvest_triggers( Printer* _printer_ptr, std::map< const std::string, Interface_event_trigger* >& _trigger_gatherer );
+  void Harvest_hooks( Printer* _printer_ptr, std::map< const std::string, Interface_event_hook* >& _hook_gatherer );
 
   void Clean();
 

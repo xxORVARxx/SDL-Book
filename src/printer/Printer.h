@@ -4,10 +4,12 @@
 
 #include "Init.h"
 #include "Printing_manager.h"
+#include "Events.h"
 
 class Image_data;
 namespace data{ class Parser; }
 class Camera;
+
 
 
 
@@ -41,6 +43,8 @@ public:
   void Flip_horizontally();
   void Flip_horizontally( bool _set_flip );
 
+
+
 private:
   // --- Variables ---
   glm::vec2 m_position;
@@ -50,6 +54,11 @@ private:
   SDL_Rect m_src_rec; // Source Rectangle.
   SDL_Rect m_dest_rec; // Destination Rectangle.
   std::map< const std::string, Printer::Action > m_actions_map;
+
+  Event_hook_TR< Printer, bool, void > flip_vertically_hook;
+  Event_hook_TR< Printer, bool, void > flip_horizontally_hook;
+  std::map< const std::string, Interface_event_trigger* > m_triggers_map;
+  std::map< const std::string, Interface_event_hook* > m_hooks_map;
 };
 
 

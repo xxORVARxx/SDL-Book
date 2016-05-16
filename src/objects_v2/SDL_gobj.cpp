@@ -9,22 +9,22 @@
 #include "Printer.h"
 #include "State.h"
 
-namespace gobj
-{
-  void Calculate_size_and_scale( const glm::vec2& _image_size, glm::vec2& _size, glm::vec2& _scale );
-}//gobj
-
 
 
 SDL_gobj::SDL_gobj( std::string _file, 
-		    State* _state ) : 
-  Base_SDL_game_obj( _file, _state )
+		    State* _state ) 
+  : Base_SDL_game_obj( _file, _state ),
+    m_trigger_flip_right( true ),
+    m_trigger_flip_left( false )
 {
   m_action = "0-WALK";
-  move_up_key =    SDL_SCANCODE_W;
-  move_down_key =  SDL_SCANCODE_S;
-  move_right_key = SDL_SCANCODE_D;
-  move_left_key =  SDL_SCANCODE_A;
+  m_move_up_key =    SDL_SCANCODE_W;
+  m_move_down_key =  SDL_SCANCODE_S;
+  m_move_right_key = SDL_SCANCODE_D;
+  m_move_left_key =  SDL_SCANCODE_A;
+
+  m_triggers_map[ "GOBJ_FLIP_RIGHT_T" ] = &m_trigger_flip_right;
+  m_triggers_map[ "GOBJ_FLIP_LEFT_T" ] = &m_trigger_flip_left;
 }
 
 
@@ -34,21 +34,25 @@ SDL_gobj::Update()
 {
   const Uint8* keys_state = the_Input_handler::Instance().Get_keys_state();
 
-  if( keys_state[ move_down_key ] &&( keys_state[ move_left_key ] || keys_state[ move_right_key ] ))
+  if( keys_state[ m_move_down_key ] &&( keys_state[ m_move_left_key ] || keys_state[ m_move_right_key ] ))
     m_action = "45-WALK";
-  else if( keys_state[ move_up_key ] &&( keys_state[ move_left_key ] || keys_state[ move_right_key ] ))
+  else if( keys_state[ m_move_up_key ] &&( keys_state[ m_move_left_key ] || keys_state[ m_move_right_key ] ))
     m_action = "135-WALK";
-  else if( keys_state[ move_down_key ] )
+  else if( keys_state[ m_move_down_key ] )
     m_action = "0-WALK";
-  else if( keys_state[ move_up_key ] )
+  else if( keys_state[ m_move_up_key ] )
     m_action = "180-WALK";
-  else if( keys_state[ move_left_key ] || keys_state[ move_right_key ] )
+  else if( keys_state[ m_move_left_key ] || keys_state[ m_move_right_key ] )
     m_action = "90-WALK";
 
-  if( keys_state[ move_right_key ] ) 
-    m_printer_ptr->Flip_horizontally( true );
-  else if( keys_state[ move_left_key ] )
-    m_printer_ptr->Flip_horizontally( false );
+  if( keys_state[ m_move_right_key ] )
+    {
+      m_trigger_flip_right();
+    }
+  else if( keys_state[ m_move_left_key ] )
+    {
+      m_trigger_flip_left();
+    }
 }
 
 
@@ -65,7 +69,7 @@ SDL_gobj::Draw( Camera* _camera_ptr )
 void 
 SDL_gobj::Clean()
 {
-  std::cout << "SDL_gobj.Clean() is Done.  ";
+  std::cout <<"SDL_gobj.Clean() is Done.  ";
   Base_SDL_game_obj::Clean();
 }
 

@@ -12,8 +12,14 @@ Printer::Action::Action( std::string _texture_id,
 			 glm::vec2 _scale,
 		         const std::vector< Image_data::Frame >* _frames,
 			 const std::vector< unsigned short >* _sequence,
-			 unsigned short _itr ) :
-  m_end(false), m_texture_id(_texture_id), m_texture_size_ptr(_size), m_scale(_scale), m_frames_vec_ptr(_frames), m_sequence_vec_ptr(_sequence), m_sequence_iterator(_itr)
+			 unsigned short _itr ) 
+  : m_end(false), 
+    m_texture_id(_texture_id), 
+    m_texture_size_ptr(_size), 
+    m_scale(_scale), 
+    m_frames_vec_ptr(_frames), 
+    m_sequence_vec_ptr(_sequence), 
+    m_sequence_iterator(_itr)
 {
 }
 
@@ -42,15 +48,21 @@ Printer::Action::Continue()
 
 
 
-Printer::Printer() : 
-  m_timer(0.0f), m_flip(SDL_FLIP_NONE) 
+Printer::Printer()
+  : m_timer(0.0f), 
+    m_flip(SDL_FLIP_NONE), 
+    flip_vertically_hook(this,&Printer::Flip_vertically), 
+    flip_horizontally_hook(this,&Printer::Flip_horizontally)
 {
+  m_hooks_map[ "PRINTER_FLIP_VERTICALLY_H" ] = &flip_vertically_hook;
+  m_hooks_map[ "PRINTER_FLIP_HORIZONTALLY_H" ] = &flip_horizontally_hook;
 }
 
 
 
 void 
-Printer::Print( std::string& _action, glm::vec2 _position )
+Printer::Print( std::string& _action, 
+		glm::vec2 _position )
 {
   auto action_itr = m_actions_map.find( _action );
   if( action_itr == m_actions_map.end())
@@ -93,34 +105,6 @@ Printer::Print( std::string& _action, glm::vec2 _position )
 
 
 void 
-Printer::Flip_horizontally()
-{
-  int flip = m_flip;
-  if(( flip == 0 )||( flip == 2 ))  
-    ++flip;
-  else if(( flip == 1 )||( flip == 3 ))
-    --flip;
-  m_flip = static_cast<SDL_RendererFlip>( flip );
-}
-
-void 
-Printer::Flip_horizontally( bool _set_flip )
-{
-  int flip = m_flip;
-  if( _set_flip )
-    {
-      if(( flip == 0 )||( flip == 2 ))
-	++flip;
-    }
-  else
-    {
-      if(( flip == 1 )||( flip == 3 ))
-	--flip;
-    }
-  m_flip = static_cast<SDL_RendererFlip>( flip );
-}
-
-void 
 Printer::Flip_vertically()
 {
   int flip = m_flip;
@@ -148,3 +132,32 @@ Printer::Flip_vertically( bool _set_flip )
   m_flip = static_cast<SDL_RendererFlip>( flip );
 }
 
+
+
+void 
+Printer::Flip_horizontally()
+{
+  int flip = m_flip;
+  if(( flip == 0 )||( flip == 2 ))  
+    ++flip;
+  else if(( flip == 1 )||( flip == 3 ))
+    --flip;
+  m_flip = static_cast<SDL_RendererFlip>( flip );
+}
+
+void 
+Printer::Flip_horizontally( bool _set_flip )
+{
+  int flip = m_flip;
+  if( _set_flip )
+    {
+      if(( flip == 0 )||( flip == 2 ))
+	++flip;
+    }
+  else
+    {
+      if(( flip == 1 )||( flip == 3 ))
+	--flip;
+    }
+  m_flip = static_cast<SDL_RendererFlip>( flip );
+}

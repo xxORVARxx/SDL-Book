@@ -40,6 +40,8 @@ namespace data
     void i_Make_frame_printer( std::ifstream& _file, data::Parser* _p ) const;
     void i_Make_action( std::ifstream& _file, data::Parser* _p ) const;
 
+    void e_Make_event( std::ifstream& _file, data::Parser* _p ) const;
+
     // List of Template Do Functions:
     template< typename T > 
     void c_Container_add( std::ifstream& _file, data::Parser* _p ) const;

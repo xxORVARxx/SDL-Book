@@ -233,6 +233,30 @@ namespace data
     else
       the_Printing_manager::Instance().Make_action( _file, _p, nullptr, image_data_id, sequence_id );
   }
+
+
+
+  void 
+  Do_functions::e_Make_event( std::ifstream& _file, 
+			      data::Parser* _p ) const
+  {
+    std::string function = data::Next_line_from_file( _file );
+    std::string state_name_id = _p->Next_get_functions< xx::String_cast >( _file, function );
+    function = data::Next_line_from_file( _file );
+    std::string object_name_id = _p->Next_get_functions< xx::String_cast >( _file, function );
+    function = data::Next_line_from_file( _file );
+    std::string trigger = _p->Next_get_functions< xx::String_cast >( _file, function );
+    function = data::Next_line_from_file( _file );
+    std::string hook = _p->Next_get_functions< xx::String_cast >( _file, function );
+    function = data::Next_line_from_file( _file );
+    char one = _p->Next_get_functions< char >( _file, function );
+    function = data::Next_line_from_file( _file );
+    char two = _p->Next_get_functions< char >( _file, function );
+    if( *m_disabled )
+      return;
+    Base_SDL_game_obj* obj = data::Get_object( state_name_id, _p->m_this_state, object_name_id, _p->m_this_object );
+    obj->Make_event( _file, _p, trigger, hook, one, two );
+  }
 }//data
 
 

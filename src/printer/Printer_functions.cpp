@@ -18,7 +18,8 @@ Check_for_line_comments( std::ifstream& _file )
 
 
 void
-Parser_image_size( std::ifstream& _file, glm::vec2& _image_size )
+Parser_image_size( std::ifstream& _file, 
+		   glm::vec2& _image_size )
 {
   bool w_ok = false;
   bool h_ok = false;

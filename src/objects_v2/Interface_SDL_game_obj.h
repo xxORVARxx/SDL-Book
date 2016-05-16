@@ -3,6 +3,7 @@
 #define INTERFACE_SDL_GAME_OBJ_H
 
 #include "Init.h"
+#include "Events.h"
 #include "Camera.h"
 
 namespace data { class Parser; }
@@ -65,8 +66,10 @@ class Base_SDL_game_obj : public Interface_SDL_game_obj
   virtual void Draw( Camera* _camera_ptr ) {}
   virtual void Clean();
 
-  void Set_printer( Printer* _printer ) { m_printer_ptr = _printer; }
-  Printer* Get_printer() const { return m_printer_ptr; }
+  void Make_event( std::ifstream& _file, data::Parser* _p, std::string& _trigger, std::string& _hook, char _one, char _two );
+
+  void Set_printer( Printer* _printer_ptr );
+  Printer* Get_printer() const;
 
   virtual const Object_type Get_type_id() const { return Object_type::BASE_SDL_GAME_OBJ; }
   const std::string Get_name_id() const { return m_name_id; }
@@ -80,6 +83,9 @@ protected:
   State* m_this_state_ptr;
   Printer* m_printer_ptr;
   std::string m_action;
+
+  std::map< const std::string, Interface_event_trigger* > m_triggers_map;
+  std::map< const std::string, Interface_event_hook* > m_hooks_map;
 };
 
 

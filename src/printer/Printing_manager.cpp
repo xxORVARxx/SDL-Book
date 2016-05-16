@@ -2,6 +2,7 @@
 #include "Printing_manager.h"
 #include "Printer.h"
 #include "Parser.h"
+#include "Events.h"
 
 void Check_for_line_comments( std::ifstream& _file );
 void Parser_image_size( std::ifstream& _file, glm::vec2& _image_size );
@@ -14,8 +15,10 @@ void Parse_sequences( std::ifstream& _file, std::string& _sequence_id, std::map<
 
 Image_data::Frame::Frame( SDL_Rect& _xywh, 
 			  float& _m, 
-			  SDL_Point& _oxy ) : 
-  m_src_rec(_xywh), m_ms(_m), m_offset(_oxy) 
+			  SDL_Point& _oxy )
+  : m_src_rec(_xywh), 
+    m_ms(_m), 
+    m_offset(_oxy) 
 {
 }
 
@@ -23,8 +26,10 @@ Image_data::Frame::Frame( SDL_Rect& _xywh,
 
 Image_data::Image_data( glm::vec2& _size, 
 			std::vector< Image_data::Frame >& _frames, 
-			std::map< const std::string, std::vector< unsigned short > >& _sequences ) :
-  m_image_size(_size), m_frames_vec(_frames), m_sequence_map(_sequences)
+			std::map< const std::string, std::vector< unsigned short > >& _sequences )
+  : m_image_size(_size), 
+    m_frames_vec(_frames), 
+    m_sequence_map(_sequences)
 {
 }
 
@@ -95,17 +100,6 @@ the_Printing_manager::Erase_image_data( std::string& _image_data_id )
     throw xx::Image_data_not_found( "(xx) Printer ERROR! When ERASING 'Image-Data'. No image-data with the ID: '"+ _image_data_id +"'! " );
   delete (*itr).second;
   m_image_data_map.erase( itr );
-}
-
-
-
-void 
-the_Printing_manager::Clean()
-{
-  for( auto& map_pair : m_image_data_map )
-    delete map_pair.second;
-  m_image_data_map.clear();
-  std::cout <<"PRINTING MANAGER :: Clean() is Done.\n";
 }
 
 
@@ -281,4 +275,41 @@ the_Printing_manager::Make_action( std::ifstream& _file,
     {
       throw xx::Printer_error( std::string( "(xx) Printer ERROR! When make an Action!\n\t" ) + e.what());
     }
+}
+
+
+
+void 
+the_Printing_manager::Harvest_triggers( Printer* _printer_ptr, 
+					std::map< const std::string, Interface_event_trigger* >& _trigger_gatherer )
+{
+  for( auto triger_pair : _printer_ptr->m_triggers_map )
+    {
+      auto pair = _trigger_gatherer.insert( std::make_pair( triger_pair.first, triger_pair.second ));
+      assert( pair.second != false );//ASSERT.
+    }
+}
+
+
+
+void 
+the_Printing_manager::Harvest_hooks( Printer* _printer_ptr, 
+				     std::map< const std::string, Interface_event_hook* >& _hook_gatherer )
+{
+  for( auto hook_pair : _printer_ptr->m_hooks_map )
+    {
+      auto pair = _hook_gatherer.insert( std::make_pair( hook_pair.first, hook_pair.second ));
+      assert( pair.second != false );//ASSERT.
+    }
+}
+
+
+
+void 
+the_Printing_manager::Clean()
+{
+  for( auto& map_pair : m_image_data_map )
+    delete map_pair.second;
+  m_image_data_map.clear();
+  std::cout <<"PRINTING MANAGER :: Clean() is Done.\n";
 }
