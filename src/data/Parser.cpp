@@ -262,7 +262,7 @@ namespace data
 	break;
 
       case 'e': // Events:
-	if( _function == "e_Make_event(PPPPPP)" )
+	if( _function == "e_Make_event()" )
 	  m_do_functions.e_Make_event( _file, this );
 	else
 	  Throw_invalid_argument( _function );
@@ -449,15 +449,15 @@ namespace data
 
 namespace data
 {
-  template int             Parser::Parse_file< int >            ( std::ifstream& _file );
-  template long int        Parser::Parse_file< long int >       ( std::ifstream& _file );
-  template unsigned        Parser::Parse_file< unsigned >       ( std::ifstream& _file );
-  template long unsigned   Parser::Parse_file< long unsigned >  ( std::ifstream& _file );
-  template float           Parser::Parse_file< float >          ( std::ifstream& _file );
-  template double          Parser::Parse_file< double >         ( std::ifstream& _file );
-  template long double     Parser::Parse_file< long double >    ( std::ifstream& _file );
-  template char            Parser::Parse_file< char >           ( std::ifstream& _file );
-  template bool            Parser::Parse_file< bool >           ( std::ifstream& _file );
+  template             int Parser::Parse_file< int >            ( std::ifstream& _file );
+  template        long int Parser::Parse_file< long int >       ( std::ifstream& _file );
+  template        unsigned Parser::Parse_file< unsigned >       ( std::ifstream& _file );
+  template   long unsigned Parser::Parse_file< long unsigned >  ( std::ifstream& _file );
+  template           float Parser::Parse_file< float >          ( std::ifstream& _file );
+  template          double Parser::Parse_file< double >         ( std::ifstream& _file );
+  template     long double Parser::Parse_file< long double >    ( std::ifstream& _file );
+  template            char Parser::Parse_file< char >           ( std::ifstream& _file );
+  template            bool Parser::Parse_file< bool >           ( std::ifstream& _file );
   template xx::String_cast Parser::Parse_file< xx::String_cast >( std::ifstream& _file );
 }//data
 

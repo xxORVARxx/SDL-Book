@@ -10,6 +10,7 @@
 
 class State;
 class Base_SDL_game_obj;
+namespace event { class Events_manager; }
 
 
 
@@ -19,6 +20,7 @@ namespace data
   {
     friend Do_functions;
     friend Get_functions;
+    friend event::Events_manager;
 
   public:
     Parser() : 

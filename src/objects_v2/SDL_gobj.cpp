@@ -13,9 +13,7 @@
 
 SDL_gobj::SDL_gobj( std::string _file, 
 		    State* _state ) 
-  : Base_SDL_game_obj( _file, _state ),
-    m_trigger_flip_right( true ),
-    m_trigger_flip_left( false )
+  : Base_SDL_game_obj( _file, _state )
 {
   m_action = "0-WALK";
   m_move_up_key =    SDL_SCANCODE_W;
@@ -23,8 +21,8 @@ SDL_gobj::SDL_gobj( std::string _file,
   m_move_right_key = SDL_SCANCODE_D;
   m_move_left_key =  SDL_SCANCODE_A;
 
-  m_triggers_map[ "GOBJ_FLIP_RIGHT_T" ] = &m_trigger_flip_right;
-  m_triggers_map[ "GOBJ_FLIP_LEFT_T" ] = &m_trigger_flip_left;
+  m_triggers_map[ "GOBJ_KEY_LEFT_T" ] = &m_trigger_key_left;
+  m_triggers_map[ "GOBJ_KEY_RIGHT_T" ] = &m_trigger_key_right;
 }
 
 
@@ -46,13 +44,9 @@ SDL_gobj::Update()
     m_action = "90-WALK";
 
   if( keys_state[ m_move_right_key ] )
-    {
-      m_trigger_flip_right();
-    }
+    m_trigger_key_left();
   else if( keys_state[ m_move_left_key ] )
-    {
-      m_trigger_flip_left();
-    }
+    m_trigger_key_right();
 }
 
 

@@ -66,7 +66,8 @@ class Base_SDL_game_obj : public Interface_SDL_game_obj
   virtual void Draw( Camera* _camera_ptr ) {}
   virtual void Clean();
 
-  void Make_event( std::ifstream& _file, data::Parser* _p, std::string& _trigger, std::string& _hook, char _one, char _two );
+  bool Find_hook( const std::string& _hook_name_id, event::i_Hook** _hook_dptr = nullptr );
+  bool Find_trigger( const std::string& _trigger_name_id, event::i_Trigger** _trigger_dptr = nullptr );
 
   void Set_printer( Printer* _printer_ptr );
   Printer* Get_printer() const;
@@ -84,8 +85,8 @@ protected:
   Printer* m_printer_ptr;
   std::string m_action;
 
-  std::map< const std::string, Interface_event_trigger* > m_triggers_map;
-  std::map< const std::string, Interface_event_hook* > m_hooks_map;
+  std::map< const std::string, event::i_Trigger* > m_triggers_map;
+  std::map< const std::string, event::i_Hook* > m_hooks_map;
 };
 
 

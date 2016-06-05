@@ -32,8 +32,8 @@ protected:
   // --- Variables ---
   Uint8 m_move_up_key, m_move_down_key, m_move_right_key, m_move_left_key;
 
-  Event_trigger_T< bool > m_trigger_flip_right;
-  Event_trigger_T< bool > m_trigger_flip_left;
+  event::Trigger m_trigger_key_left;
+  event::Trigger m_trigger_key_right;
 };
 
 

@@ -80,24 +80,26 @@ Base_SDL_game_obj::Clean()
 
 
 
-void 
-Base_SDL_game_obj::Make_event( std::ifstream& _file, 
-			       data::Parser* _p, 
-			       std::string& _trigger, 
-			       std::string& _hook, 
-			       char _one,
-			       char _two )
+bool 
+Base_SDL_game_obj::Find_hook( const std::string& _hook_name_id, 
+			      event::i_Hook** _hook_dptr )
 {
-  auto t_itr = m_triggers_map.find( _trigger );
-  if( t_itr == m_triggers_map.end())
-    throw std::invalid_argument( "(xx) Event ERROR! When MAKING event. The Trigger: '"+ _trigger +"' could not be found! " );
+  auto hook_itr = m_hooks_map.find( _hook_name_id );
+  if( hook_itr == m_hooks_map.end())
+    return false;
+  *_hook_dptr = hook_itr->second;
+  return true;
+}
 
-  auto h_itr = m_hooks_map.find( _hook );
-  if( h_itr == m_hooks_map.end())
-    throw std::invalid_argument( "(xx) Event ERROR! When MAKING event. The Hook: '"+ _hook +"' could not be found! " );
-
-  t_itr->second->Set_hook( h_itr->second );
-  h_itr->second->Set_parameter_1( t_itr->second->Get_variable_A());
+bool 
+Base_SDL_game_obj::Find_trigger( const std::string& _trigger_name_id,
+				 event::i_Trigger** _trigger_dptr )
+{
+  auto trigger_itr = m_triggers_map.find( _trigger_name_id );
+  if( trigger_itr == m_triggers_map.end())
+    return false;
+  *_trigger_dptr = trigger_itr->second;
+  return true;
 }
 
 

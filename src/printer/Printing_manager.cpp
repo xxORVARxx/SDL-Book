@@ -281,7 +281,7 @@ the_Printing_manager::Make_action( std::ifstream& _file,
 
 void 
 the_Printing_manager::Harvest_triggers( Printer* _printer_ptr, 
-					std::map< const std::string, Interface_event_trigger* >& _trigger_gatherer )
+					std::map< const std::string, event::i_Trigger* >& _trigger_gatherer )
 {
   for( auto triger_pair : _printer_ptr->m_triggers_map )
     {
@@ -294,7 +294,7 @@ the_Printing_manager::Harvest_triggers( Printer* _printer_ptr,
 
 void 
 the_Printing_manager::Harvest_hooks( Printer* _printer_ptr, 
-				     std::map< const std::string, Interface_event_hook* >& _hook_gatherer )
+				     std::map< const std::string, event::i_Hook* >& _hook_gatherer )
 {
   for( auto hook_pair : _printer_ptr->m_hooks_map )
     {

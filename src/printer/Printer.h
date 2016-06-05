@@ -39,9 +39,9 @@ public:
   void Print( std::string& _action, glm::vec2 _position );
 
   void Flip_vertically();
-  void Flip_vertically( bool _set_flip );
+  void Flip_vertically( byte_t _set_flip );
   void Flip_horizontally();
-  void Flip_horizontally( bool _set_flip );
+  void Flip_horizontally( byte_t _set_flip );
 
 
 
@@ -55,10 +55,10 @@ private:
   SDL_Rect m_dest_rec; // Destination Rectangle.
   std::map< const std::string, Printer::Action > m_actions_map;
 
-  Event_hook_TR< Printer, bool, void > flip_vertically_hook;
-  Event_hook_TR< Printer, bool, void > flip_horizontally_hook;
-  std::map< const std::string, Interface_event_trigger* > m_triggers_map;
-  std::map< const std::string, Interface_event_hook* > m_hooks_map;
+  std::map< const std::string, event::i_Trigger* > m_triggers_map;
+  std::map< const std::string, event::i_Hook* > m_hooks_map;
+  event::Hook_T< Printer, byte_t > m_hook_flip_vertically;
+  event::Hook_T< Printer, byte_t > m_hook_flip_horizontally;
 };
 
 

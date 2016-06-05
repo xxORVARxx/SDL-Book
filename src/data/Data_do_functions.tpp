@@ -3,6 +3,7 @@
 #include "Texture_manager_v2.h"
 #include "Printing_manager.h"
 #include "Game.h"
+#include "Events.h"
 #include "State.h"
 #include "SDL_gobj.h"
 
@@ -240,22 +241,8 @@ namespace data
   Do_functions::e_Make_event( std::ifstream& _file, 
 			      data::Parser* _p ) const
   {
-    std::string function = data::Next_line_from_file( _file );
-    std::string state_name_id = _p->Next_get_functions< xx::String_cast >( _file, function );
-    function = data::Next_line_from_file( _file );
-    std::string object_name_id = _p->Next_get_functions< xx::String_cast >( _file, function );
-    function = data::Next_line_from_file( _file );
-    std::string trigger = _p->Next_get_functions< xx::String_cast >( _file, function );
-    function = data::Next_line_from_file( _file );
-    std::string hook = _p->Next_get_functions< xx::String_cast >( _file, function );
-    function = data::Next_line_from_file( _file );
-    char one = _p->Next_get_functions< char >( _file, function );
-    function = data::Next_line_from_file( _file );
-    char two = _p->Next_get_functions< char >( _file, function );
-    if( *m_disabled )
-      return;
-    Base_SDL_game_obj* obj = data::Get_object( state_name_id, _p->m_this_state, object_name_id, _p->m_this_object );
-    obj->Make_event( _file, _p, trigger, hook, one, two );
+    event::Events_manager events;
+    events.Parse( _file, _p );
   }
 }//data
 

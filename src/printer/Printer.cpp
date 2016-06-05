@@ -51,11 +51,11 @@ Printer::Action::Continue()
 Printer::Printer()
   : m_timer(0.0f), 
     m_flip(SDL_FLIP_NONE), 
-    flip_vertically_hook(this,&Printer::Flip_vertically), 
-    flip_horizontally_hook(this,&Printer::Flip_horizontally)
+    m_hook_flip_vertically( this, &Printer::Flip_vertically ), 
+    m_hook_flip_horizontally( this, &Printer::Flip_horizontally )
 {
-  m_hooks_map[ "PRINTER_FLIP_VERTICALLY_H" ] = &flip_vertically_hook;
-  m_hooks_map[ "PRINTER_FLIP_HORIZONTALLY_H" ] = &flip_horizontally_hook;
+  m_hooks_map[ "PRINTER_FLIP_VERTICALLY_H" ] = &m_hook_flip_vertically;
+  m_hooks_map[ "PRINTER_FLIP_HORIZONTALLY_H" ] = &m_hook_flip_horizontally;
 }
 
 
@@ -116,7 +116,7 @@ Printer::Flip_vertically()
 }
 
 void 
-Printer::Flip_vertically( bool _set_flip )
+Printer::Flip_vertically( byte_t _set_flip )
 {
   int flip = m_flip;
   if( _set_flip )
@@ -146,7 +146,7 @@ Printer::Flip_horizontally()
 }
 
 void 
-Printer::Flip_horizontally( bool _set_flip )
+Printer::Flip_horizontally( byte_t _set_flip )
 {
   int flip = m_flip;
   if( _set_flip )
