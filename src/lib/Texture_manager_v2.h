@@ -9,8 +9,13 @@
 // Singleton Class:
 class the_Texture_manager_v2
 {
-public:
+private:
   the_Texture_manager_v2();
+
+  the_Texture_manager_v2( const the_Texture_manager_v2& ) = delete;
+  the_Texture_manager_v2& operator=( const the_Texture_manager_v2& ) = delete;
+
+public:
   ~the_Texture_manager_v2() = default;
 
   static the_Texture_manager_v2& Instance()
@@ -19,11 +24,6 @@ public:
     return instance;
   }
 
-private:
-  the_Texture_manager_v2( const the_Texture_manager_v2& ) = delete;
-  the_Texture_manager_v2& operator=( const the_Texture_manager_v2& ) = delete;
-
-public:
   // --- --- FUNCTIONS --- ---
   /* Swap between the two texture-maps. 
    * It will change which is the current texture-maps.

@@ -1,5 +1,6 @@
 
-#include "Events.h"
+#include "Events_manager.h"
+#include "Parser.h"
 #include "Interface_SDL_game_obj.h"
 
 namespace data 
@@ -11,14 +12,14 @@ namespace data
 
 
 namespace event
-{
+{ 
   Events_manager::Events_manager() : m_hook_ptr(nullptr), m_trigger_ptr(nullptr) {}
-}//data
+}//event
 
 
 
 namespace event
-{
+{ 
   void 
   Events_manager::Parse( std::ifstream& _file, 
 			 data::Parser* _p )
@@ -26,18 +27,30 @@ namespace event
     this->Parse_get_trigger( _file, _p );
     this->Parse_get_hook( _file, _p );
 
-    event::i_Link* link_ptr = m_hook_ptr->Make_link();
-    m_trigger_ptr->Add_link( link_ptr );
-    link_ptr->Parse( m_trigger_ptr, _file, _p );
+    event::i_Link* link_ptr = nullptr;
+    try
+      {
+	link_ptr = m_hook_ptr->Make_link();
+	link_ptr->Parse( m_trigger_ptr, _file, _p );
+	m_trigger_ptr->Add_link( link_ptr );
+      }
+    catch( const std::exception& e )
+      {
+	delete link_ptr;
+	throw xx::Parsing_error( std::string( "(xx) Event ERROR! When creating Link!\n\t" ) + e.what());
+      }
 
 
 
     if( _p->m_disabled )
       return;
   }
+}//event
 
 
 
+namespace event
+{ 
   void 
   Events_manager::Parse_get_hook( std::ifstream& _file, 
 				  data::Parser* _p )
@@ -47,7 +60,7 @@ namespace event
     std::string hook_name_id = std::string( _p->Parse_file< xx::String_cast >( _file ));
     if( hook_location == "Object" )
       {
-        std::string function = data::Next_line_from_file( _file );
+	std::string function = data::Next_line_from_file( _file );
 	std::string state_name_id = _p->Next_get_functions< xx::String_cast >( _file, function );
 	function = data::Next_line_from_file( _file );
 	std::string object_name_id = _p->Next_get_functions< xx::String_cast >( _file, function );
@@ -68,9 +81,12 @@ namespace event
     else
       throw std::invalid_argument( "(xx) Event ERROR! When MAKING event. Unexpected: '"+ hook_location +"'. Expected Hook's location: 'Object', 'State' or 'Global'." );
   }
+}//event
 
 
 
+namespace event
+{ 
   void
   Events_manager::Parse_get_trigger( std::ifstream& _file,
 				     data::Parser* _p )
@@ -80,7 +96,7 @@ namespace event
     std::string trigger_name_id = std::string( _p->Parse_file< xx::String_cast >( _file ));
     if( trigger_location == "Object" )
       {
-        std::string function = data::Next_line_from_file( _file );
+	std::string function = data::Next_line_from_file( _file );
 	std::string state_name_id = _p->Next_get_functions< xx::String_cast >( _file, function );
 	function = data::Next_line_from_file( _file );
 	std::string object_name_id = _p->Next_get_functions< xx::String_cast >( _file, function );

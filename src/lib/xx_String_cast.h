@@ -28,6 +28,8 @@ namespace xx
     String_cast( const long double _ld ) { str = std::to_string( _ld ); Remove_zeros( str ); }
     String_cast( const bool _b ) { if( _b ) str = "True"; else str = "Fasle"; }
     String_cast( const char _c ) { str = _c; }
+    String_cast( const signed char _sc ) { str = std::to_string( (int)_sc ); }
+    String_cast( const unsigned char _uc ) { str = std::to_string( (unsigned)_uc ); }
     String_cast( char const* _cs ) { str = _cs; }
     String_cast( std::string _s ) { str = _s; }
     String_cast( const xx::String_cast& _s ) { str = _s.str; }
@@ -70,6 +72,14 @@ namespace xx
       try { return str[0]; }
       catch( const std::exception& e ) { return 0; }
     }
+    operator signed char() const { 
+      try { return std::stoi( str ); }
+      catch( const std::exception& e ) { return 0; }
+    }
+    operator unsigned char() const { 
+      try { return std::stoi( str ); }
+      catch( const std::exception& e ) { return 0; }
+    }
     operator std::string() const {
       try { return str; }
       catch( const std::exception& e ) { return 0; }
@@ -81,7 +91,7 @@ namespace xx
     xx::String_cast operator+( const T& _t ) const {
       try {
 	std::string temp = std::to_string( _t );
-	Remove_zeros( temp );
+	this->Remove_zeros( temp );
 	return xx::String_cast( str + temp );
       }
       catch( const std::exception& e ) { 
@@ -109,7 +119,7 @@ namespace xx
     xx::String_cast operator-( const T& _t ) const {
       try {
 	std::string temp = std::to_string( _t );
-	Remove_zeros( temp );
+	this->Remove_zeros( temp );
 	return( xx::String_cast( str ) - temp );
       }
       catch( const std::exception& e ) { 
@@ -166,7 +176,7 @@ namespace xx
     xx::String_cast operator*( const T& _t ) const {
       try {
 	std::string temp = std::to_string( _t );
-	Remove_zeros( temp );
+	this->Remove_zeros( temp );
 	return xx::String_cast( temp + str );
       }
       catch( const std::exception& e ) { 
@@ -194,7 +204,7 @@ namespace xx
     xx::String_cast operator/( const T& _t ) const {
       try {
 	std::string temp = std::to_string( _t );
-	Remove_zeros( temp );
+	this->Remove_zeros( temp );
 	return( xx::String_cast( str ) / temp );
       }
       catch( const std::exception& e ) { 
@@ -389,6 +399,14 @@ namespace xx
       if( str.size() == 1 )  return( str[0] == _c );
       else  return false;
     }
+    bool operator==( const signed char _sc ) const {
+      try { return( _sc == std::stoi( str )); }
+      catch( const std::exception& e ) { return false; }
+    }
+    bool operator==( const unsigned char _uc ) const {
+      try { return( _uc == std::stoi( str )); }
+      catch( const std::exception& e ) { return false; }
+    }
     bool operator==( const char* _cs ) const {
       return( str == std::string( _cs ));
     }
@@ -435,6 +453,14 @@ namespace xx
     bool operator!=( const char _c ) const {
       if( str.size() == 1 )  return( str[0] != _c );
       else  return true;
+    }
+    bool operator!=( const signed char _sc ) const {
+      try { return( _sc != std::stoi( str )); }
+      catch( const std::exception& e ) { return true; }
+    }
+    bool operator!=( const unsigned char _uc ) const {
+      try { return( _uc != std::stoi( str )); }
+      catch( const std::exception& e ) { return true; }
     }
     bool operator!=( const char* _cs ) const {
       return( str != std::string( _cs ));
@@ -558,20 +584,10 @@ namespace xx
 
     // Overload Random-Access Operator:
     char& operator[]( const int i ) {
-      if( str.empty())
-	throw std::length_error( "(xx) Indexing an empty string." );
-      if(( i >= str.size() )&&( i < -str.size() ))
-	throw std::length_error( "(xx) Index Out of Bounds." );
-      if( i >= 0 )  return str[ i ];
-      else  return str[ str.size() + i ];
+      return str[ i ];
     }
     const char& operator[]( const int i ) const {
-      if( str.empty())
-	throw std::length_error( "(xx) Indexing an empty string." );
-      if(( i >= str.size() )&&( i < -str.size() ))
-	throw std::length_error( "(xx) Index Out of Bounds." );
-      if( i >= 0 )  return str[ i ];
-      else  return str[ str.size() + i ];
+      return str[ i ];
     }
 
 
@@ -587,8 +603,31 @@ namespace xx
 
 
     // --- Functions ---
-    size_t Size() {
+    char& at( size_t _i ) {
+      if( str.empty())
+	throw std::length_error( "(xx) Indexing an empty string." );
+      if(( _i >= str.size() )&&( _i < -str.size() ))
+	throw std::length_error( "(xx) Index Out of Bounds." );
+      if( _i >= 0 )  return str[ _i ];
+      else  return str[ str.size() + _i ];
+    }
+    const char& at( size_t _i ) const {
+      if( str.empty())
+	throw std::length_error( "(xx) Indexing an empty string." );
+      if(( _i >= str.size() )&&( _i < -str.size() ))
+	throw std::length_error( "(xx) Index Out of Bounds." );
+      if( _i >= 0 )  return str[ _i ];
+      else  return str[ str.size() + _i ];
+    }
+
+    size_t size() const {
       return str.size();
+    }
+    void clear() {
+      str.clear();
+    }
+    bool empty() const {
+      return str.empty();
     }
 
   private:

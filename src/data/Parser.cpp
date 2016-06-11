@@ -10,7 +10,6 @@ namespace data
   bool Is_template( std::string& _function );
   void Comment( std::ifstream& _file, std::string& _comment );
   std::string Check_for_comments( std::ifstream& _file, std::string& _str );
-  std::string Next_line_from_file( std::ifstream& _file );
 }//data
 
 
@@ -40,10 +39,7 @@ namespace data
   T 
   Parser::Parse_file( std::ifstream& _file )
   {
-    m_value_from_file = true;
-    this->Parse_file( _file );
-    m_value_from_file = false;
-
+    this->Parse_file( _file, "Return" );
     std::string function = data::Next_line_from_file( _file );
     return this->Next_get_functions< T >( _file, function );
   }
@@ -51,7 +47,7 @@ namespace data
 
 
   void 
-  Parser::Parse_file( std::ifstream& _file )
+  Parser::Parse_file( std::ifstream& _file, std::string _end )
   {
     std::string function;
     while( ! _file.eof())
@@ -60,36 +56,47 @@ namespace data
 	if( _file.fail())
 	  data::Throw_file_corrupted();
 
-        if( (*function.rbegin()) == ')' )
+        if( (*function.rbegin()) == ')' ) // Do-Function.
 	  {
 	    this->Next_do_functions( _file, function );
 	  }
-	else if( function[0] == '#' )
+	else if( function[0] == '#' ) // Comment.
 	  {
 	    data::Comment( _file, function );
 	  }
-	else if( function == "Done" )
+	else if( function == "Done" ) // Done.
 	  {
-	    if( m_value_from_file )
-	      throw std::logic_error( "(xx) Parsing ERROR! Unexpected: 'Done'. Expected: 'Return' and a value to be returned! " );
+	    if( _end == "Done" )
+	      return;
+	    else if( _end == "Local" )
+	      throw std::logic_error( "(xx) Parsing ERROR! Unexpected: 'Done'. Expected: 'Local' and a Local-function! " );
 	    else
-	      return;
+	      throw std::logic_error( "(xx) Parsing ERROR! Unexpected: 'Done'. Expected: 'Return' and a value to be returned! " );
 	  }
-	else if( function == "Return" )
+	else if( function == "Return" ) // Return.
 	  {
-	    if( m_value_from_file )
+	    if( _end == "Return" )
 	      return;
+	    else if( _end == "Local" )
+	      throw std::logic_error( "(xx) Parsing ERROR! Unexpected: 'Return'. Expected: 'Local' and a Local-function! " );
 	    else
 	      throw std::logic_error( "(xx) Parsing ERROR! Unexpected: 'Return'. Expected: 'Done' and no return value! " );
+	  }
+	else if( function == "Local" ) // Local-Function
+	  {
+	    if( _end == "Local" )
+	      return;
+	    else
+	      throw std::logic_error( "(xx) Parsing ERROR! Unexpected: 'Local'. Not expecting Local-function! " );
 	  }
 	else
 	  data::Throw_invalid_argument( function );
       }//while
 
-    if( m_value_from_file )
-      throw std::logic_error( "(xx) Parsing ERROR! Expected: 'Return' and a value to be returned! " );
-    else
+    if( function == "Done" )
       throw std::logic_error( "(xx) Parsing ERROR! Expected: 'Done' to end the parsing! " );
+    else
+      throw std::logic_error( "(xx) Parsing ERROR! Expected: 'Return' and a value to be returned! " );
   }
 }//data
 
@@ -133,26 +140,14 @@ namespace data
   {
     std::string template_type = data::Next_line_from_file( _file );
 
-    if( template_type == "Int" )
-      this->List_of_template_do_functions< int >( _file, _function );
-    else if( template_type == "Long_int" )
-      this->List_of_template_do_functions< long int >( _file, _function );
-    else if( template_type == "Unsigned" )
-      this->List_of_template_do_functions< unsigned >( _file, _function );
-    else if( template_type == "Long_unsigned" )
-      this->List_of_template_do_functions< long unsigned >( _file, _function );
-    else if( template_type == "Float" )
-      this->List_of_template_do_functions< float >( _file, _function );
-    else if( template_type == "Double" )
-      this->List_of_template_do_functions< double >( _file, _function );
-    else if( template_type == "Long_double" )
-      this->List_of_template_do_functions< long double >( _file, _function );
-    else if( template_type == "Bool" )
-      this->List_of_template_do_functions< bool >( _file, _function );
-    else if( template_type == "Char" )
-      this->List_of_template_do_functions< char >( _file, _function );
+    if( template_type == "Byte" )
+      this->List_of_template_do_functions< byte_t >( _file, _function );
+    else if( template_type == "Integer" )
+      this->List_of_template_do_functions< integer_t >( _file, _function );
+    else if( template_type == "Real" )
+      this->List_of_template_do_functions< real_t >( _file, _function );
     else if( template_type == "String" )
-      this->List_of_template_do_functions< xx::String_cast >( _file, _function );
+      this->List_of_template_do_functions< string_t >( _file, _function );
     else
       throw std::invalid_argument( "(xx) Parsing ERROR! '" + template_type + "' is not a valid type! " );
   }
@@ -167,26 +162,14 @@ namespace data
     T value;
     std::string template_type = data::Next_line_from_file( _file );
 
-    if( template_type == "Int" )
-      value = this->List_of_template_get_functions< int >( _file, _function );
-    else if( template_type == "Long_int" )
-      value = this->List_of_template_get_functions< long int >( _file, _function );
-    else if( template_type == "Unsigned" )
-      value = this->List_of_template_get_functions< unsigned >( _file, _function );
-    else if( template_type == "Long_unsigned" )
-      value = this->List_of_template_get_functions< long unsigned >( _file, _function );
-    else if( template_type == "Float" )
-      value = this->List_of_template_get_functions< float >( _file, _function );
-    else if( template_type == "Double" )
-      value = this->List_of_template_get_functions< double >( _file, _function );
-    else if( template_type == "Long_double" )
-      value = this->List_of_template_get_functions< long double >( _file, _function );
-    else if( template_type == "Bool" )
-      value = this->List_of_template_get_functions< bool >( _file, _function );
-    else if( template_type == "Char" )
-      value = this->List_of_template_get_functions< char >( _file, _function );
+    if( template_type == "Byte" )
+      value = this->List_of_template_get_functions< byte_t >( _file, _function );
+    else if( template_type == "Integer" )
+      value = this->List_of_template_get_functions< integer_t >( _file, _function );
+    else if( template_type == "Real" )
+      value = this->List_of_template_get_functions< real_t >( _file, _function );
     else if( template_type == "String" )
-      value = this->List_of_template_get_functions< xx::String_cast >( _file, _function );
+      value = this->List_of_template_get_functions< string_t >( _file, _function );
     else
       throw std::invalid_argument( "(xx) Parsing ERROR! '" + template_type + "' is not a valid type! " );
 
@@ -317,24 +300,12 @@ namespace data
     switch( _function[0] )
       {
       case 'b': // Built In Types:
-	if( _function == "b_Int()R" )
-	  value = m_get_functions.b_Int( _file );
-	else if( _function == "b_Long_int()R" )
-	  value = m_get_functions.b_Long_int( _file );
-	else if( _function == "b_Unsigned()R" )
-	  value = m_get_functions.b_Unsigned( _file );
-	else if( _function == "b_Long_unsigned()R" )
-	  value = m_get_functions.b_Long_unsigned( _file );
-	else if( _function == "b_Float()R" )
-	  value = m_get_functions.b_Float( _file );
-	else if( _function == "b_Double()R" )
-	  value = m_get_functions.b_Double( _file );
-	else if( _function == "b_Long_double()R" )
-	  value = m_get_functions.b_Long_double( _file );
-	else if( _function == "b_Bool()R" )
-	  value = m_get_functions.b_Bool( _file );
-	else if( _function == "b_Char()R" )
-	  value = m_get_functions.b_Char( _file );
+	if( _function == "b_Byte()R" )
+	  value = m_get_functions.b_Byte( _file );
+	else if( _function == "b_Integer()R" )
+	  value = m_get_functions.b_Integer( _file );
+	else if( _function == "b_Real()R" )
+	  value = m_get_functions.b_Real( _file );
 	else if( _function == "b_String()R" )
 	  value = m_get_functions.b_String( _file );
 	else
@@ -449,16 +420,10 @@ namespace data
 
 namespace data
 {
-  template             int Parser::Parse_file< int >            ( std::ifstream& _file );
-  template        long int Parser::Parse_file< long int >       ( std::ifstream& _file );
-  template        unsigned Parser::Parse_file< unsigned >       ( std::ifstream& _file );
-  template   long unsigned Parser::Parse_file< long unsigned >  ( std::ifstream& _file );
-  template           float Parser::Parse_file< float >          ( std::ifstream& _file );
-  template          double Parser::Parse_file< double >         ( std::ifstream& _file );
-  template     long double Parser::Parse_file< long double >    ( std::ifstream& _file );
-  template            char Parser::Parse_file< char >           ( std::ifstream& _file );
-  template            bool Parser::Parse_file< bool >           ( std::ifstream& _file );
-  template xx::String_cast Parser::Parse_file< xx::String_cast >( std::ifstream& _file );
+  template byte_t Parser::Parse_file< byte_t >( std::ifstream& _file );
+  template integer_t Parser::Parse_file< integer_t >( std::ifstream& _file );
+  template real_t Parser::Parse_file< real_t >( std::ifstream& _file );
+  template string_t Parser::Parse_file< string_t >( std::ifstream& _file );
 }//data
 
 

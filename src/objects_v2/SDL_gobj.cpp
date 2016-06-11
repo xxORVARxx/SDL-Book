@@ -2,7 +2,6 @@
 #include "SDL_gobj.h"
 #include "Input_handler.h"
 #include "Texture_manager_v2.h"
-#include "xx_String_cast.h"
 
 #include "Game.h"
 #include "Parser.h"
@@ -13,7 +12,8 @@
 
 SDL_gobj::SDL_gobj( std::string _file, 
 		    State* _state ) 
-  : Base_SDL_game_obj( _file, _state )
+  : Base_SDL_game_obj( _file, _state ),
+    m_hook_test( this, &SDL_gobj::Test_function )
 {
   m_action = "0-WALK";
   m_move_up_key =    SDL_SCANCODE_W;
@@ -23,6 +23,10 @@ SDL_gobj::SDL_gobj( std::string _file,
 
   m_triggers_map[ "GOBJ_KEY_LEFT_T" ] = &m_trigger_key_left;
   m_triggers_map[ "GOBJ_KEY_RIGHT_T" ] = &m_trigger_key_right;
+
+  // TEST:
+  m_triggers_map[ "TEST_T" ] = &m_trigger_test;
+  m_hooks_map[ "TEST_H" ] = &m_hook_test;
 }
 
 
@@ -43,10 +47,15 @@ SDL_gobj::Update()
   else if( keys_state[ m_move_left_key ] || keys_state[ m_move_right_key ] )
     m_action = "90-WALK";
 
-  if( keys_state[ m_move_right_key ] )
+  if( keys_state[ m_move_left_key ] )
     m_trigger_key_left();
-  else if( keys_state[ m_move_left_key ] )
+  else if( keys_state[ m_move_right_key ] )
     m_trigger_key_right();
+
+
+  // TEST:
+  if( keys_state[ SDL_SCANCODE_SPACE ] )
+    m_trigger_test( 10 );
 }
 
 
@@ -90,4 +99,12 @@ SDL_gobj::Parse_data_file( std::ifstream& _file,
   m_position.y = _p->Parse_file< float >( _file );
   gobj::Calculate_size_and_scale( m_print.m_image_size, m_size, m_scale );
   */
+}
+
+
+
+// TEST:
+void SDL_gobj::Test_function( string_t _str )
+{
+  std::cout <<"------------------- "<< _str <<"\n";
 }

@@ -2,7 +2,6 @@
 #include "Printing_manager.h"
 #include "Printer.h"
 #include "Parser.h"
-#include "Events.h"
 
 void Check_for_line_comments( std::ifstream& _file );
 void Parser_image_size( std::ifstream& _file, glm::vec2& _image_size );
@@ -200,17 +199,17 @@ the_Printing_manager::Make_printer( std::ifstream& _file,
     {
       if( ! _p->Disabled())
 	{
-	  printer_ptr->m_position.x = _p->Parse_file< float >( _file );
-	  printer_ptr->m_position.y = _p->Parse_file< float >( _file );
-	  printer_ptr->m_scale.x = _p->Parse_file< float >( _file );
-	  printer_ptr->m_scale.y = _p->Parse_file< float >( _file );
+	  printer_ptr->m_position.x = _p->Parse_file< real_t >( _file );
+	  printer_ptr->m_position.y = _p->Parse_file< real_t >( _file );
+	  printer_ptr->m_scale.x = _p->Parse_file< real_t >( _file );
+	  printer_ptr->m_scale.y = _p->Parse_file< real_t >( _file );
 	}
       else
 	{
-	  _p->Parse_file< float >( _file );
-	  _p->Parse_file< float >( _file );
-	  _p->Parse_file< float >( _file );
-	  _p->Parse_file< float >( _file );
+	  _p->Parse_file< real_t >( _file );
+	  _p->Parse_file< real_t >( _file );
+	  _p->Parse_file< real_t >( _file );
+	  _p->Parse_file< real_t >( _file );
 	  return nullptr;
 	}
     }
@@ -235,10 +234,10 @@ the_Printing_manager::Make_action( std::ifstream& _file,
     {
       if( ! _p->Disabled())
 	{
-	  std::string action_id = std::string( _p->Parse_file< xx::String_cast >( _file ));
-	  std::string texture_id = std::string( _p->Parse_file< xx::String_cast >( _file ));
-	  glm::vec2 scale( _p->Parse_file< float >( _file ),
-			   _p->Parse_file< float >( _file ));
+	  std::string action_id = std::string( _p->Parse_file< string_t >( _file ));
+	  std::string texture_id = std::string( _p->Parse_file< string_t >( _file ));
+	  glm::vec2 scale( _p->Parse_file< real_t >( _file ),
+			   _p->Parse_file< real_t >( _file ));
 
 	  // Find the 'Image-Data':
 	  auto image_data_itr = m_image_data_map.find( _image_data_id );
@@ -265,9 +264,9 @@ the_Printing_manager::Make_action( std::ifstream& _file,
 	}
       else
 	{
-	  _p->Parse_file< xx::String_cast >( _file );
-	  _p->Parse_file< float >( _file );
-	  _p->Parse_file< float >( _file );
+	  _p->Parse_file< string_t >( _file );
+	  _p->Parse_file< real_t >( _file );
+	  _p->Parse_file< real_t >( _file );
 	  return;
 	}
     }

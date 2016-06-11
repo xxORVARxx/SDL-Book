@@ -13,23 +13,23 @@ i_Make_frame_printer(PPRRRR)
   o_This_object()R
 
   Return                      #--Position-X--#
-    m_Divide(TT)T  Double
+    m_Divide(TT)T  Real
       w_Display_width()R
-    b_Double()R
+    b_Real()R
       2
 
   Return                      #--Position-Y--#
-    m_Multiply(TT)T  Double
+    m_Multiply(TT)T  Real
       w_Display_height()R
-    b_Double()R
+    b_Real()R
       0.3333
 
   Return                         #--SCALE-X--#
-    b_Float()R
+    b_Real()R
       4.0
 
   Return                         #--SCALE-Y--#
-    b_Float()R
+    b_Real()R
       4.0
 
 
@@ -52,11 +52,11 @@ i_Make_action(PPPPRRRR)
       "SOLDIER"
 
   Return                         #--SCALE-X--#
-    b_Float()R
+    b_Real()R
       1.0
 
   Return                         #--SCALE-Y--#
-    b_Float()R
+    b_Real()R
       1.0
 
 
@@ -79,11 +79,11 @@ i_Make_action(PPPPRRRR)
       "SOLDIER"
 
   Return                         #--SCALE-X--#
-    b_Float()R
+    b_Real()R
       1.0
 
   Return                         #--SCALE-Y--#
-    b_Float()R
+    b_Real()R
       1.0
 
 
@@ -106,11 +106,11 @@ i_Make_action(PPPPRRRR)
       "SOLDIER"
 
   Return                         #--SCALE-X--#
-    b_Float()R
+    b_Real()R
       1.0
 
   Return                         #--SCALE-Y--#
-    b_Float()R
+    b_Real()R
       1.0
 
 
@@ -133,11 +133,11 @@ i_Make_action(PPPPRRRR)
       "SOLDIER"
 
   Return                         #--SCALE-X--#
-    b_Float()R
+    b_Real()R
       1.0
 
   Return                         #--SCALE-Y--#
-    b_Float()R
+    b_Real()R
       1.0
 
 
@@ -160,12 +160,13 @@ i_Make_action(PPPPRRRR)
       "SOLDIER"
 
   Return                         #--SCALE-X--#
-    b_Float()R
+    b_Real()R
       1.0
 
   Return                         #--SCALE-Y--#
-    b_Float()R
+    b_Real()R
       1.0
+
 
 
 ################### EVENTS ###################
@@ -191,12 +192,12 @@ Return
     "PRINTER_FLIP_HORIZONTALLY_H"
 s_This_state()R
 o_This_object()R
-Return
-  b_String()R
-    "Constant_value"
-      Return
-        b_Int()R
-          1
+
+### Link ###
+Local Constant_value()R
+  Return
+    b_Integer()R
+      0
 
 
 
@@ -221,11 +222,47 @@ Return
     "PRINTER_FLIP_HORIZONTALLY_H"
 s_This_state()R
 o_This_object()R
+
+### Link ###
+Local Constant_value()R
+  Return
+    b_Integer()R
+      1
+
+
+
+#### TEST ####
+e_Make_event() 
+
+### Trigger ###
 Return
   b_String()R
-    "Constant_value"
-      Return
-        b_Int()R
-          0
+    "Object"
+Return
+  b_String()R
+    "TEST_T"
+s_This_state()R
+o_This_object()R
+
+### Hook ###
+Return
+  b_String()R
+    "Object"
+Return
+  b_String()R
+    "TEST_H"
+s_This_state()R
+o_This_object()R
+
+### Link ###
+Local Add(LL)
+  Local Convert_to_integer(L)
+    Local Trigger_variable_1()
+  Local Constant_value()R
+    Return
+      b_Integer()R
+        15
+
+
 
 Done

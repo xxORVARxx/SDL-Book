@@ -3,7 +3,7 @@
 #define INTERFACE_SDL_GAME_OBJ_H
 
 #include "Init.h"
-#include "Events.h"
+#include "Events_manager.h"
 #include "Camera.h"
 
 namespace data { class Parser; }
@@ -14,7 +14,7 @@ class Printer;
 
 enum class Object_type
 {
-  VOID = 0,
+    VOID = 0,
     BASE_SDL_GAME_OBJ,
     SDL_GOBJ,
     MAX

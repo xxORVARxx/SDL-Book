@@ -4,7 +4,6 @@
 
 #include "Init.h"
 #include <unordered_map>
-#include "xx_String_cast.h"
 
 
 
@@ -24,8 +23,10 @@ namespace data
       long double ld; //    id: 7
       bool b; //            id: 8
       char c; //            id: 9
+      signed char sc; //    id: 10
+      unsigned char uc; //  id: 11
     } type;
-    xx::String_cast s; //   id: 10
+    xx::String_cast s; //   id: 12
   };
 }//data
 
@@ -99,6 +100,8 @@ namespace data
     void Container_add_type( data::Type_union& tu, const long double _value );
     void Container_add_type( data::Type_union& tu, const bool _value );
     void Container_add_type( data::Type_union& tu, const char _value );
+    void Container_add_type( data::Type_union& tu, const signed char _value );
+    void Container_add_type( data::Type_union& tu, const unsigned char _value );
     void Container_add_type( data::Type_union& tu, const xx::String_cast _value );
 
     bool Container_set_type( data::Type_union& tu, const int _value );
@@ -110,6 +113,8 @@ namespace data
     bool Container_set_type( data::Type_union& tu, const long double _value );
     bool Container_set_type( data::Type_union& tu, const bool _value );
     bool Container_set_type( data::Type_union& tu, const char _value );
+    bool Container_set_type( data::Type_union& tu, const signed char _value );
+    bool Container_set_type( data::Type_union& tu, const unsigned char _value );
     bool Container_set_type( data::Type_union& tu, const xx::String_cast _value );
 
     bool Container_get_type( const data::Type_union& tu, int& _value ) const;
@@ -121,6 +126,8 @@ namespace data
     bool Container_get_type( const data::Type_union& tu, long double& _value ) const;
     bool Container_get_type( const data::Type_union& tu, bool& _value ) const;
     bool Container_get_type( const data::Type_union& tu, char& _value ) const;
+    bool Container_get_type( const data::Type_union& tu, signed char& _value ) const;
+    bool Container_get_type( const data::Type_union& tu, unsigned char& _value ) const;
     bool Container_get_type( const data::Type_union& tu, xx::String_cast& _value ) const;
 
     // --- Variables ---

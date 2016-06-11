@@ -3,7 +3,6 @@
 #define PARSER_H
 
 #include "Init.h"
-#include "xx_String_cast.h"
 
 #include "Data_do_functions.h"
 #include "Data_get_functions.h"
@@ -11,6 +10,11 @@
 class State;
 class Base_SDL_game_obj;
 namespace event { class Events_manager; }
+
+namespace data
+{
+  std::string Next_line_from_file( std::ifstream& _file );
+}//data
 
 
 
@@ -24,7 +28,7 @@ namespace data
 
   public:
     Parser() : 
-      m_value_from_file(false), m_disabled(false), m_this_state(nullptr), m_this_object(nullptr), m_do_functions(&m_disabled), m_get_functions(&m_disabled) {}
+      m_disabled(false), m_this_state(nullptr), m_this_object(nullptr), m_do_functions(&m_disabled), m_get_functions(&m_disabled) {}
 
     // --- Functions ---
     void Set_this( State* _state );
@@ -32,9 +36,17 @@ namespace data
     bool Disabled() { return m_disabled; }
 
     template< typename T > 
+    T Parse_file( std::ifstream& _file, T(& _List_of_local_functions)(std::string&) )
+    {
+      this->Parse_file( _file, "Local" );
+      std::string local_function = data::Next_line_from_file( _file );
+      return _List_of_local_functions( local_function );
+    }
+
+    template< typename T > 
     T Parse_file( std::ifstream& _file );
 
-    void Parse_file( std::ifstream& _file );
+    void Parse_file( std::ifstream& _file, std::string _end = "Done" );
 
   private:
     void Next_do_functions( std::ifstream& _file, std::string& _function );
@@ -61,7 +73,6 @@ namespace data
     T List_of_template_get_functions( std::ifstream& _file, std::string& _function );
 
     // --- Variables ---
-    bool m_value_from_file;
     bool m_disabled;
 
     State* m_this_state;

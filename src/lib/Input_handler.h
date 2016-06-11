@@ -11,6 +11,7 @@ class the_Input_handler
 {
  private:
   the_Input_handler();
+
   the_Input_handler( const the_Input_handler& ) = delete;
   the_Input_handler& operator=( const the_Input_handler& ) = delete;
 

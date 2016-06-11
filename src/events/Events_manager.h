@@ -3,11 +3,12 @@
 #define EVENTS_H
 
 #include "Init.h"
-#include "Event_functions.h"
 
-namespace event{ class i_Hook; }
-namespace event{ class i_Link; }
-namespace event{ class i_Trigger; }
+#include "Event_functions.h"
+#include "Event_link.h"
+#include "Event_hook.h"
+#include "Event_trigger.h"
+
 namespace data{ class Parser; }
 
 

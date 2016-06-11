@@ -2,45 +2,55 @@
 #ifndef EVENT_FUNCTIONS_H
 #define EVENT_FUNCTIONS_H
 
-#include "Init.h"
 #include "Parser.h"
-#include "xx_String_cast.h"
 
-using byte_t = char;
-using integer_t = long int;
-using real_t = double;
-using string_t = xx::String_cast;
+namespace event{ class i_Trigger; }
+namespace event{ template< typename T > class Parameter_base; }
 
 
 
-namespace event 
-{ 
-  enum class Type
-  {
-      VOID,
-      BYTE,
-      INTEGER,
-      REAL,
-      STRING
-  };
+namespace event
+{
+  template< typename T1 > 
+  using Return_function_t = event::Parameter_base< T1 >*(& )( event::i_Trigger*, std::ifstream&, data::Parser* );
+
+  template< typename T1 > 
+  event::Return_function_t< T1 > Get_function( std::string& _function );
 }//event
 
 
 
-namespace event{ template< typename T > struct Parameter_base; }
-namespace event{ class i_Trigger; }
-
-
-
-namespace event 
+namespace event
 {
-  template< typename T > 
-  event::Type Get_type();
+  template< typename T1 > 
+  event::Parameter_base< T1 >* Constant_value( event::i_Trigger* _trigger_ptr, std::ifstream& _file, data::Parser* _p );
 
+  template< typename T1 > 
+  event::Parameter_base< T1 >* Trigger_variable_1( event::i_Trigger* _trigger_ptr, std::ifstream& _file, data::Parser* _p );
 
+  template< typename T1 > 
+  event::Parameter_base< T1 >* Trigger_variable_2( event::i_Trigger* _trigger_ptr, std::ifstream& _file, data::Parser* _p );
 
-  template< typename T > 
-  event::Parameter_base< T >* Make_parameter( event::i_Trigger* _trigger_ptr, std::ifstream& _file, data::Parser* _p );
+  template< typename T1 > 
+  event::Parameter_base< T1 >* Add( event::i_Trigger* _trigger_ptr, std::ifstream& _file, data::Parser* _p );
+
+  template< typename T1 > 
+  event::Parameter_base< T1 >* Subtract( event::i_Trigger* _trigger_ptr, std::ifstream& _file, data::Parser* _p );
+
+  template< typename T1 > 
+  event::Parameter_base< T1 >* Is_equal( event::i_Trigger* _trigger_ptr, std::ifstream& _file, data::Parser* _p );
+
+  template< typename T1 > 
+  event::Parameter_base< T1 >* Convert_to_byte( event::i_Trigger* _trigger_ptr, std::ifstream& _file, data::Parser* _p );
+
+  template< typename T1 > 
+  event::Parameter_base< T1 >* Convert_to_integer( event::i_Trigger* _trigger_ptr, std::ifstream& _file, data::Parser* _p );
+
+  template< typename T1 > 
+  event::Parameter_base< T1 >* Convert_to_real( event::i_Trigger* _trigger_ptr, std::ifstream& _file, data::Parser* _p );
+
+  template< typename T1 > 
+  event::Parameter_base< T1 >* Convert_to_string( event::i_Trigger* _trigger_ptr, std::ifstream& _file, data::Parser* _p );
 }//event
 
 
@@ -50,12 +60,12 @@ namespace event
   // Event-Parameter Interface:
   struct i_Parameter
   {
-    i_Parameter( const event::Type _type ) 
+    i_Parameter( const Type_e _type ) 
       : m_type(_type) {}
     virtual ~i_Parameter() {}
-    virtual event::Type Type() { return m_type; }
+    virtual Type_e Type() { return m_type; }
   protected:
-    const event::Type m_type;
+    const Type_e m_type;
   };
 
 
@@ -64,9 +74,9 @@ namespace event
   struct Parameter_base : public i_Parameter
   {
     Parameter_base() 
-      : i_Parameter(event::Get_type<T>()) {}
+      : i_Parameter(What_type<T>()) {}
     virtual ~Parameter_base() {}
-    virtual event::Type Type() { return i_Parameter::m_type; }
+    virtual Type_e Type() { return i_Parameter::m_type; }
     virtual T Get() = 0;
   };
 
@@ -76,7 +86,7 @@ namespace event
   struct Parameter_variable : public Parameter_base< T >
   {
     virtual ~Parameter_variable() {}
-    virtual event::Type Type() { return i_Parameter::m_type; }
+    virtual Type_e Type() { return i_Parameter::m_type; }
     virtual T Get() { return m_value; }
     void Set( T _value ) { m_value = _value; }
   protected:
@@ -85,24 +95,62 @@ namespace event
 
 
 
-  template< typename T >
-  struct Parameter_add : public Parameter_base< T >
+  template< typename T1, typename T2 >
+  struct Parameter_operator : public Parameter_base< T1 >
   {
-    Parameter_add( event::i_Trigger* _trigger_ptr, std::ifstream& _file, data::Parser* _p )
+    Parameter_operator( event::i_Trigger* _trigger_ptr, std::ifstream& _file, data::Parser* _p, std::function< T1(T2,T2) > _Operation )
+      : m_Operation(_Operation)
     {
-      p1 = event::Make_parameter< T >( _trigger_ptr, _file, _p );
-      p2 = event::Make_parameter< T >( _trigger_ptr, _file, _p );
+      auto local_function = _p->Parse_file< event::Return_function_t< T2 > >( _file, event::Get_function );
+      m_parameter_1 = local_function( _trigger_ptr, _file, _p );
+      local_function = _p->Parse_file< event::Return_function_t< T2 > >( _file, event::Get_function );
+      m_parameter_2 = local_function( _trigger_ptr, _file, _p );
     }
-    virtual ~Parameter_add()
+    virtual ~Parameter_operator()
     {
-      delete p1;
-      delete p2;
+      /*  !!!!!!!!!!!!!!  MEMORY LEAK  !!!!!!!!!!!!!!  */
+      //delete m_parameter_1;
+      //delete m_parameter_2;
     }
-    virtual event::Type Type() { return i_Parameter::m_type; }
-    virtual T Get() { return ( p1->Get() + p2->Get()); }
+    virtual Type_e Type()
+    { 
+      return i_Parameter::m_type;
+    }
+    virtual T1 Get() 
+    { 
+      return m_Operation( m_parameter_1->Get(), m_parameter_2->Get()); 
+    }
   protected:
-    event::Parameter_base< T >* p1;
-    event::Parameter_base< T >* p2;
+    std::function< T1(T2,T2) > m_Operation;
+    event::Parameter_base< T2 >* m_parameter_1;
+    event::Parameter_base< T2 >* m_parameter_2;
+  };
+
+
+
+  template< typename T1, typename T2 >
+  struct Parameter_convert : public Parameter_base< T1 >
+  {
+    Parameter_convert( event::i_Trigger* _trigger_ptr, std::ifstream& _file, data::Parser* _p )
+    {
+      auto local_function = _p->Parse_file< event::Return_function_t< T2 > >( _file, event::Get_function );
+      m_parameter = local_function( _trigger_ptr, _file, _p );
+    }
+    virtual ~Parameter_convert()
+    {
+      /*  !!!!!!!!!!!!!!  MEMORY LEAK  !!!!!!!!!!!!!!  */
+      //delete m_parameter;
+    }
+    virtual Type_e Type()
+    {
+      return i_Parameter::m_type;
+    }
+    virtual T1 Get()
+    {
+      return (T1)(m_parameter->Get());
+    }
+  protected:
+    event::Parameter_base< T2 >* m_parameter;
   };
 }//event
 

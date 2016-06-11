@@ -3,7 +3,7 @@
 #include "Texture_manager_v2.h"
 #include "Printing_manager.h"
 #include "Game.h"
-#include "Events.h"
+#include "Events_manager.h"
 #include "State.h"
 #include "SDL_gobj.h"
 

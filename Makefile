@@ -82,7 +82,15 @@ run: $(BUILD-Os)
 
 ## Run the Program using Valgrind, a memory error detector.
 .PHONY: valgrind
-valgrind:
+valgrind: $(BUILD-Os)
+	$(info )
+	$(info REMEMBER EACH TIME YOU CHANGE WHICH HEADER-FILES)
+	$(info ARE #included"" INTO OTHER FILES IN YOUR PROGRAM,)
+	$(info YOU HAVE TO COMPILE FROM SCRATCH! use: 'make clean')
+	$(info )
+	$(info ----------   Linking   ----------)
+	$(CXX) $(CPPFLAGS) $(BUILD-Os) -o $(TEST) $(LDFLAGS)
+#	  g++ -std=c++11 my.o -o test -lSDL2 -lSDL2_image
 	valgrind ./$(TEST)
 #	  valgrind ./test
 

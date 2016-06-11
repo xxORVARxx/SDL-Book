@@ -37,15 +37,41 @@
 
 #include <iostream>
 #include <algorithm>
+#include <functional>
 
 #include <string>
 #include <vector>
 #include <map>
 
+#include <memory>
 #include <assert.h> 
 
 #include "The_xx_namespace.h"
 #include "xx_Exceptions.h"
+#include "xx_String_cast.h"
+
+
+
+using byte_t = signed char;
+using integer_t = long int;
+using real_t = double;
+using string_t = xx::String_cast;
+
+
+
+enum class Type_e
+{
+    VOID,
+    BYTE,
+    INTEGER,
+    REAL,
+    STRING
+};
+
+
+
+template< typename T > 
+Type_e What_type();
 
 
 

@@ -130,5 +130,5 @@ Base_SDL_game_obj::Parse_data_file( std::ifstream& _file,
   if( _set_p )
     _p->Set_this( m_this_state_ptr, this );
 
-  m_name_id = std::string( _p->Parse_file< xx::String_cast >( _file ));
+  m_name_id = std::string( _p->Parse_file< string_t >( _file ));
 }

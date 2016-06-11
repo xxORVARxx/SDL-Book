@@ -79,11 +79,27 @@ namespace data
 
   void 
   Container::Container_add_type( data::Type_union& tu, 
+				 const signed char _value )
+  {
+    tu.type.c = _value;
+    tu.type_id = 10;
+  }
+
+  void 
+  Container::Container_add_type( data::Type_union& tu, 
+				 const unsigned char _value )
+  {
+    tu.type.c = _value;
+    tu.type_id = 11;
+  }
+
+  void 
+  Container::Container_add_type( data::Type_union& tu, 
 				 const xx::String_cast _value )
   {
     tu.s = _value;
     tu.type.i = 0;
-    tu.type_id = 10;
+    tu.type_id = 12;
   }
 }//data
 
@@ -183,9 +199,29 @@ namespace data
 
   bool 
   Container::Container_set_type( data::Type_union& tu, 
-				 const xx::String_cast _value )
+				 const signed char _value )
   {
     if( tu.type_id != 10 )
+      return false;
+    tu.type.c = _value;
+    return true;
+  }
+
+  bool 
+  Container::Container_set_type( data::Type_union& tu, 
+				 const unsigned char _value )
+  {
+    if( tu.type_id != 11 )
+      return false;
+    tu.type.c = _value;
+    return true;
+  }
+
+  bool 
+  Container::Container_set_type( data::Type_union& tu, 
+				 const xx::String_cast _value )
+  {
+    if( tu.type_id != 12 )
       return false;
     tu.s = _value;
     return true;
@@ -288,9 +324,29 @@ namespace data
 
   bool 
   Container::Container_get_type( const data::Type_union& tu, 
-				 xx::String_cast& _value ) const
+				 signed char& _value ) const
   {
     if( tu.type_id != 10 )
+      return false;
+    _value = tu.type.c;
+    return true;
+  }
+
+  bool 
+  Container::Container_get_type( const data::Type_union& tu, 
+				 unsigned char& _value ) const
+  {
+    if( tu.type_id != 11 )
+      return false;
+    _value = tu.type.c;
+    return true;
+  }
+
+  bool 
+  Container::Container_get_type( const data::Type_union& tu, 
+				 xx::String_cast& _value ) const
+  {
+    if( tu.type_id != 12 )
       return false;
     _value = tu.s;
     return true;

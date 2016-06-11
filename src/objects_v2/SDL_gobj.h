@@ -34,6 +34,11 @@ protected:
 
   event::Trigger m_trigger_key_left;
   event::Trigger m_trigger_key_right;
+
+  // TEST:
+  void Test_function( string_t _str );
+  event::Hook_T< SDL_gobj, string_t > m_hook_test;
+  event::Trigger_T< integer_t > m_trigger_test;
 };
 
 

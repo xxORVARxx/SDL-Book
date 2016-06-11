@@ -4,7 +4,7 @@
 
 #include "Init.h"
 #include "Printing_manager.h"
-#include "Events.h"
+#include "Events_manager.h"
 
 class Image_data;
 namespace data{ class Parser; }
