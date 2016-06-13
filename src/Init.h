@@ -61,7 +61,7 @@ using string_t = xx::String_cast;
 
 enum class Type_e
 {
-    VOID,
+    VOID = 0,
     BYTE,
     INTEGER,
     REAL,

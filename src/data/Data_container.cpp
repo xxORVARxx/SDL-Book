@@ -81,7 +81,7 @@ namespace data
   Container::Container_add_type( data::Type_union& tu, 
 				 const signed char _value )
   {
-    tu.type.c = _value;
+    tu.type.sc = _value;
     tu.type_id = 10;
   }
 
@@ -89,7 +89,7 @@ namespace data
   Container::Container_add_type( data::Type_union& tu, 
 				 const unsigned char _value )
   {
-    tu.type.c = _value;
+    tu.type.uc = _value;
     tu.type_id = 11;
   }
 
@@ -203,7 +203,7 @@ namespace data
   {
     if( tu.type_id != 10 )
       return false;
-    tu.type.c = _value;
+    tu.type.sc = _value;
     return true;
   }
 
@@ -213,7 +213,7 @@ namespace data
   {
     if( tu.type_id != 11 )
       return false;
-    tu.type.c = _value;
+    tu.type.uc = _value;
     return true;
   }
 
@@ -328,7 +328,7 @@ namespace data
   {
     if( tu.type_id != 10 )
       return false;
-    _value = tu.type.c;
+    _value = tu.type.sc;
     return true;
   }
 
@@ -338,7 +338,7 @@ namespace data
   {
     if( tu.type_id != 11 )
       return false;
-    _value = tu.type.c;
+    _value = tu.type.uc;
     return true;
   }
 

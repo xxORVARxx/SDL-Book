@@ -70,12 +70,13 @@ namespace event
   class Trigger_T : public i_Trigger
   {
   public:
+    Trigger_T() : m_variable_ptr( false ) {}
     virtual ~Trigger_T() {}
 
     // --- Functions ---
     virtual event::Parameter_variable< T1 >* Get_variable_1()
     {
-      return &m_variable;
+      return &m_variable_ptr;
     }
     virtual event::Parameter_variable< T1 >* Get_variable_2()
     {
@@ -85,14 +86,14 @@ namespace event
     // When Triggered:
     void operator()( T1 _variable )
     {
-      m_variable.Set( _variable );
+      m_variable_ptr.Set( _variable );
       for( event::i_Link* link : m_links_vec )
 	link->Callback();
     }
 
   private:
     // --- Variables ---
-    event::Parameter_variable< T1 > m_variable;
+    event::Parameter_variable< T1 > m_variable_ptr;
   };
 }//event
 

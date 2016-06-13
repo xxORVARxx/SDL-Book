@@ -85,7 +85,7 @@ namespace event
       return new event::Link_T< Hook_T, T1 >( this );
     }
 
-    virtual void Callback( event::i_Parameter* _parameter_ptr )
+    virtual void Callback( event::i_Parameter* _parameter_ptr = nullptr )
     {
       event::Parameter_base< T1 >* p = dynamic_cast< event::Parameter_base< T1 >* >( _parameter_ptr );
       assert( p != nullptr );//ASSERT.

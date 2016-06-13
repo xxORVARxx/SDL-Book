@@ -55,32 +55,29 @@ namespace event
   {
   public:
     Link_T( C1* _hook_ptr ) 
-      : m_hook_ptr(_hook_ptr)//, m_parameter_ptr(nullptr)
+      : m_hook_ptr(_hook_ptr)
     {
       assert( m_hook_ptr != nullptr );//ASSERT.
     }
-    virtual ~Link_T()
-    {
-      /*  !!!!!!!!!!!!!!  MEMORY LEAK  !!!!!!!!!!!!!!  */
-      //delete m_parameter_ptr;
-    }
+    virtual ~Link_T() {}
 
     // --- Functions ---
     virtual void Parse( event::i_Trigger* _trigger_ptr, std::ifstream& _file, data::Parser* _p )
     {
       auto local_function = _p->Parse_file< event::Return_function_t< T1 > >( _file, event::Get_function );
-      m_parameter_ptr = local_function( _trigger_ptr, _file, _p );
+      m_parameter = local_function( _trigger_ptr, _file, _p );
     }
 
     virtual void Callback()
     {
-      m_hook_ptr->Callback( m_parameter_ptr );
+      assert( m_parameter.Good());//ASSERT.
+      m_hook_ptr->Callback( m_parameter.m_parameter_ptr );
     }
 
   private:
     // --- Variables ---
     C1* m_hook_ptr;
-    event::Parameter_base< T1 >* m_parameter_ptr;
+    event::Parameater< T1 > m_parameter;
   };
 }//event
 

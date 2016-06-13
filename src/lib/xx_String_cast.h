@@ -65,12 +65,12 @@ namespace xx
       catch( const std::exception& e ) { return 0; }
     }
     operator bool() const {
-      try { return str.empty(); }
-      catch( const std::exception& e ) { return 0; }
+      return str.empty();
     }
     operator char() const { 
-      try { return str[0]; }
-      catch( const std::exception& e ) { return 0; }
+      if( str.size() > 0 )      
+	return str[0];
+      return '\0';
     }
     operator signed char() const { 
       try { return std::stoi( str ); }
@@ -81,8 +81,7 @@ namespace xx
       catch( const std::exception& e ) { return 0; }
     }
     operator std::string() const {
-      try { return str; }
-      catch( const std::exception& e ) { return 0; }
+      return str; 
     }
 
 

@@ -12,6 +12,7 @@ namespace data
   byte_t
   Get_functions::b_Byte( std::ifstream& _file ) const
   {
+    /* Add support for 'true', 'false' and char here. */
     byte_t b;
     _file >> b;
     if( *m_disabled )
